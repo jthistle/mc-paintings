@@ -5,7 +5,7 @@ import UploadInput from '../../components/UploadInput';
 
 const Home = () => {
   return (
-    <Layout>
+    <Layout columns={2}>
       <UploadInput />
     </Layout>
   );

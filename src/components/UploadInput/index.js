@@ -1,8 +1,18 @@
 import React from 'react';
 
-export default () => {
+export default ({ callback }) => {
   return (
-    <></>
-    // TODO
+    <>
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        onChange={callback}
+        className="fileInput"
+      />
+      <style jsx>{`
+        .fileInput {
+        }
+      `}</style>
+    </>
   );
 };
