@@ -1,8 +1,56 @@
+/*
+ *  Font faces
+ */
+
+@font-face {
+  font-family: Rubik;
+  src: local(Rubik), url(./fonts/Rubik-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local(Rubik), url(./fonts/Rubik-RegularItalic.ttf);
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local(Rubik), url(./fonts/Rubik-Bold.ttf);
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local(Rubik), url(./fonts/Rubik-BoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local(Rubik), url(./fonts/Rubik-Light.ttf);
+  font-weight: lighter;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local(Rubik), url(./fonts/Rubik-LightItalic.ttf);
+  font-weight: lighter;
+  font-style: italic;
+}
+
+/*
+ *  Everything else
+ */
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Rubik", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
