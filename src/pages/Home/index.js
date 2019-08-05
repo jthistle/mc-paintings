@@ -1,12 +1,14 @@
 import React from 'react';
 import Layout from '../../components/Layout';
+import { c_PRIMARY } from '../../theme';
+import UploadInput from '../../components/UploadInput';
 
 const Home = () => {
   return (
     <Layout>
-      <h1>This is a test.</h1>
+      <UploadInput />
     </Layout>
-  )
-}
+  );
+};
 
 export default Home;

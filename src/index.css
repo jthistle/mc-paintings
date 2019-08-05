@@ -50,12 +50,14 @@
 
 body {
   margin: 0;
-  font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #051a26;
+  color: #cfe0f7;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }

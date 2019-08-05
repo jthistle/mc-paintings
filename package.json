@@ -30,5 +30,15 @@
       "last 1 safari version"
     ]
   },
-  "license": "GPL-2.0"
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "husky": "^3.0.2",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
 }
