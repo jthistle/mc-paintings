@@ -4,14 +4,14 @@ import { c_ACTION, c_HIGHLIGHT, c_ACTIVE } from '../../theme';
 const INPUT_HEIGHT = 3; // rem
 const INPUT_WIDTH = 15; // rem
 
-export default ({ callback }) => {
+export default ({ onUpload }) => {
   return (
     <div className="fakeButton">
       <div className="textBox">Upload an image</div>
       <input
         type="file"
         accept="image/png, image/jpeg"
-        onChange={callback}
+        onChange={onUpload}
         className="fileInput"
       />
       <style jsx>{`
