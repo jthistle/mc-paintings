@@ -10,7 +10,7 @@ import 'react-image-crop/dist/ReactCrop.css';
  *    aspectRatio: a number
  *    onCropChange: a callback function that will be passed the change event
  */
-export default ({ image, aspectRatio, onCropChange, ...props }) => {
+export default ({ image, aspectRatio, onCropChange }) => {
   const [currentImageRef, setCurrentImageRef] = useState();
   const [crop, setCrop] = useState({ aspect: aspectRatio });
 
@@ -18,7 +18,9 @@ export default ({ image, aspectRatio, onCropChange, ...props }) => {
     var tempCrop = crop;
     tempCrop.aspect = aspectRatio;
     setCrop(tempCrop);
-  }, props);
+    // We don't want to depend on crop, disable warning
+    // eslint-disable-next-line
+  }, [aspectRatio]);
 
   /*
   `*  This was taken from the docs for `react-image-crop`
