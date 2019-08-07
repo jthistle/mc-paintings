@@ -5,11 +5,11 @@ import UploadInput from '../../components/UploadInput';
 import Cropper from '../../components/Cropper';
 import ImageSize from '../../components/ImageSize';
 
-const DEBUG = process.env.NODE_ENV === 'development';
+const DEBUG = process.env.NODE_ENV === 'development' && false;
 
-const ImagePlaceHolder = () => (
+const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
-    Upload an image to start
+    {needsImage ? 'Upload an image' : 'Choose a size to begin'}
     <style jsx>{`
       .placeholder {
         width: 100%;
@@ -139,7 +139,6 @@ const Home = () => {
       size,
       index,
     });
-    setOpenedMenu(null);
   };
 
   useEffect(() => {
@@ -155,12 +154,6 @@ const Home = () => {
     <Layout>
       <Column>
         <UploadInput onUpload={onImageUpload} />
-        {// debug:
-        selectedSize && (
-          <img
-            src={textureImages[selectedSize.size][selectedSize.index] || ''}
-          />
-        )}
         <div className="imageSizeContainer">
           {Object.keys(SIZES).map(size => (
             <ImageSize
@@ -169,6 +162,9 @@ const Home = () => {
               onClick={onImageSizeClick}
               images={textureImages[size]}
               onImageSelect={onImageSelect}
+              hasSelected={
+                selectedSize && selectedSize.size === size && selectedSize.index
+              }
             />
           ))}
         </div>
@@ -181,9 +177,10 @@ const Home = () => {
               cropConfigs[selectedSize.size][selectedSize.index] || {}
             }
             onCropChange={onCropChange}
+            imageStyle={{ maxWidth: '45vw' }}
           />
         ) : (
-          <ImagePlaceHolder />
+          <ImagePlaceHolder needsImage={!!selectedSize} />
         )}
       </Column>
       <style jsx>{`
