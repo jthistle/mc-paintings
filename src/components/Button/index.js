@@ -21,6 +21,7 @@ const Button = ({ children, onClick, disabled }) => (
         transition: all 0.3s;
         text-align: center;
         font-weight: bold;
+        margin: 0 0.25rem;
       }
 
       .button:hover {

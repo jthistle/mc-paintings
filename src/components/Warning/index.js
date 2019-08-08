@@ -1,4 +1,5 @@
 import React from 'react';
+import InfoPopup from '../InfoPopup';
 import {
   c_WARNING_ACTION,
   c_WARNING_ACTIVE,
@@ -33,46 +34,20 @@ const Button = ({ children, onClick }) => (
 
 const Warning = ({ children, onAccept, onReject }) => {
   return (
-    <>
-      <div className="blackout" />
-      <div className="box">
-        {children}
-        <div className="buttonContainer">
-          <Button onClick={onReject}>Go back</Button>
-          <Button onClick={onAccept}>Continue anyway</Button>
-        </div>
+    <InfoPopup bgColour={c_WARNING_INACTIVE}>
+      {children}
+      <div className="buttonContainer">
+        <Button onClick={onReject}>Go back</Button>
+        <Button onClick={onAccept}>Continue anyway</Button>
       </div>
       <style jsx>{`
-        .box {
-          position: absolute;
-          left: 20vw;
-          top: 20vh;
-          width: 60vw;
-          padding: 2rem;
-          text-align: center;
-          background: ${c_WARNING_INACTIVE};
-          border-radius: 0.5rem;
-          z-index: 100;
-        }
-
         .buttonContainer {
           display: flex;
           justify-content: space-evenly;
           margin-top: 3rem;
         }
-
-        .blackout {
-          background: black;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          opacity: 0.5;
-          z-index: 99;
-        }
       `}</style>
-    </>
+    </InfoPopup>
   );
 };
 
