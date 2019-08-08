@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+
 import Layout, { Column } from '../../components/Layout';
 import { c_INACTIVE } from '../../theme';
 import UploadInput from '../../components/UploadInput';
 import Cropper from '../../components/Cropper';
 import ImageSize from '../../components/ImageSize';
 import Warning from '../../components/Warning';
+import Button from '../../components/Button';
+
+import { SIZES, MC_1_14_NAMES } from './configs';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -21,16 +27,6 @@ const ImagePlaceHolder = ({ needsImage }) => (
     `}</style>
   </div>
 );
-
-const SIZES = {
-  '1x1': 7,
-  '1x2': 2,
-  '2x1': 5,
-  '2x2': 6,
-  '4x2': 1,
-  '4x3': 2,
-  '4x4': 3,
-};
 
 /*
  *  Given a size string, return a float aspect ratio
@@ -67,7 +63,7 @@ const Home = () => {
   const [uploadedImages, setUploadedImages] = useState(generateInitial());
   const [cropConfigs, setCropConfigs] = useState(generateInitial());
 
-  /*  The warning object. Should be formatted as:
+  /*  The warning object. Falsy displays no warning. Should be formatted as:
    *    {
    *      title: string,
    *      message: string,
@@ -118,8 +114,8 @@ const Home = () => {
       setTextureImages(newTextureImages);
     };
 
-    reader.onerror = event => {
-      // TODO handle
+    reader.onerror = error => {
+      console.error('Error with image upload:', error);
     };
 
     reader.readAsDataURL(file);
@@ -174,6 +170,69 @@ const Home = () => {
     }
   };
 
+  const createZip = async (force = false) => {
+    // Perform check
+    if (!force) {
+      let hasImage = false;
+      for (let size in textureImages) {
+        for (let image of textureImages[size]) {
+          if (image) {
+            hasImage = true;
+            break;
+          }
+        }
+        if (hasImage) break;
+      }
+
+      if (!hasImage) {
+        setWarning({
+          title: 'No images in resource pack',
+          message:
+            "You haven't added any images to this resource pack. Are you sure you want to continue?",
+          onAccept: () => {
+            setWarning(null);
+            createZip(true);
+          },
+          onReject: () => setWarning(null),
+        });
+        return;
+      }
+    }
+
+    const zipper = new JSZip();
+    zipper.file(
+      'pack.mcmeta',
+      JSON.stringify({
+        pack: {
+          pack_format: 4,
+          description: 'TODO',
+        },
+      })
+    );
+    let paintings = zipper.folder(
+      'packnametodo/assets/minecraft/textures/painting'
+    );
+
+    for (let size in textureImages) {
+      let thisSize = textureImages[size];
+      for (let i = 0; i < thisSize.length; i++) {
+        let imageString =
+          thisSize[i] && thisSize[i].replace('data:image/png;base64,', '');
+        if (imageString) {
+          paintings.file(`${MC_1_14_NAMES[size][i]}.png`, imageString, {
+            base64: true,
+          });
+        }
+      }
+    }
+
+    let zipBlob = await zipper.generateAsync({
+      type: 'blob',
+    });
+
+    saveAs(zipBlob, 'packnametodo.zip');
+  };
+
   return (
     <Layout>
       {warning && (
@@ -183,16 +242,19 @@ const Home = () => {
         </Warning>
       )}
       <Column>
-        <UploadInput
-          onUpload={onImageUpload}
-          text={
-            selectedSize &&
-            uploadedImages[selectedSize.size][selectedSize.index]
-              ? 'Change image'
-              : 'Upload an image'
-          }
-          disabled={!selectedSize}
-        />
+        <div className="buttonsContainer">
+          <UploadInput
+            onUpload={onImageUpload}
+            text={
+              selectedSize &&
+              uploadedImages[selectedSize.size][selectedSize.index]
+                ? 'Change image'
+                : 'Upload an image'
+            }
+            disabled={!selectedSize}
+          />
+          <Button onClick={() => createZip()}>Download pack</Button>
+        </div>
         <div className="imageSizeContainer">
           {Object.keys(SIZES).map(size => (
             <ImageSize
@@ -204,6 +266,7 @@ const Home = () => {
               hasSelected={
                 selectedSize && selectedSize.size === size && selectedSize.index
               }
+              key={size}
             />
           ))}
         </div>
@@ -233,6 +296,11 @@ const Home = () => {
           margin-top: 1rem;
           display: flex;
           flex-wrap: wrap;
+          justify-content: space-evenly;
+        }
+
+        .buttonsContainer {
+          display: flex;
           justify-content: space-evenly;
         }
 

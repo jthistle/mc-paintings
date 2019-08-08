@@ -83,6 +83,7 @@ const ImageSize = ({
               image={image}
               onSelect={onImageSelect}
               isSelected={hasSelected === index}
+              key={index}
             />
           ))}
         </div>
