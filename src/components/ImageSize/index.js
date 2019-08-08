@@ -124,10 +124,10 @@ const ImageSize = ({
         }
 
         .closeBtn {
-          font-weight: bold;
           width: 100%;
           height: 1.5rem;
           line-height: 1.5rem;
+          font-weight: bold;
           text-align: right;
         }
       `}</style>

@@ -8,6 +8,10 @@ const c_BLANK = '#5b718c';
 const c_BLANK_HIGHLIGHT = '#5a7699';
 const c_BLANK_ACTIVE = '#aabbd0';
 const c_INACTIVE_TEXT = '#5b718c';
+const c_WARNING_ACTIVE = '#ff6650';
+const c_WARNING_ACTION = '#de1f1f';
+const c_WARNING_HIGHLIGHT = '#ff4637';
+const c_WARNING_INACTIVE = '#9a0000';
 
 export {
   c_INACTIVE,
@@ -20,4 +24,8 @@ export {
   c_BLANK_HIGHLIGHT,
   c_BLANK_ACTIVE,
   c_INACTIVE_TEXT,
+  c_WARNING_ACTIVE,
+  c_WARNING_ACTION,
+  c_WARNING_HIGHLIGHT,
+  c_WARNING_INACTIVE,
 };

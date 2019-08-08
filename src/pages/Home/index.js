@@ -4,6 +4,7 @@ import { c_INACTIVE } from '../../theme';
 import UploadInput from '../../components/UploadInput';
 import Cropper from '../../components/Cropper';
 import ImageSize from '../../components/ImageSize';
+import Warning from '../../components/Warning';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -65,6 +66,16 @@ const Home = () => {
   const [textureImages, setTextureImages] = useState(generateInitial());
   const [uploadedImages, setUploadedImages] = useState(generateInitial());
   const [cropConfigs, setCropConfigs] = useState(generateInitial());
+
+  /*  The warning object. Should be formatted as:
+   *    {
+   *      title: string,
+   *      message: string,
+   *      onAccept: function,
+   *      onReject: function,
+   *    }
+   */
+  const [warning, setWarning] = useState();
 
   const onCropChange = event => {
     if (!selectedSize) return;
@@ -130,14 +141,47 @@ const Home = () => {
    *  Callback for when an specific image inside ImageSize is clicked.
    */
   const onImageSelect = (size, index) => {
-    setSelectedSize({
-      size,
-      index,
-    });
+    let doSetSize = () =>
+      setSelectedSize({
+        size,
+        index,
+      });
+
+    if (!selectedSize) {
+      doSetSize();
+      return;
+    }
+
+    let currentCrop = cropConfigs[selectedSize.size][selectedSize.index];
+    if (!currentCrop) {
+      doSetSize();
+      return;
+    }
+
+    if (currentCrop.width === 0 && currentCrop.height === 0) {
+      setWarning({
+        title: 'Warning: you have not set a crop',
+        message:
+          'To make a painting from this image you must crop it. Continue anyway?',
+        onReject: () => setWarning(null),
+        onAccept: () => {
+          doSetSize();
+          setWarning(null);
+        },
+      });
+    } else {
+      doSetSize();
+    }
   };
 
   return (
     <Layout>
+      {warning && (
+        <Warning onAccept={warning.onAccept} onReject={warning.onReject}>
+          <h1>{warning.title}</h1>
+          <p>{warning.message}</p>
+        </Warning>
+      )}
       <Column>
         <UploadInput
           onUpload={onImageUpload}
