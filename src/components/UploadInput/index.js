@@ -1,18 +1,25 @@
 import React from 'react';
-import { c_ACTION, c_HIGHLIGHT, c_ACTIVE } from '../../theme';
+import {
+  c_ACTION,
+  c_HIGHLIGHT,
+  c_ACTIVE,
+  c_INACTIVE,
+  c_INACTIVE_TEXT,
+} from '../../theme';
 
 const INPUT_HEIGHT = 3; // rem
 const INPUT_WIDTH = 15; // rem
 
-export default ({ onUpload }) => {
+export default ({ onUpload, text, disabled }) => {
   return (
-    <div className="fakeButton">
-      <div className="textBox">Upload an image</div>
+    <div className={`fakeButton ${disabled && 'disabled'}`}>
+      <div className="textBox">{text}</div>
       <input
         type="file"
         accept="image/png, image/jpeg"
         onChange={onUpload}
         className="fileInput"
+        disabled={!!disabled}
       />
       <style jsx>{`
         .fakeButton {
@@ -30,6 +37,11 @@ export default ({ onUpload }) => {
 
         .fakeButton:active {
           background: ${c_ACTIVE};
+        }
+
+        .fakeButton.disabled {
+          background: ${c_INACTIVE};
+          color: ${c_INACTIVE_TEXT};
         }
 
         .textBox {

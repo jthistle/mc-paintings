@@ -5,8 +5,6 @@ import UploadInput from '../../components/UploadInput';
 import Cropper from '../../components/Cropper';
 import ImageSize from '../../components/ImageSize';
 
-const DEBUG = process.env.NODE_ENV === 'development' && false;
-
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
     {needsImage ? 'Upload an image' : 'Choose a size to begin'}
@@ -87,8 +85,6 @@ const Home = () => {
   const onImageUpload = event => {
     if (!selectedSize) return;
 
-    console.log('uploaded');
-
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = event => {
@@ -103,17 +99,16 @@ const Home = () => {
       newCropConfigs[selectedSize.size][selectedSize.index] = {
         aspect: sizeToAspect(selectedSize.size),
       };
-      console.log(
-        'new config: ',
-        newCropConfigs[selectedSize.size][selectedSize.index]
-      );
       setCropConfigs(newCropConfigs);
 
       // Reset the texture that may have already been saved
       let newTextureImages = { ...textureImages };
       newTextureImages[selectedSize.size][selectedSize.index] = null;
       setTextureImages(newTextureImages);
-      console.log('done');
+    };
+
+    reader.onerror = event => {
+      // TODO handle
     };
 
     reader.readAsDataURL(file);
@@ -141,19 +136,19 @@ const Home = () => {
     });
   };
 
-  useEffect(() => {
-    if (!DEBUG) return;
-
-    console.log('Current size: ', selectedSize);
-    console.log('Uploaded images:', uploadedImages);
-    console.log('Crop configs:', cropConfigs);
-    console.log('Texture images:', textureImages);
-  });
-
   return (
     <Layout>
       <Column>
-        <UploadInput onUpload={onImageUpload} />
+        <UploadInput
+          onUpload={onImageUpload}
+          text={
+            selectedSize &&
+            uploadedImages[selectedSize.size][selectedSize.index]
+              ? 'Change image'
+              : 'Upload an image'
+          }
+          disabled={!selectedSize}
+        />
         <div className="imageSizeContainer">
           {Object.keys(SIZES).map(size => (
             <ImageSize
@@ -177,10 +172,16 @@ const Home = () => {
               cropConfigs[selectedSize.size][selectedSize.index] || {}
             }
             onCropChange={onCropChange}
-            imageStyle={{ maxWidth: '45vw' }}
           />
         ) : (
           <ImagePlaceHolder needsImage={!!selectedSize} />
+        )}
+        {selectedSize && (
+          <h2>
+            {uploadedImages[selectedSize.size][selectedSize.index] &&
+              'Crop your image | '}
+            Current size: {selectedSize.size}
+          </h2>
         )}
       </Column>
       <style jsx>{`
