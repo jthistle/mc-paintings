@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import {
   c_ACTION,
   c_HIGHLIGHT,
@@ -39,7 +39,7 @@ const ImageSelect = ({ image, size, index, onSelect, isSelected }) => {
 
         .imageSelect {
           flex-grow: 0;
-          margin: 0.25rem 0.1rem;
+          margin: 0.25rem;
           background: ${image ? 'none' : c_BLANK};
           transition: all 0.2s;
         }
@@ -74,15 +74,18 @@ const ImageSize = ({
     <div className="imageSize" onClick={handleClick}>
       {size}
       <div className="expandedMenu" onClick={handleClose}>
-        {images.map((image, index) => (
-          <ImageSelect
-            size={size}
-            index={index}
-            image={image}
-            onSelect={onImageSelect}
-            isSelected={hasSelected === index}
-          />
-        ))}
+        <div className="closeBtn">X</div>
+        <div className="sizes">
+          {images.map((image, index) => (
+            <ImageSelect
+              size={size}
+              index={index}
+              image={image}
+              onSelect={onImageSelect}
+              isSelected={hasSelected === index}
+            />
+          ))}
+        </div>
       </div>
       <style jsx>{`
         .imageSize {
@@ -91,10 +94,10 @@ const ImageSize = ({
           background: ${c_ACTION};
           width: ${BASE_SIZE * width}rem;
           height: ${BASE_SIZE * height}rem;
-          transition: all 0.2s;
           text-align: center;
           line-height: ${BASE_SIZE * height}rem;
           font-weight: ${typeof hasSelected === 'number' ? 'bold' : 'normal'};
+          transition: background 0.2s;
         }
 
         .imageSize:hover {
@@ -102,20 +105,30 @@ const ImageSize = ({
         }
 
         .expandedMenu {
-          opacity: ${isExpanded ? 1 : 0};
+          display: ${isExpanded ? 'block' : 'none'};
           width: ${BASE_SIZE * 5}rem;
           border: 1px solid ${c_PRIMARY};
           background: ${c_ACTIVE};
           position: absolute;
-          z-index: ${isExpanded ? 10 : -10};
+          z-index: 10;
           border-radius: 0.25rem;
           top: 0;
           left: 0;
-          transition: all 0.2s;
+          padding: 0.5rem;
+        }
+
+        .sizes {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-evenly;
-          padding: 0.5rem;
+        }
+
+        .closeBtn {
+          font-weight: bold;
+          width: 100%;
+          height: 1.5rem;
+          line-height: 1.5rem;
+          text-align: right;
         }
       `}</style>
     </div>
