@@ -30,7 +30,7 @@ const InfoPopup = ({ children, bgColour, onReject }) => {
           box-sizing: border-box;
           position: absolute;
           left: 20vw;
-          top: 20vh;
+          top: 10vh;
           width: 60vw;
           padding: 2rem;
           text-align: center;

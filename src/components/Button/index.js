@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@reach/router';
 import {
   c_ACTION,
   c_HIGHLIGHT,
@@ -52,6 +53,7 @@ const ButtonInternals = ({ children, onClick, disabled, scheme }) => {
           margin: 0 0.25rem;
           text-decoration: none;
           color: ${primary};
+          cursor: pointer;
         }
 
         .button:hover {
@@ -71,12 +73,18 @@ const ButtonInternals = ({ children, onClick, disabled, scheme }) => {
   );
 };
 
-const Button = ({ external, children, ...props }) => {
+const Button = ({ external, internal, children, ...props }) => {
   if (external) {
     return (
       <a href={external} target="_blank">
         <ButtonInternals {...props}>{children}</ButtonInternals>
       </a>
+    );
+  } else if (internal) {
+    return (
+      <Link to={internal}>
+        <ButtonInternals {...props}>{children}</ButtonInternals>
+      </Link>
     );
   } else {
     return <ButtonInternals {...props}>{children}</ButtonInternals>;

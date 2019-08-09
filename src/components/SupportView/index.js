@@ -4,13 +4,12 @@ import Button from '../Button';
 import TextInput from '../TextInput';
 import { c_BLANK, c_BLANK_ACTIVE } from '../../theme';
 
-const PAYPAL =
-  'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MM2MS68EB8FZC&source=url';
-const TWITTER =
-  'https://twitter.com/intent/tweet?hashtags=minecraftpaintings&text=I just used Minecraft painting creator to create an awesome custom resource pack full of paintings!&url=http%3A%2F%2Fjamesthistlewood.co.uk%2Fputlinkhere';
-const GITHUB = 'https://github.com/jthistle/mc-paintings/';
-const FEEDBACK =
-  'https://docs.google.com/forms/d/e/1FAIpQLScfjgvzPzw1OCbJVJ_gUwDDR1AxWtOQUZzxa2PeRw8BU-EhuA/viewform?usp=sf_link';
+import links from '../../supportLinks.json';
+
+const PAYPAL = links.PAYPAL;
+const TWITTER = links.TWITTER;
+const GITHUB = links.GITHUB;
+const FEEDBACK = links.FEEDBACK;
 
 const Line = () => (
   <div className="line">
@@ -29,15 +28,21 @@ export default ({ onClose }) => {
   return (
     <InfoPopup onReject={onClose}>
       <h1>Thank you for using this website</h1>
-      <p>Things like this take time to make and cost money to keep running.</p>
+      <p>
+        Things like this take time to make and cost money to keep running, and I
+        hate ads.
+      </p>
       <p className="highlight">Please consider supporting me:</p>
       <Button external={PAYPAL} scheme="yellow">
         Donate
       </Button>
       <p>
-        I'm incredibly grateful for any monetary donations. For £5 (or €5/$5
-        etc.) or more, I will add your name to the list of backers. I'll also
-        email everyone who donates to thank you personally :)
+        I'm incredibly grateful for any donations.
+        <br />
+        When you donate, I will add your name to the list of backers (leave a
+        message if you don't want your name added).
+        <br />
+        I'll also email everyone who donates to thank you personally :)
       </p>
       <Line />
       <p>Other ways to support me, without having to spend money:</p>

@@ -86,7 +86,7 @@ const Home = () => {
   const [packMeta, setPackMeta] = useState({});
 
   const [showDownloadView, setShowDownloadView] = useState(false);
-  const [showSupportView, setShowSupportView] = useState(true); // DEBUG should be false
+  const [showSupportView, setShowSupportView] = useState(false);
 
   const onCropChange = event => {
     if (!selectedSize) return;

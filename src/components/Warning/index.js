@@ -19,6 +19,7 @@ const Button = ({ children, onClick }) => (
         background: ${c_WARNING_ACTION};
         transition: all 0.2s;
         font-weight: bold;
+        cursor: pointer;
       }
 
       .button:hover {
