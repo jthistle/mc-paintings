@@ -46,7 +46,7 @@ const styles = {
 };
 
 export default ({ handleInput, onDownload, onClose }) => (
-  <InfoPopup>
+  <InfoPopup onReject={onClose}>
     <div className="wrapper">
       <h1>Download your resource pack</h1>
       <table>

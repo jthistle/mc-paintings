@@ -34,7 +34,7 @@ const Button = ({ children, onClick }) => (
 
 const Warning = ({ children, onAccept, onReject }) => {
   return (
-    <InfoPopup bgColour={c_WARNING_INACTIVE}>
+    <InfoPopup bgColour={c_WARNING_INACTIVE} onReject={onReject}>
       {children}
       <div className="buttonContainer">
         <Button onClick={onReject}>Go back</Button>
