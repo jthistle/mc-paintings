@@ -1,8 +1,49 @@
 import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
+import Select from 'react-select';
 
-import { c_ACTION, c_HIGHLIGHT, c_PRIMARY, c_ACTIVE } from '../../theme';
+import {
+  c_ACTION,
+  c_HIGHLIGHT,
+  c_PRIMARY,
+  c_ACTIVE,
+  c_INACTIVE,
+} from '../../theme';
+
+const selectOptions = [
+  { value: '1_14', label: 'Minecraft 1.14' },
+  { value: '', label: 'More versions coming soon!', isDisabled: true },
+];
+
+const sharedFunc = (provided, state) => {
+  let bg;
+  if (state.isDisabled) bg = c_INACTIVE;
+  else if (state.isSelected) bg = c_ACTIVE;
+  else bg = c_ACTION;
+
+  return {
+    ...provided,
+    backgroundColor: bg,
+    border: 'none',
+    color: c_PRIMARY,
+  };
+};
+
+const styles = {
+  control: sharedFunc,
+  menu: sharedFunc,
+  option: sharedFunc,
+  placeholder: sharedFunc,
+  singleValue: sharedFunc,
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    color: c_PRIMARY,
+    ':hover': {
+      color: 'white',
+    },
+  }),
+};
 
 export default ({ handleInput, onDownload, onClose }) => (
   <InfoPopup>
@@ -37,10 +78,22 @@ export default ({ handleInput, onDownload, onClose }) => (
             />
           </td>
         </tr>
+        <tr>
+          <td>
+            <label for="version">Minecraft Version: </label>
+          </td>
+          <td>
+            <Select
+              options={selectOptions}
+              styles={styles}
+              defaultValue={selectOptions[0]}
+            />
+          </td>
+        </tr>
       </table>
       <br />
       <Button onClick={onClose}>Go back</Button>
-      <Button onClick={onDownload}>Download resource pack (MC 1.14)</Button>
+      <Button onClick={onDownload}>Download resource pack</Button>
     </div>
     <style jsx>{`
       .wrapper {
@@ -61,22 +114,25 @@ export default ({ handleInput, onDownload, onClose }) => (
       }
 
       .textInput {
-        height: 3rem;
-        background: ${c_ACTION};
+        height: 2.5rem;
+        background-color: ${c_ACTION};
         border-radius: 0.25rem;
         border: none;
         padding: 0 0.5rem;
         color: ${c_PRIMARY};
         transition: all 0.2s;
+      }
+
+      .textInput {
         font-weight: bold;
       }
 
       .textInput:hover {
-        background: ${c_HIGHLIGHT};
+        background-color: ${c_HIGHLIGHT};
       }
 
       .textInput:focus {
-        background: ${c_ACTIVE};
+        background-color: ${c_ACTIVE};
         color: white;
       }
     `}</style>
