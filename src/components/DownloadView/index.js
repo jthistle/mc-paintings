@@ -1,15 +1,10 @@
 import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
+import TextInput from '../TextInput';
 import Select from 'react-select';
 
-import {
-  c_ACTION,
-  c_HIGHLIGHT,
-  c_PRIMARY,
-  c_ACTIVE,
-  c_INACTIVE,
-} from '../../theme';
+import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
   { value: '1_14', label: 'Minecraft 1.14' },
@@ -55,9 +50,7 @@ export default ({ handleInput, onDownload, onClose }) => (
             <label for="packName">Pack name:</label>
           </td>
           <td>
-            <input
-              className="textInput"
-              type="text"
+            <TextInput
               id="packName"
               placeholder="Pack name"
               onChange={e => handleInput(e, 'name')}
@@ -69,9 +62,7 @@ export default ({ handleInput, onDownload, onClose }) => (
             <label for="packDesc">Pack description:</label>
           </td>
           <td>
-            <input
-              className="textInput"
-              type="text"
+            <TextInput
               id="packDesc"
               placeholder="Pack description"
               onChange={e => handleInput(e, 'description')}
@@ -111,29 +102,6 @@ export default ({ handleInput, onDownload, onClose }) => (
 
       label {
         padding: 0 1rem;
-      }
-
-      .textInput {
-        height: 2.5rem;
-        background-color: ${c_ACTION};
-        border-radius: 0.25rem;
-        border: none;
-        padding: 0 0.5rem;
-        color: ${c_PRIMARY};
-        transition: all 0.2s;
-      }
-
-      .textInput {
-        font-weight: bold;
-      }
-
-      .textInput:hover {
-        background-color: ${c_HIGHLIGHT};
-      }
-
-      .textInput:focus {
-        background-color: ${c_ACTIVE};
-        color: white;
       }
     `}</style>
   </InfoPopup>

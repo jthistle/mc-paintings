@@ -10,6 +10,7 @@ import ImageSize from '../../components/ImageSize';
 import Warning from '../../components/Warning';
 import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
+import SupportView from '../../components/SupportView';
 
 import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META } from './configs';
 
@@ -85,6 +86,7 @@ const Home = () => {
   const [packMeta, setPackMeta] = useState({});
 
   const [showDownloadView, setShowDownloadView] = useState(false);
+  const [showSupportView, setShowSupportView] = useState(true); // DEBUG should be false
 
   const onCropChange = event => {
     if (!selectedSize) return;
@@ -218,6 +220,9 @@ const Home = () => {
     });
 
     saveAs(zipBlob, `${packName}.zip`);
+
+    setShowDownloadView(false);
+    setShowSupportView(true);
   };
 
   const onDownloadPressed = () => {
@@ -280,6 +285,9 @@ const Home = () => {
           onDownload={createZip}
           onClose={() => setShowDownloadView(false)}
         />
+      )}
+      {showSupportView && (
+        <SupportView onClose={() => setShowSupportView(false)} />
       )}
       <Column>
         <div className="buttonsContainer">

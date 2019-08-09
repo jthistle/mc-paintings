@@ -19,7 +19,12 @@ const InfoPopup = ({ children, bgColour, onReject }) => {
   return (
     <div onKeyDown={handleKeyPress}>
       <div className="blackout" onClick={onReject} />
-      <div className="box">{children}</div>
+      <div className="box">
+        {children}
+        <div className="spacerContainer">
+          <div className="spacer" />
+        </div>
+      </div>
       <style jsx>{`
         .box {
           box-sizing: border-box;
@@ -32,6 +37,18 @@ const InfoPopup = ({ children, bgColour, onReject }) => {
           background: ${bgColour || c_INACTIVE};
           border-radius: 0.5rem;
           z-index: 100;
+          margin-bottom: 3rem;
+        }
+
+        .spacerContainer {
+          position: relative;
+        }
+
+        .spacer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 6rem;
         }
 
         @media (max-width: 600px) {
