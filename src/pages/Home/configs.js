@@ -18,4 +18,9 @@ const MC_1_14_NAMES = {
   '4x4': ['burning_skull', 'pigscene', 'pointer'],
 };
 
-export { SIZES, MC_1_14_NAMES };
+const DEFAULT_PACK_META = {
+  name: 'MC Paintings Pack',
+  description: 'Generated at %WEBSITE_ADDRESS%',
+};
+
+export { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META };

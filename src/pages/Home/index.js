@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
@@ -9,8 +9,9 @@ import Cropper from '../../components/Cropper';
 import ImageSize from '../../components/ImageSize';
 import Warning from '../../components/Warning';
 import Button from '../../components/Button';
+import DownloadView from '../../components/DownloadView';
 
-import { SIZES, MC_1_14_NAMES } from './configs';
+import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META } from './configs';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -63,7 +64,8 @@ const Home = () => {
   const [uploadedImages, setUploadedImages] = useState(generateInitial());
   const [cropConfigs, setCropConfigs] = useState(generateInitial());
 
-  /*  The warning object. Falsy displays no warning. Should be formatted as:
+  /*
+   *  The warning object. Falsy displays no warning. Should be formatted as:
    *    {
    *      title: string,
    *      message: string,
@@ -72,6 +74,17 @@ const Home = () => {
    *    }
    */
   const [warning, setWarning] = useState();
+
+  /*
+   *  The pack meta data. Should be formatted as:
+   *    {
+   *      name: string,
+   *      description: string,
+   *    }
+   */
+  const [packMeta, setPackMeta] = useState({});
+
+  const [showDownloadView, setShowDownloadView] = useState(false);
 
   const onCropChange = event => {
     if (!selectedSize) return;
@@ -170,48 +183,22 @@ const Home = () => {
     }
   };
 
-  const createZip = async (force = false) => {
-    // Perform check
-    if (!force) {
-      let hasImage = false;
-      for (let size in textureImages) {
-        for (let image of textureImages[size]) {
-          if (image) {
-            hasImage = true;
-            break;
-          }
-        }
-        if (hasImage) break;
-      }
-
-      if (!hasImage) {
-        setWarning({
-          title: 'No images in resource pack',
-          message:
-            "You haven't added any images to this resource pack. Are you sure you want to continue?",
-          onAccept: () => {
-            setWarning(null);
-            createZip(true);
-          },
-          onReject: () => setWarning(null),
-        });
-        return;
-      }
-    }
+  const createZip = async () => {
+    let packName = packMeta.name || DEFAULT_PACK_META.name;
+    let packDesc = packMeta.description || DEFAULT_PACK_META.description;
 
     const zipper = new JSZip();
-    zipper.file(
+    let root = zipper.folder(packName);
+    root.file(
       'pack.mcmeta',
       JSON.stringify({
         pack: {
           pack_format: 4,
-          description: 'TODO',
+          description: packDesc,
         },
       })
     );
-    let paintings = zipper.folder(
-      'packnametodo/assets/minecraft/textures/painting'
-    );
+    let paintings = root.folder('assets/minecraft/textures/painting');
 
     for (let size in textureImages) {
       let thisSize = textureImages[size];
@@ -230,7 +217,53 @@ const Home = () => {
       type: 'blob',
     });
 
-    saveAs(zipBlob, 'packnametodo.zip');
+    saveAs(zipBlob, `${packName}.zip`);
+  };
+
+  const onDownloadPressed = () => {
+    // Perform check
+    let hasImage = false;
+    for (let size in textureImages) {
+      for (let image of textureImages[size]) {
+        if (image) {
+          hasImage = true;
+          break;
+        }
+      }
+      if (hasImage) break;
+    }
+
+    if (!hasImage) {
+      setWarning({
+        title: 'No images in resource pack',
+        message:
+          "You haven't added any images to this resource pack. Are you sure you want to continue?",
+        onAccept: () => {
+          setWarning(null);
+          setShowDownloadView(true);
+        },
+        onReject: () => setWarning(null),
+      });
+      return;
+    }
+
+    setShowDownloadView(true);
+  };
+
+  const handleInput = (event, type) => {
+    let newPackMeta = { ...packMeta };
+    switch (type) {
+      case 'name':
+        newPackMeta.name = event.target.value;
+        break;
+      case 'description':
+        newPackMeta.description = event.target.value;
+        break;
+      default:
+        console.error('Invalid handleInput type: ', type);
+    }
+
+    setPackMeta(newPackMeta);
   };
 
   return (
@@ -240,6 +273,13 @@ const Home = () => {
           <h1>{warning.title}</h1>
           <p>{warning.message}</p>
         </Warning>
+      )}
+      {showDownloadView && (
+        <DownloadView
+          handleInput={handleInput}
+          onDownload={createZip}
+          onClose={() => setShowDownloadView(false)}
+        />
       )}
       <Column>
         <div className="buttonsContainer">
@@ -253,7 +293,7 @@ const Home = () => {
             }
             disabled={!selectedSize}
           />
-          <Button onClick={() => createZip()}>Download pack</Button>
+          <Button onClick={onDownloadPressed}>Download pack</Button>
         </div>
         <div className="imageSizeContainer">
           {Object.keys(SIZES).map(size => (
