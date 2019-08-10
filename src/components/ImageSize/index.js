@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   c_ACTION,
   c_HIGHLIGHT,
@@ -29,7 +29,7 @@ const ImageSelect = ({ image, size, index, onSelect, isSelected }) => {
       className={`imageSelect ${isSelected ? ' selected' : ''}`}
       onClick={onClick}
     >
-      {image && <img src={image} />}
+      {image && <img src={image} alt={`Size ${size} number ${index + 1}`} />}
       <style jsx>{`
         .imageSelect,
         img {

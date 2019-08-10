@@ -38,6 +38,7 @@ const Backers = ({ ...props }) => {
 
   useEffect(() => {
     fetchBackers();
+    // eslint-disable-next-line
   }, [props]);
 
   return (

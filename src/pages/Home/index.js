@@ -43,7 +43,7 @@ function sizeToAspect(size) {
  */
 function generateInitial() {
   let initial = {};
-  Object.keys(SIZES).map(size => {
+  Object.keys(SIZES).forEach(size => {
     initial[size] = Array(SIZES[size]).fill(undefined);
   });
   return initial;

@@ -34,6 +34,8 @@ const ButtonInternals = ({ children, onClick, disabled, scheme }) => {
       primaryDisabled = '#AAA';
       secondaryDisabled = '#111';
       break;
+    default:
+      break;
   }
 
   return (
@@ -76,7 +78,7 @@ const ButtonInternals = ({ children, onClick, disabled, scheme }) => {
 const Button = ({ external, internal, children, ...props }) => {
   if (external) {
     return (
-      <a href={external} target="_blank">
+      <a href={external} target="_blank" rel="noopener noreferrer">
         <ButtonInternals {...props}>{children}</ButtonInternals>
       </a>
     );

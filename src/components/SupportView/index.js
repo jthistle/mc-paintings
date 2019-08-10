@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
-import TextInput from '../TextInput';
 import { c_BLANK, c_BLANK_ACTIVE } from '../../theme';
 
 import links from '../../supportLinks.json';

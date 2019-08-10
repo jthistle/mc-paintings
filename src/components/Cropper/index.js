@@ -17,14 +17,13 @@ export default ({ image, initialCrop, onCropChange }) => {
 
   useEffect(() => {
     setCrop(initialCrop);
-    // We don't want to depend on crop, disable warning
-    // eslint-disable-next-line
   }, [initialCrop]);
 
   useEffect(() => {
     // Make sure we load the image after setting the crop
     setImageToUse(image);
-    console.log('set image');
+    // We don't want to depend on image, disable warning
+    // eslint-disable-next-line
   }, [crop]);
 
   /*
