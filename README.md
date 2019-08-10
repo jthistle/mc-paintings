@@ -44,3 +44,7 @@ There's a pretty simple structure:
 ## Contributing
 
 Contributions are welcomed. Please make a PR into the `develop` branch.
+
+## License
+
+This code is licensed under the GPL-2.0 license.
