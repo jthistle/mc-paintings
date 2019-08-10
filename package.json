@@ -13,10 +13,12 @@
     "react-image-crop": "^8.2.0",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
+    "serve": "^11.1.0",
     "styled-jsx": "^3.2.1"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "serve -s build",
+    "dev": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "release": "bump --push --tag --commit"
