@@ -1,7 +1,7 @@
 {
   "name": "mc-paintings",
   "descriptions": "A painting resource pack generator for Minecraft",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "private": false,
   "dependencies": {
     "@reach/router": "^1.2.1",
@@ -10,6 +10,7 @@
     "jszip": "^3.2.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-ga": "^2.6.0",
     "react-image-crop": "^8.2.0",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
@@ -20,7 +21,6 @@
     "start": "serve -s build",
     "dev": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
     "release": "bump --push --tag --commit"
   },
   "eslintConfig": {

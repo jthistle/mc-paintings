@@ -16,29 +16,32 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-const SIZES = {
-  '1x1': 7,
-  '1x2': 2,
-  '2x1': 5,
-  '2x2': 6,
-  '4x2': 1,
-  '4x3': 2,
-  '4x4': 3,
+import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
+
+const Tracker = () => {
+  const [init, setInit] = useState(false);
+  const pathName = window.location.pathname + window.location.search;
+
+  useEffect(() => {
+    if (
+      process.env.REACT_APP_GA_TRACKING_ID &&
+      localStorage.getItem('canTrack') === 'yes'
+    ) {
+      ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+      ReactGA.set({ anonymizeIp: true });
+      setInit(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (init) {
+      // Log page view
+      ReactGA.pageview(pathName);
+    }
+  }, [init, pathName]);
+
+  return <div />;
 };
 
-const MC_1_14_NAMES = {
-  '1x1': ['alban', 'aztec', 'aztec2', 'bomb', 'kebab', 'plant', 'wasteland'],
-  '1x2': ['graham', 'wanderer'],
-  '2x1': ['courbet', 'creebet', 'pool', 'sea', 'sunset'],
-  '2x2': ['bust', 'match', 'skull_and_roses', 'stage', 'void', 'wither'],
-  '4x2': ['fighters'],
-  '4x3': ['donkey_kong', 'skeleton'],
-  '4x4': ['burning_skull', 'pigscene', 'pointer'],
-};
-
-const DEFAULT_PACK_META = {
-  name: 'MC Paintings Pack',
-  description: 'Generated at mcpaintings.com',
-};
-
-export { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META };
+export default Tracker;
