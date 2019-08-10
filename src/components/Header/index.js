@@ -20,6 +20,9 @@ export default () => {
           <Button onClick={() => setShowSupport(true)} scheme="yellow">
             Support
           </Button>
+          <Link to="/privacy">
+            <span className="privacyLink">Privacy</span>
+          </Link>
         </div>
         <style jsx>{`
           .header {
@@ -39,6 +42,13 @@ export default () => {
           .text {
             font-size: 1.5rem;
             color: ${c_PRIMARY};
+          }
+
+          .privacyLink {
+            display: inline-block;
+            margin-left: 1rem;
+            color ${c_PRIMARY};
+            font-size: 0.8rem;
           }
 
           :global(.header a) {
