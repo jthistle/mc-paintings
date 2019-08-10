@@ -185,9 +185,23 @@ const Home = () => {
     }
   };
 
+  const createNewImage = imageString => {
+    return new Promise((resolve, reject) => {
+      let imageObj = new Image();
+      imageObj.src = imageString;
+      console.log('set source');
+      imageObj.onload = () => {
+        console.log('image loaded');
+        resolve(imageObj);
+      };
+    });
+  };
+
   const createZip = async () => {
     let packName = packMeta.name || DEFAULT_PACK_META.name;
-    let packDesc = packMeta.description || DEFAULT_PACK_META.description;
+    let packDesc =
+      (packMeta.description ? packMeta.description + ' | ' : '') +
+      DEFAULT_PACK_META.description;
 
     const zipper = new JSZip();
     let root = zipper.folder(packName);
@@ -205,13 +219,25 @@ const Home = () => {
     for (let size in textureImages) {
       let thisSize = textureImages[size];
       for (let i = 0; i < thisSize.length; i++) {
-        let imageString =
-          thisSize[i] && thisSize[i].replace('data:image/png;base64,', '');
-        if (imageString) {
-          paintings.file(`${MC_1_14_NAMES[size][i]}.png`, imageString, {
-            base64: true,
-          });
-        }
+        // At this point the image is in jpeg format so convert
+        // it to a png via a canvas
+        let jpegImage = thisSize[i];
+        if (!jpegImage) continue;
+
+        let imageObj = await createNewImage(jpegImage);
+
+        let canvas = document.createElement('canvas');
+        canvas.width = imageObj.naturalWidth;
+        canvas.height = imageObj.naturalHeight;
+        let context = canvas.getContext('2d');
+        context.drawImage(imageObj, 0, 0);
+
+        let imageString = canvas
+          .toDataURL()
+          .replace('data:image/png;base64,', '');
+        paintings.file(`${MC_1_14_NAMES[size][i]}.png`, imageString, {
+          base64: true,
+        });
       }
     }
 
@@ -226,6 +252,7 @@ const Home = () => {
   };
 
   const onDownloadPressed = () => {
+    setPackMeta({});
     // Perform check
     let hasImage = false;
     for (let size in textureImages) {

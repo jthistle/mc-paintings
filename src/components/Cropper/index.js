@@ -53,7 +53,7 @@ export default ({ image, initialCrop, onCropChange }) => {
     );
 
     // Return as Base64 string
-    return canvas.toDataURL('image/png');
+    return canvas.toDataURL('image/jpeg');
   };
 
   const onChange = crop => {
