@@ -3,6 +3,7 @@ import { Router } from '@reach/router';
 import Home from './pages/Home';
 import Backers from './pages/Backers';
 import DonationThank from './pages/DonationThank';
+import Privacy from './pages/Privacy';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Home path="/*" />
         <Backers path="/backers" />
         <DonationThank path="/postdonation" />
+        <Privacy path="/privacy" />
       </Router>
     </div>
   );

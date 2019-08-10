@@ -69,6 +69,7 @@ const ButtonInternals = ({ children, onClick, disabled, scheme }) => {
         .button[disabled] {
           background: ${secondaryDisabled};
           color: ${primaryDisabled};
+          cursor: default;
         }
       `}</style>
     </div>
