@@ -12,6 +12,7 @@ const c_WARNING_ACTIVE = '#ff6650';
 const c_WARNING_ACTION = '#de1f1f';
 const c_WARNING_HIGHLIGHT = '#ff4637';
 const c_WARNING_INACTIVE = '#9a0000';
+const c_DARKEST = '#000407';
 
 export {
   c_INACTIVE,
@@ -28,4 +29,5 @@ export {
   c_WARNING_ACTION,
   c_WARNING_HIGHLIGHT,
   c_WARNING_INACTIVE,
+  c_DARKEST,
 };

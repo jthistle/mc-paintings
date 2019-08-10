@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout, { Column } from '../../components/Layout';
 import Button from '../../components/Button';
 
 const Privacy = () => {
-  const [isOptedOut, setIsOptedout] = useState(false); // TODO local storage
+  const [isOptedOut, setIsOptedOut] = useState(
+    localStorage.getItem('canTrack') === 'no'
+  );
 
   const setOptout = () => {
-    // TODO
-    setIsOptedout(true);
+    localStorage.setItem('canTrack', 'no');
+    // erase analytics cookies
+    let cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      let key = cookies[i].split('=');
+      document.cookie = key[0] + ' =; expires = Thu, 01 Jan 1970 00:00:00 UTC';
+    }
+    setIsOptedOut(true);
   };
+
+  useEffect(() => {
+    setIsOptedOut(localStorage.getItem('canTrack') === 'no');
+  }, []);
 
   return (
     <Layout>
@@ -38,6 +50,7 @@ const Privacy = () => {
           <Button onClick={setOptout} disabled={isOptedOut}>
             Opt out of analytics
           </Button>
+          {isOptedOut && <p>You are opted out of analytics cookies.</p>}
         </div>
       </Column>
       <style jsx>{`

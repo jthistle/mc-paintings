@@ -10,6 +10,7 @@
     "jszip": "^3.2.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-ga": "^2.6.0",
     "react-image-crop": "^8.2.0",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",

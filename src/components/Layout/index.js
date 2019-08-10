@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../Header';
+import CookiesBar from '../CookiesBar';
+import Tracker from '../Tracker';
 
 const Column = ({ children }) => (
   <div className="column">
@@ -16,26 +18,49 @@ const Column = ({ children }) => (
   </div>
 );
 
-const Layout = ({ children }) => (
-  <div>
-    <Header />
-    <div className="main">{children}</div>
-    <style jsx>{`
-      .main {
-        box-sizing: border-box;
-        padding: 0 1rem;
-        display: flex;
-        justify-content: space-evenly;
-      }
+const Layout = ({ children }) => {
+  const [showCookieBar, setShowCookieBar] = useState(
+    !localStorage.getItem('canTrack')
+  );
 
-      @media (max-width: 600px) {
+  const onCookiesAccept = () => {
+    localStorage.setItem('canTrack', 'yes');
+    setShowCookieBar(false);
+  };
+
+  return (
+    <div>
+      {showCookieBar || <Tracker />}
+      <Header />
+      <div className="main">{children}</div>
+      {showCookieBar && (
+        <>
+          <div className="pushDown" />
+          <CookiesBar onAccept={onCookiesAccept} />
+        </>
+      )}
+      <style jsx>{`
         .main {
-          flex-wrap: wrap;
+          box-sizing: border-box;
+          padding: 0 1rem;
+          display: flex;
+          justify-content: space-evenly;
         }
-      }
-    `}</style>
-  </div>
-);
+
+        .pushDown {
+          height: 30vh;
+          display: block;
+        }
+
+        @media (max-width: 600px) {
+          .main {
+            flex-wrap: wrap;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
 
 export { Column };
 export default Layout;
