@@ -28,7 +28,7 @@ import 'react-image-crop/dist/ReactCrop.css';
  *    initialCrop: the initial crop object
  *    onCropChange: a callback function that will be passed the change event
  */
-export default ({ image, initialCrop, onCropChange }) => {
+export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
   const [currentImageRef, setCurrentImageRef] = useState();
   const [crop, setCrop] = useState(initialCrop);
   const [imageToUse, setImageToUse] = useState();
@@ -78,6 +78,13 @@ export default ({ image, initialCrop, onCropChange }) => {
     if (onCropChange)
       onCropChange({
         crop,
+      });
+  };
+
+  const onComplete = crop => {
+    setCrop(crop);
+    if (onCropComplete)
+      onCropComplete({
         croppedImage: getCroppedImg(currentImageRef, crop),
       });
   };
@@ -87,6 +94,7 @@ export default ({ image, initialCrop, onCropChange }) => {
       src={imageToUse}
       crop={crop}
       onChange={onChange}
+      onComplete={onComplete}
       onImageLoaded={setCurrentImageRef}
     />
   );

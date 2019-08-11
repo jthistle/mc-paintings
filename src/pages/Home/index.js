@@ -112,6 +112,10 @@ const Home = () => {
     let newConfigs = { ...cropConfigs };
     newConfigs[selectedSize.size][selectedSize.index] = event.crop;
     setCropConfigs(newConfigs);
+  };
+
+  const onCropComplete = event => {
+    if (!selectedSize) return;
 
     let newTextureImages = { ...textureImages };
     newTextureImages[selectedSize.size][selectedSize.index] =
@@ -373,6 +377,7 @@ const Home = () => {
               cropConfigs[selectedSize.size][selectedSize.index] || {}
             }
             onCropChange={onCropChange}
+            onCropComplete={onCropComplete}
           />
         ) : (
           <ImagePlaceHolder needsImage={!!selectedSize} />
