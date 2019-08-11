@@ -220,7 +220,7 @@ const Home = () => {
       DEFAULT_PACK_META.description;
 
     const zipper = new JSZip();
-    let root = zipper.folder(packName);
+    let root = zipper;
     root.file(
       'pack.mcmeta',
       JSON.stringify({
