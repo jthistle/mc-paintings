@@ -63,6 +63,11 @@ const Privacy = () => {
               is data is, as just described, all effectively anonymized through
               IP anonymization.
             </li>
+            <li>
+              Your uploaded images and the texture pack are all managed and
+              created client-side, which means none of your images are ever sent
+              off to a server.
+            </li>
           </ul>
           <p>If you really want, you can:</p>
           <Button onClick={setOptout} disabled={isOptedOut}>
