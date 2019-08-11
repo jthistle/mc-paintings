@@ -96,6 +96,7 @@ export default ({ handleInput, onDownload, onClose }) => (
               options={selectOptions}
               styles={styles}
               defaultValue={selectOptions[0]}
+              isSearchable={false}
             />
           </td>
         </tr>
