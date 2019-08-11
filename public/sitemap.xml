@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://www.mcpaintings.com/</loc>
+        <priority>1.0</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.mcpaintings.com/backers</loc>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.mcpaintings.com/privacy</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.2</priority>
+    </url>
+</urlset>
