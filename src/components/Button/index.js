@@ -27,7 +27,7 @@ import {
   c_PRIMARY,
 } from '../../theme';
 
-const ButtonInternals = ({ children, onClick, disabled, scheme }) => {
+const ButtonInternals = ({ children, onClick, disabled, scheme, noMargin }) => {
   let primary = c_PRIMARY;
   let secondary = c_ACTION;
   let secondaryHover = c_HIGHLIGHT;
@@ -70,7 +70,7 @@ const ButtonInternals = ({ children, onClick, disabled, scheme }) => {
           transition: all 0.3s;
           text-align: center;
           font-weight: bold;
-          margin: 0 0.25rem;
+          margin: ${noMargin ? '0' : '0.25rem'};
           text-decoration: none;
           color: ${primary};
           cursor: pointer;

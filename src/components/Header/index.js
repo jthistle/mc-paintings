@@ -34,18 +34,14 @@ export default () => {
           <h1 className="text">Minecraft 1.14 painting creator</h1>
         </Link>
         <div className="links">
-          <div className="linkBtn">
-            <Button internal="/backers">Backers</Button>
-          </div>
-          <div className="linkBtn">
-            <Button
-              onClick={() => setShowSupport(true)}
-              scheme="yellow"
-              className="linkBtn"
-            >
-              Support
-            </Button>
-          </div>
+          <Button internal="/backers">Backers</Button>
+          <Button
+            onClick={() => setShowSupport(true)}
+            scheme="yellow"
+            className="linkBtn"
+          >
+            Support
+          </Button>
           <Link to="/privacy">
             <span className="privacyLink">Privacy</span>
           </Link>
@@ -65,10 +61,6 @@ export default () => {
             align-items: center;
             flex-wrap: wrap;
             justify-content: center;
-          }
-
-          .links .linkBtn {
-            margin: 0.25rem 0;
           }
 
           .text {

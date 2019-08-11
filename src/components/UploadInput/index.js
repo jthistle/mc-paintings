@@ -47,6 +47,7 @@ export default ({ onUpload, text, disabled }) => {
           background: ${c_ACTION};
           transition: all 0.3s;
           text-align: center;
+          margin: 0.25rem;
         }
 
         .fakeButton:hover {

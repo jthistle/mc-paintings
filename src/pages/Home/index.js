@@ -395,6 +395,7 @@ const Home = () => {
         .buttonsContainer {
           display: flex;
           justify-content: space-evenly;
+          flex-wrap: wrap;
         }
 
         :global(.imageSizeContainer > *) {
