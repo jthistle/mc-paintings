@@ -21,6 +21,8 @@ import Header from '../Header';
 import CookiesBar from '../CookiesBar';
 import Tracker from '../Tracker';
 
+const PRIVACY_PATH = '/privacy';
+
 const Column = ({ children }) => (
   <div className="column">
     {children}
@@ -51,7 +53,7 @@ const Layout = ({ children }) => {
       {showCookieBar || <Tracker />}
       <Header />
       <div className="main">{children}</div>
-      {showCookieBar && (
+      {showCookieBar && window.location.pathname !== PRIVACY_PATH && (
         <>
           <div className="pushDown" />
           <CookiesBar onAccept={onCookiesAccept} />
