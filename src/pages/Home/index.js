@@ -207,9 +207,7 @@ const Home = () => {
     return new Promise((resolve, reject) => {
       let imageObj = new Image();
       imageObj.src = imageString;
-      console.log('set source');
       imageObj.onload = () => {
-        console.log('image loaded');
         resolve(imageObj);
       };
     });
@@ -348,6 +346,9 @@ const Home = () => {
           />
           <Button onClick={onDownloadPressed}>Download pack</Button>
         </div>
+        {!selectedSize && window.innerWidth < 600 && (
+          <div className="chooseSize">Choose a size to begin:</div>
+        )}
         <div className="imageSizeContainer">
           {Object.keys(SIZES).map(size => (
             <ImageSize
@@ -396,6 +397,12 @@ const Home = () => {
           display: flex;
           justify-content: space-evenly;
           flex-wrap: wrap;
+        }
+
+        .chooseSize {
+          text-align: center;
+          width: 100%;
+          margin: 1rem 0;
         }
 
         :global(.imageSizeContainer > *) {
