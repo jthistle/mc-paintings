@@ -6,13 +6,4 @@
         <priority>1.0</priority>
         <changefreq>weekly</changefreq>
     </url>
-    <url>
-        <loc>http://www.mcpaintings.com/backers</loc>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>http://www.mcpaintings.com/privacy</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.2</priority>
-    </url>
 </urlset>
