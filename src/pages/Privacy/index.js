@@ -52,16 +52,11 @@ const Privacy = () => {
             </li>
             <li>
               analytics cookies, literally just because I want to see how many
-              people visit my site.
-              <br />
-              These analytics cookies collect your <b>anonymized</b> IP address,
-              what kind of device you're using,
-              <br />
+              people visit my site. These analytics cookies collect your{' '}
+              <b>anonymized</b> IP address, what kind of device you're using,
               your general location (i.e. which city) and the date and time
-              certain pages were accessed. This
-              <br />
-              is data is, as just described, all effectively anonymized through
-              IP anonymization.
+              certain pages were accessed. This is data is, as just described,
+              all effectively anonymized through IP anonymization.
             </li>
             <li>
               Your uploaded images and the texture pack are all managed and
@@ -79,6 +74,16 @@ const Privacy = () => {
       <style jsx>{`
         .content {
           text-align: center;
+        }
+
+        ul {
+          display: inline-block;
+          max-width: 40rem;
+          text-align: left;
+        }
+
+        li {
+          padding-top: 0.5rem;
         }
       `}</style>
     </Layout>
