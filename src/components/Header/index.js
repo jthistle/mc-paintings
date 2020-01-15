@@ -31,7 +31,7 @@ export default () => {
       {showSupport && <SupportView onClose={() => setShowSupport(false)} />}
       <div className="header">
         <Link to="/">
-          <h1 className="text">Minecraft 1.14 painting creator</h1>
+          <h1 className="text">Minecraft 1.15 painting creator</h1>
         </Link>
         <div className="links">
           <Button internal="/backers">Backers</Button>

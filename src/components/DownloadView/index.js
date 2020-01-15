@@ -25,6 +25,7 @@ import Select from 'react-select';
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
+  { value: '1_15', label: 'Minecraft 1.15' },
   { value: '1_14', label: 'Minecraft 1.14' },
   { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
@@ -63,43 +64,46 @@ export default ({ handleInput, onDownload, onClose }) => (
     <div className="wrapper">
       <h1>Download your resource pack</h1>
       <table>
-        <tr>
-          <td>
-            <label for="packName">Pack name:</label>
-          </td>
-          <td>
-            <TextInput
-              id="packName"
-              placeholder="Pack name"
-              onChange={e => handleInput(e, 'name')}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="packDesc">Pack description:</label>
-          </td>
-          <td>
-            <TextInput
-              id="packDesc"
-              placeholder="Pack description"
-              onChange={e => handleInput(e, 'description')}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="version">Minecraft Version: </label>
-          </td>
-          <td>
-            <Select
-              options={selectOptions}
-              styles={styles}
-              defaultValue={selectOptions[0]}
-              isSearchable={false}
-            />
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <label for="packName">Pack name:</label>
+            </td>
+            <td>
+              <TextInput
+                id="packName"
+                placeholder="Pack name"
+                onChange={e => handleInput(e, 'name')}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="packDesc">Pack description:</label>
+            </td>
+            <td>
+              <TextInput
+                id="packDesc"
+                placeholder="Pack description"
+                onChange={e => handleInput(e, 'description')}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="version">Minecraft Version: </label>
+            </td>
+            <td>
+              <Select
+                options={selectOptions}
+                styles={styles}
+                defaultValue={selectOptions[0]}
+                isSearchable={false}
+                onChange={e => handleInput(e, 'version')}
+              />
+            </td>
+          </tr>
+        </tbody>
       </table>
       <br />
       <Button onClick={onClose}>Go back</Button>
