@@ -99,6 +99,7 @@ const Home = () => {
    *    {
    *      name: string,
    *      description: string,
+   *      pack_format: int
    *    }
    */
   const [packMeta, setPackMeta] = useState({});
@@ -229,7 +230,7 @@ const Home = () => {
       'pack.mcmeta',
       JSON.stringify({
         pack: {
-          pack_format: 4,
+          pack_format: packMeta.pack_format || DEFAULT_PACK_META.pack_format,
           description: packDesc,
         },
       })
@@ -273,6 +274,7 @@ const Home = () => {
 
   const onDownloadPressed = () => {
     setPackMeta({});
+
     // Perform check
     let hasImage = false;
     for (let size in textureImages) {
@@ -310,6 +312,20 @@ const Home = () => {
         break;
       case 'description':
         newPackMeta.description = event.target.value;
+        break;
+      case 'version':
+        let pack_format = DEFAULT_PACK_META.pack_format;
+        switch (event.value) {
+          case '1_14':
+            pack_format = 4;
+            break;
+          case '1_15':
+            pack_format = 5;
+            break;
+          default:
+            console.error('Invalid pack version');
+        }
+        newPackMeta.pack_format = pack_format;
         break;
       default:
         console.error('Invalid handleInput type: ', type);
