@@ -22,15 +22,17 @@ import Home from './pages/Home';
 import Backers from './pages/Backers';
 import DonationThank from './pages/DonationThank';
 import Privacy from './pages/Privacy';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Home path="/*" />
+        <Home path="/" />
         <Backers path="/backers" />
         <DonationThank path="/postdonation" />
         <Privacy path="/privacy" />
+        <NotFound default />
       </Router>
     </div>
   );
