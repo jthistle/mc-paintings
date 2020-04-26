@@ -61,6 +61,12 @@ function Enquiries(props) {
           line-height: 1.4rem;
         }
 
+        @media (max-width: 600px) {
+          .info {
+            max-width: 90vw;
+          }
+        }
+
         .email {
           display: inline-block;
           border-radius: 0.5rem;
@@ -81,6 +87,7 @@ function Enquiries(props) {
           display: flex;
           align-items: center;
           justify-content: center;
+          flex-wrap: wrap;
         }
 
         .copied {

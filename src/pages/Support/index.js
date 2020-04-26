@@ -19,6 +19,7 @@
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
 import Button from '../../components/Button';
+import ExtraInfo from '../../components/ExtraInfo';
 import { PAYPAL, TWITTER, GITHUB, FEEDBACK } from '../../supportLinks.json';
 
 const Support = ({ ...props }) => {
@@ -26,11 +27,8 @@ const Support = ({ ...props }) => {
     <Layout>
       <Column>
         <div className="content">
-          <h1>Thank you for using this website</h1>
-          <p>
-            Things like this take time to make and cost money to keep running.
-          </p>
-          <p className="highlight">Please consider supporting me:</p>
+          <ExtraInfo />
+          <div className="spacer" />
           <Button external={PAYPAL} scheme="yellow">
             Donate
           </Button>
@@ -40,12 +38,11 @@ const Support = ({ ...props }) => {
             When you donate, I will add your name to the list of backers - leave
             a message if you don't want your name added.
           </p>
-          <p>Other ways to support me, without having to spend money:</p>
+          <p>Other ways to support me:</p>
           <Button external={TWITTER}>Tweet about it</Button>
           <Button external={GITHUB} scheme="black">
             Star on GitHub
           </Button>
-          <div className="break" />
           <p>Or, just</p>
           <Button external={FEEDBACK}>Give some feedback</Button>
         </div>
@@ -55,8 +52,8 @@ const Support = ({ ...props }) => {
           font-weight: bold;
         }
 
-        .break {
-          margin-top: 2rem;
+        .spacer {
+          height: 2rem;
         }
 
         .content {

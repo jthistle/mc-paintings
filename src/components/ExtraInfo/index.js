@@ -8,17 +8,22 @@ function ExtraInfo(props) {
     <div>
       <div className="supported">Supported by:</div>
       <a href={campaignLink} target="_blank" rel="noopener noreferrer">
-        <div className="information"></div>
+        <div className="information">
+          <img src={campaignImage} alt="campaign" />
+        </div>
       </a>
       <div className="ethical">All adverts are ethically sourced</div>
       <style jsx>{`
         .information {
-          height: 100px;
-          width: 320px;
-          border: 1px solid ${c_SUBTLE};
+          width: 100%;
+          max-width: 320px;
           display: inline-block;
           margin-top: 1rem;
-          background-image: url(${campaignImage});
+          border: none;
+        }
+
+        img {
+          width: 100%;
         }
 
         .ethical {
