@@ -23,6 +23,8 @@ import Backers from './pages/Backers';
 import DonationThank from './pages/DonationThank';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
+import Support from './pages/Support';
+import Enquiries from './pages/Enquiries';
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
         <Backers path="/backers" />
         <DonationThank path="/postdonation" />
         <Privacy path="/privacy" />
+        <Support path="/support" />
+        <Enquiries path="/enquiries" />
         <NotFound default />
       </Router>
     </div>

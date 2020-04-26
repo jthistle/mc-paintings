@@ -19,6 +19,7 @@
 import React, { useState } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { navigate } from '@reach/router';
 
 import Layout, { Column } from '../../components/Layout';
 import { c_INACTIVE } from '../../theme';
@@ -28,7 +29,7 @@ import ImageSize from '../../components/ImageSize';
 import Warning from '../../components/Warning';
 import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
-import SupportView from '../../components/SupportView';
+import FinishView from '../../components/FinishView';
 
 import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META } from './configs';
 
@@ -106,6 +107,16 @@ const Home = () => {
 
   const [showDownloadView, setShowDownloadView] = useState(false);
   const [showSupportView, setShowSupportView] = useState(false);
+
+  const revealSupportView = () => {
+    setShowSupportView(true);
+    navigate('/?finish');
+  };
+
+  const hideSupportView = () => {
+    setShowSupportView(false);
+    navigate('/');
+  };
 
   const onCropChange = event => {
     if (!selectedSize) return;
@@ -269,7 +280,7 @@ const Home = () => {
     saveAs(zipBlob, `${packName}.zip`);
 
     setShowDownloadView(false);
-    setShowSupportView(true);
+    revealSupportView();
   };
 
   const onDownloadPressed = () => {
@@ -349,9 +360,7 @@ const Home = () => {
           onClose={() => setShowDownloadView(false)}
         />
       )}
-      {showSupportView && (
-        <SupportView onClose={() => setShowSupportView(false)} />
-      )}
+      {showSupportView && <FinishView onClose={hideSupportView} />}
       <Column>
         <div className="buttonsContainer">
           <UploadInput
