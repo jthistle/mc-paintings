@@ -19,7 +19,6 @@
 import React, { useState } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import { navigate } from '@reach/router';
 
 import Layout, { Column } from '../../components/Layout';
 import { c_INACTIVE } from '../../theme';
@@ -30,6 +29,7 @@ import Warning from '../../components/Warning';
 import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
 import FinishView from '../../components/FinishView';
+import ReactGA from '../../analytics';
 
 import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META } from './configs';
 
@@ -69,7 +69,7 @@ function generateInitial() {
 }
 
 const Home = () => {
-  // current image to use { size: string, index: int }, falsly if none selected
+  // current image to use { size: string, index: int }, falsy if none selected
   const [selectedSize, setSelectedSize] = useState();
   // the current opened menu (size string), falsy if none open
   const [openedMenu, setOpenedMenu] = useState();
@@ -107,16 +107,6 @@ const Home = () => {
 
   const [showDownloadView, setShowDownloadView] = useState(false);
   const [showSupportView, setShowSupportView] = useState(false);
-
-  const revealSupportView = () => {
-    setShowSupportView(true);
-    navigate('/?finish');
-  };
-
-  const hideSupportView = () => {
-    setShowSupportView(false);
-    navigate('/');
-  };
 
   const onCropChange = event => {
     if (!selectedSize) return;
@@ -161,10 +151,21 @@ const Home = () => {
       let newTextureImages = { ...textureImages };
       newTextureImages[selectedSize.size][selectedSize.index] = null;
       setTextureImages(newTextureImages);
+
+      ReactGA.event({
+        category: 'Image',
+        action: 'Upload Success',
+        label: `${selectedSize.size} [${selectedSize.index}]`,
+      });
     };
 
     reader.onerror = error => {
       console.error('Error with image upload:', error);
+      ReactGA.event({
+        category: 'Image',
+        action: 'Upload Error',
+        label: error,
+      });
     };
 
     reader.readAsDataURL(file);
@@ -230,10 +231,11 @@ const Home = () => {
   };
 
   const createZip = async () => {
-    let packName = packMeta.name || DEFAULT_PACK_META.name;
-    let packDesc =
+    const packName = packMeta.name || DEFAULT_PACK_META.name;
+    const packDesc =
       (packMeta.description ? packMeta.description + ' | ' : '') +
       DEFAULT_PACK_META.description;
+    const packFormat = packMeta.pack_format || DEFAULT_PACK_META.pack_format;
 
     const zipper = new JSZip();
     let root = zipper;
@@ -241,13 +243,14 @@ const Home = () => {
       'pack.mcmeta',
       JSON.stringify({
         pack: {
-          pack_format: packMeta.pack_format || DEFAULT_PACK_META.pack_format,
+          pack_format: packFormat,
           description: packDesc,
         },
       })
     );
     let paintings = root.folder('assets/minecraft/textures/painting');
 
+    let userPaintingsCount = 0;
     for (let size in textureImages) {
       let thisSize = textureImages[size];
       for (let i = 0; i < thisSize.length; i++) {
@@ -270,6 +273,7 @@ const Home = () => {
         paintings.file(`${MC_1_14_NAMES[size][i]}.png`, imageString, {
           base64: true,
         });
+        userPaintingsCount += 1;
       }
     }
 
@@ -280,7 +284,13 @@ const Home = () => {
     saveAs(zipBlob, `${packName}.zip`);
 
     setShowDownloadView(false);
-    revealSupportView();
+    setShowSupportView(true);
+    ReactGA.event({
+      category: 'Pack',
+      action: 'Download',
+      label: `v${packFormat}`,
+      value: userPaintingsCount,
+    });
   };
 
   const onDownloadPressed = () => {
@@ -360,7 +370,17 @@ const Home = () => {
           onClose={() => setShowDownloadView(false)}
         />
       )}
-      {showSupportView && <FinishView onClose={hideSupportView} />}
+      {showSupportView && (
+        <FinishView
+          onClose={() => {
+            setShowSupportView(false);
+            ReactGA.event({
+              category: 'Pack',
+              action: 'Close Finish View',
+            });
+          }}
+        />
+      )}
       <Column>
         <div className="buttonsContainer">
           <UploadInput
@@ -369,7 +389,7 @@ const Home = () => {
               selectedSize &&
               uploadedImages[selectedSize.size][selectedSize.index]
                 ? 'Change image'
-                : 'Upload an image'
+                : 'Add an image'
             }
             disabled={!selectedSize}
           />

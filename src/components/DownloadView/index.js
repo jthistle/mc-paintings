@@ -67,7 +67,7 @@ export default ({ handleInput, onDownload, onClose }) => (
         <tbody>
           <tr>
             <td>
-              <label for="packName">Pack name:</label>
+              <label htmlFor="packName">Pack name:</label>
             </td>
             <td>
               <TextInput
@@ -79,7 +79,7 @@ export default ({ handleInput, onDownload, onClose }) => (
           </tr>
           <tr>
             <td>
-              <label for="packDesc">Pack description:</label>
+              <label htmlFor="packDesc">Pack description:</label>
             </td>
             <td>
               <TextInput
@@ -91,7 +91,7 @@ export default ({ handleInput, onDownload, onClose }) => (
           </tr>
           <tr>
             <td>
-              <label for="version">Minecraft Version: </label>
+              <label htmlFor="version">Minecraft Version: </label>
             </td>
             <td>
               <Select
