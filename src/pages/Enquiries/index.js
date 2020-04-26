@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Layout, { Column } from '../../components/Layout';
 import Button from '../../components/Button';
 import { c_INACTIVE } from '../../theme';
+import ReactGA from '../../analytics';
 
 function Enquiries(props) {
   const [revealed, setRevealed] = useState(false);
@@ -15,11 +16,19 @@ function Enquiries(props) {
     document.execCommand('copy');
     emailRef.current.focus();
     setCopied(true);
+    ReactGA.event({
+      category: 'Enquiries',
+      action: 'Copy to Clipboard',
+    });
   };
 
   const reveal = () => {
     setRevealed(true);
     emailRef.current.value = email;
+    ReactGA.event({
+      category: 'Enquiries',
+      action: 'Reveal Email',
+    });
   };
 
   return (

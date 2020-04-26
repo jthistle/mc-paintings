@@ -80,6 +80,10 @@ export default ({ onUpload, text, disabled }) => {
           height: ${INPUT_HEIGHT}rem;
           width: ${INPUT_WIDTH}rem;
         }
+
+        input:hover {
+          cursor: pointer;
+        }
       `}</style>
     </div>
   );

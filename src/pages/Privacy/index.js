@@ -51,13 +51,17 @@ const Privacy = () => {
               necessary cookies that are required to keep the site functioning
             </li>
             <li>
-              analytics cookies, literally just because I want to see how many
-              people visit my site. These analytics cookies collect your{' '}
-              <b>anonymized</b> IP address, what kind of device you're using,
-              your general location (i.e. which city) and the date and time
-              certain pages were accessed. This is data is, as just described,
-              all effectively anonymized through IP anonymization.
+              analytics cookies, which allow me to see how many people visit my
+              site. These analytics cookies collect your <b>anonymized</b> IP
+              address, what kind of device you're using, your general location
+              (i.e. which city), the date and time certain pages were accessed,
+              and how you use some functions of the website. This is data is, as
+              described above, all anonymized through IP anonymization. I use
+              this information to improve the website.
             </li>
+          </ul>
+          <p>Please also note:</p>
+          <ul>
             <li>
               Your uploaded images and the texture pack are all managed and
               created client-side, which means none of your images are ever sent
