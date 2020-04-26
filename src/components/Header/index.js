@@ -41,6 +41,9 @@ export default () => {
           <Link to="/privacy">
             <span className="privacyLink">Privacy</span>
           </Link>
+          <Link to="/enquiries">
+            <span className="enquiriesLink">Enquiries</span>
+          </Link>
         </div>
         <style jsx>{`
           .header {
@@ -64,7 +67,7 @@ export default () => {
             color: ${c_PRIMARY};
           }
 
-          .privacyLink {
+          .privacyLink, .enquiriesLink {
             display: inline-block;
             margin: 0.25rem 1rem;
             color ${c_PRIMARY};
