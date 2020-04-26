@@ -16,19 +16,15 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { useState } from 'react';
-import { Link } from '@reach/router';
+import React from 'react';
+import { Link, navigate } from '@reach/router';
 
 import Button from '../../components/Button';
 import { c_HEADER, c_PRIMARY } from '../../theme';
-import SupportView from '../SupportView';
 
 export default () => {
-  const [showSupport, setShowSupport] = useState(false);
-
   return (
     <>
-      {showSupport && <SupportView onClose={() => setShowSupport(false)} />}
       <div className="header">
         <Link to="/">
           <h1 className="text">Minecraft Painting Creator</h1>
@@ -36,7 +32,7 @@ export default () => {
         <div className="links">
           <Button internal="/backers">Backers</Button>
           <Button
-            onClick={() => setShowSupport(true)}
+            onClick={() => navigate('/support')}
             scheme="yellow"
             className="linkBtn"
           >
