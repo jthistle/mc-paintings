@@ -68,6 +68,8 @@ function generateInitial() {
   return initial;
 }
 
+const DEFAULT_EXTENSION = 'zip';
+
 const Home = () => {
   // current image to use { size: string, index: int }, falsy if none selected
   const [selectedSize, setSelectedSize] = useState();
@@ -230,15 +232,31 @@ const Home = () => {
     });
   };
 
-  const createZip = async () => {
-    const packName = packMeta.name || DEFAULT_PACK_META.name;
-    const packDesc =
-      (packMeta.description ? packMeta.description + ' | ' : '') +
-      DEFAULT_PACK_META.description;
-    const packFormat = packMeta.pack_format || DEFAULT_PACK_META.pack_format;
+  const bedrockFileBuilder = async (root, packFormat, packDesc, packName) => {
+    root.file('manifest.json',
+    JSON.stringify({
+      format_version: 2,
+      header: {
+        description: packDesc,
+        name: `${packName} Resource Pack`,
+        uuid: "TODO",
+        version: [0,0,1],
+        min_engine_version: [1,14,0]
+      },
+      modules: [
+        {
+          description: packDesc,
+          type: 'resources',
+          uuid: 'TODO', 
+          version: [0,0,1]
+        }
+      ]
+    }));
+    let painting = root.folder('textures/painting');
+    
+  };
 
-    const zipper = new JSZip();
-    let root = zipper;
+  const javaFileBuilder = async (root, packFormat, packDesc) => {
     root.file(
       'pack.mcmeta',
       JSON.stringify({
@@ -276,12 +294,27 @@ const Home = () => {
         userPaintingsCount += 1;
       }
     }
+    return userPaintingsCount;
+  };
 
+  const createZip = async () => {
+    const packName = packMeta.name || DEFAULT_PACK_META.name;
+    const packDesc =
+      (packMeta.description ? packMeta.description + ' | ' : '') +
+      DEFAULT_PACK_META.description;
+    const packFormat = packMeta.pack_format || DEFAULT_PACK_META.pack_format;
+    const fileBuilder = packMeta.fileBuilder || javaFileBuilder;
+    const extension = packMeta.extension || DEFAULT_EXTENSION;
+
+    const zipper = new JSZip();
+    let root = zipper;
+    const userPaintingsCount = await fileBuilder(root, packFormat, packDesc, packName);
+    
     let zipBlob = await zipper.generateAsync({
       type: 'blob',
     });
 
-    saveAs(zipBlob, `${packName}.zip`);
+    saveAs(zipBlob, `${packName}.${extension}`);
 
     setShowDownloadView(false);
     setShowSupportView(true);
@@ -336,12 +369,20 @@ const Home = () => {
         break;
       case 'version':
         let pack_format = DEFAULT_PACK_META.pack_format;
+        newPackMeta.extension = DEFAULT_EXTENSION;
         switch (event.value) {
           case '1_14':
             pack_format = 4;
+            newPackMeta.fileBuilder = javaFileBuilder;
             break;
           case '1_15':
             pack_format = 5;
+            newPackMeta.fileBuilder = javaFileBuilder;
+            break;
+          case 'BR_1_14':
+            // valid, but pack_format is irrelevant
+            newPackMeta.fileBuilder = bedrockFileBuilder;
+            newPackMeta.extension = 'mcpack';
             break;
           default:
             console.error('Invalid pack version');
