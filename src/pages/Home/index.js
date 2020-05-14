@@ -30,8 +30,15 @@ import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
 import FinishView from '../../components/FinishView';
 import ReactGA from '../../analytics';
+import defaultBedrockImage from './kz.png';
+import { v4 as uuid } from 'uuid';
 
-import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META } from './configs';
+import {
+  SIZES,
+  MC_1_14_NAMES,
+  DEFAULT_PACK_META,
+  BR_1_14_POSITIONS,
+} from './configs';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -106,6 +113,7 @@ const Home = () => {
   const [packMeta, setPackMeta] = useState({});
 
   const [showDownloadView, setShowDownloadView] = useState(false);
+  const [showResolutionSelect, setShowResolutionSelect] = useState(false);
   const [showSupportView, setShowSupportView] = useState(false);
 
   const onCropChange = event => {
@@ -230,15 +238,79 @@ const Home = () => {
     });
   };
 
-  const createZip = async () => {
-    const packName = packMeta.name || DEFAULT_PACK_META.name;
-    const packDesc =
-      (packMeta.description ? packMeta.description + ' | ' : '') +
-      DEFAULT_PACK_META.description;
-    const packFormat = packMeta.pack_format || DEFAULT_PACK_META.pack_format;
+  const bedrockFileBuilder = async (
+    root,
+    packFormat,
+    packDesc,
+    packName,
+    resolution
+  ) => {
+    root.file(
+      'manifest.json',
+      JSON.stringify({
+        format_version: 2,
+        header: {
+          description: packDesc,
+          name: `${packName} Resource Pack`,
+          uuid: uuid(),
+          version: [0, 0, 1],
+          min_engine_version: [1, 14, 0],
+        },
+        modules: [
+          {
+            description: packDesc,
+            type: 'resources',
+            uuid: uuid(), // yes this is supposed to be different from the one above
+            version: [0, 0, 1],
+          },
+        ],
+      })
+    );
+    let painting = root.folder('textures/painting');
+    let baseImage = await createNewImage(defaultBedrockImage);
+    let canvas = document.createElement('canvas');
+    const blockPixels = resolution || 16;
+    const fullSize = blockPixels * 16;
+    canvas.width = fullSize;
+    canvas.height = fullSize;
+    let context = canvas.getContext('2d');
+    context.drawImage(baseImage, 0, 0, fullSize, fullSize);
 
-    const zipper = new JSZip();
-    let root = zipper;
+    let userPaintingsCount = 0;
+    for (let size in textureImages) {
+      let thisSize = textureImages[size];
+      let sizeAndPositions = BR_1_14_POSITIONS[size];
+      for (let i = 0; i < thisSize.length; i++) {
+        // At this point the image is in jpeg format so convert
+        // it to a png via a canvas
+        let jpegImage = thisSize[i];
+        if (!jpegImage) continue;
+
+        let imageObj = await createNewImage(jpegImage);
+
+        let positionConfig = sizeAndPositions.positions[i];
+        let sizeConfig = sizeAndPositions.size;
+
+        context.drawImage(
+          imageObj,
+          positionConfig.x * blockPixels,
+          positionConfig.y * blockPixels,
+          sizeConfig.w * blockPixels,
+          sizeConfig.h * blockPixels
+        );
+
+        userPaintingsCount += 1;
+      }
+    }
+    let imageString = canvas.toDataURL().replace('data:image/png;base64,', '');
+    painting.file(`kz.png`, imageString, {
+      base64: true,
+    });
+
+    return userPaintingsCount;
+  };
+
+  const javaFileBuilder = async (root, packFormat, packDesc) => {
     root.file(
       'pack.mcmeta',
       JSON.stringify({
@@ -276,12 +348,33 @@ const Home = () => {
         userPaintingsCount += 1;
       }
     }
+    return userPaintingsCount;
+  };
+
+  const createZip = async () => {
+    const packName = packMeta.name || DEFAULT_PACK_META.name;
+    const packDesc =
+      (packMeta.description ? packMeta.description + ' | ' : '') +
+      DEFAULT_PACK_META.description;
+    const packFormat = packMeta.pack_format || DEFAULT_PACK_META.pack_format;
+    const fileBuilder = packMeta.fileBuilder || javaFileBuilder;
+    const extension = packMeta.extension || DEFAULT_PACK_META.extension;
+
+    const zipper = new JSZip();
+    let root = zipper;
+    const userPaintingsCount = await fileBuilder(
+      root,
+      packFormat,
+      packDesc,
+      packName,
+      packMeta.resolution
+    );
 
     let zipBlob = await zipper.generateAsync({
       type: 'blob',
     });
 
-    saveAs(zipBlob, `${packName}.zip`);
+    saveAs(zipBlob, `${packName}.${extension}`);
 
     setShowDownloadView(false);
     setShowSupportView(true);
@@ -336,17 +429,31 @@ const Home = () => {
         break;
       case 'version':
         let pack_format = DEFAULT_PACK_META.pack_format;
+        newPackMeta.extension = DEFAULT_PACK_META.extension;
+        let showResolution = false;
         switch (event.value) {
           case '1_14':
             pack_format = 4;
+            newPackMeta.fileBuilder = javaFileBuilder;
             break;
           case '1_15':
             pack_format = 5;
+            newPackMeta.fileBuilder = javaFileBuilder;
+            break;
+          case 'BR_1_14':
+            // valid, but pack_format is irrelevant
+            newPackMeta.fileBuilder = bedrockFileBuilder;
+            newPackMeta.extension = 'mcpack';
+            showResolution = true;
             break;
           default:
             console.error('Invalid pack version');
         }
         newPackMeta.pack_format = pack_format;
+        setShowResolutionSelect(showResolution);
+        break;
+      case 'resolution':
+        newPackMeta.resolution = event.value;
         break;
       default:
         console.error('Invalid handleInput type: ', type);
@@ -368,6 +475,7 @@ const Home = () => {
           handleInput={handleInput}
           onDownload={createZip}
           onClose={() => setShowDownloadView(false)}
+          enableResolution={showResolutionSelect}
         />
       )}
       {showSupportView && (
