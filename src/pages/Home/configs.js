@@ -38,21 +38,38 @@ const MC_1_14_NAMES = {
 
 const _p = (x, y) => {
   return { x, y };
-}
+};
 
 const _s = (w, h) => {
   return { w, h };
-}
+};
 
 // positions and sizes are defined as number of blocks - pixel size depends on the resolution chosen
 const BR_1_14_POSITIONS = {
-  '1x1': { size: _s(1, 1), positions: [_p(0, 0), _p(1, 0), _p(2, 0), _p(3, 0), _p(4, 0), _p(5, 0), _p(6, 0)] },
+  '1x1': {
+    size: _s(1, 1),
+    positions: [
+      _p(0, 0),
+      _p(1, 0),
+      _p(2, 0),
+      _p(3, 0),
+      _p(4, 0),
+      _p(5, 0),
+      _p(6, 0),
+    ],
+  },
   '1x2': { size: _s(1, 2), positions: [_p(0, 4), _p(1, 4)] },
-  '2x1': { size: _s(2, 1), positions: [_p(0, 2), _p(2, 2), _p(4, 2), _p(6, 2), _p(8, 2)] },
-  '2x2': { size: _s(2, 2), positions: [_p(0, 8), _p(2, 8), _p(4, 8), _p(6, 8), _p(8, 8), _p(10, 8)] },
+  '2x1': {
+    size: _s(2, 1),
+    positions: [_p(0, 2), _p(2, 2), _p(4, 2), _p(6, 2), _p(8, 2)],
+  },
+  '2x2': {
+    size: _s(2, 2),
+    positions: [_p(0, 8), _p(2, 8), _p(4, 8), _p(6, 8), _p(8, 8), _p(10, 8)],
+  },
   '4x2': { size: _s(4, 2), positions: [_p(0, 6)] },
   '4x3': { size: _s(4, 3), positions: [_p(12, 4), _p(12, 7)] },
-  '4x4': { size: _s(4, 4), positions: [_p(0, 12), _p(4, 12), _p(8, 12)] }
+  '4x4': { size: _s(4, 4), positions: [_p(0, 12), _p(4, 12), _p(8, 12)] },
 };
 
 const DEFAULT_PACK_META = {

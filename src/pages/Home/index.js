@@ -33,7 +33,12 @@ import ReactGA from '../../analytics';
 import defaultBedrockImage from './kz.png';
 import { v4 as uuid } from 'uuid';
 
-import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META, BR_1_14_POSITIONS } from './configs';
+import {
+  SIZES,
+  MC_1_14_NAMES,
+  DEFAULT_PACK_META,
+  BR_1_14_POSITIONS,
+} from './configs';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -235,8 +240,15 @@ const Home = () => {
     });
   };
 
-  const bedrockFileBuilder = async (root, packFormat, packDesc, packName, resolution) => {
-    root.file('manifest.json',
+  const bedrockFileBuilder = async (
+    root,
+    packFormat,
+    packDesc,
+    packName,
+    resolution
+  ) => {
+    root.file(
+      'manifest.json',
       JSON.stringify({
         format_version: 2,
         header: {
@@ -244,17 +256,18 @@ const Home = () => {
           name: `${packName} Resource Pack`,
           uuid: uuid(),
           version: [0, 0, 1],
-          min_engine_version: [1, 14, 0]
+          min_engine_version: [1, 14, 0],
         },
         modules: [
           {
             description: packDesc,
             type: 'resources',
             uuid: uuid(), // yes this is supposed to be different from the one above
-            version: [0, 0, 1]
-          }
-        ]
-      }));
+            version: [0, 0, 1],
+          },
+        ],
+      })
+    );
     let painting = root.folder('textures/painting');
     let baseImage = await createNewImage(defaultBedrockImage);
     let canvas = document.createElement('canvas');
@@ -279,25 +292,24 @@ const Home = () => {
 
         let positionConfig = sizeAndPositions.positions[i];
         let sizeConfig = sizeAndPositions.size;
-        
-        context.drawImage(imageObj,
-          positionConfig.x * blockPixels, positionConfig.y * blockPixels,
-          sizeConfig.w * blockPixels, sizeConfig.h * blockPixels
+
+        context.drawImage(
+          imageObj,
+          positionConfig.x * blockPixels,
+          positionConfig.y * blockPixels,
+          sizeConfig.w * blockPixels,
+          sizeConfig.h * blockPixels
         );
 
         userPaintingsCount += 1;
       }
     }
-    let imageString = canvas
-      .toDataURL()
-      .replace('data:image/png;base64,', '');
+    let imageString = canvas.toDataURL().replace('data:image/png;base64,', '');
     painting.file(`kz.png`, imageString, {
       base64: true,
     });
 
     return userPaintingsCount;
-
-
   };
 
   const javaFileBuilder = async (root, packFormat, packDesc) => {
@@ -352,7 +364,13 @@ const Home = () => {
 
     const zipper = new JSZip();
     let root = zipper;
-    const userPaintingsCount = await fileBuilder(root, packFormat, packDesc, packName, packMeta.resolution);
+    const userPaintingsCount = await fileBuilder(
+      root,
+      packFormat,
+      packDesc,
+      packName,
+      packMeta.resolution
+    );
 
     let zipBlob = await zipper.generateAsync({
       type: 'blob',
@@ -438,7 +456,7 @@ const Home = () => {
         break;
       case 'resolution':
         newPackMeta.resolution = event.value;
-        break
+        break;
       default:
         console.error('Invalid handleInput type: ', type);
     }
@@ -479,7 +497,7 @@ const Home = () => {
             onUpload={onImageUpload}
             text={
               selectedSize &&
-                uploadedImages[selectedSize.size][selectedSize.index]
+              uploadedImages[selectedSize.size][selectedSize.index]
                 ? 'Change image'
                 : 'Add an image'
             }
@@ -517,8 +535,8 @@ const Home = () => {
             onCropComplete={onCropComplete}
           />
         ) : (
-            <ImagePlaceHolder needsImage={!!selectedSize} />
-          )}
+          <ImagePlaceHolder needsImage={!!selectedSize} />
+        )}
         {selectedSize && (
           <h2>
             {uploadedImages[selectedSize.size][selectedSize.index] &&

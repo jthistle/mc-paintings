@@ -32,9 +32,9 @@ const selectOptions = [
 ];
 
 const resolutionOptions = [
-  { value: 16, label: '16x'},
-  { value: 32, label: '32x'},
-  { value: 64, label: '64x'}
+  { value: 16, label: '16x' },
+  { value: 32, label: '32x' },
+  { value: 64, label: '64x' },
 ];
 
 const sharedFunc = (provided, state) => {
