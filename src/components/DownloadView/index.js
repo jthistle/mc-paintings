@@ -31,6 +31,12 @@ const selectOptions = [
   { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
 
+const resolutionOptions = [
+  { value: 16, label: '16x'},
+  { value: 32, label: '32x'},
+  { value: 64, label: '64x'}
+];
+
 const sharedFunc = (provided, state) => {
   let bg;
   if (state.isDisabled) bg = c_INACTIVE;
@@ -60,7 +66,7 @@ const styles = {
   }),
 };
 
-export default ({ handleInput, onDownload, onClose }) => (
+export default ({ handleInput, onDownload, onClose, enableResolution }) => (
   <InfoPopup onReject={onClose}>
     <div className="wrapper">
       <h1>Download your resource pack</h1>
@@ -101,6 +107,21 @@ export default ({ handleInput, onDownload, onClose }) => (
                 defaultValue={selectOptions[0]}
                 isSearchable={false}
                 onChange={e => handleInput(e, 'version')}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="resolution">Bedrock block pixels: </label>
+            </td>
+            <td>
+              <Select
+                options={resolutionOptions}
+                styles={styles}
+                defaultValue={resolutionOptions[0]}
+                isSearchable={false}
+                onChange={e => handleInput(e, 'resolution')}
+                isDisabled={!enableResolution}
               />
             </td>
           </tr>

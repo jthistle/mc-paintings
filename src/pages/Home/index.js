@@ -110,6 +110,7 @@ const Home = () => {
   const [packMeta, setPackMeta] = useState({});
 
   const [showDownloadView, setShowDownloadView] = useState(false);
+  const [showResolutionSelect, setShowResolutionSelect] = useState(false);
   const [showSupportView, setShowSupportView] = useState(false);
 
   const onCropChange = event => {
@@ -234,7 +235,7 @@ const Home = () => {
     });
   };
 
-  const bedrockFileBuilder = async (root, packFormat, packDesc, packName) => {
+  const bedrockFileBuilder = async (root, packFormat, packDesc, packName, resolution) => {
     root.file('manifest.json',
       JSON.stringify({
         format_version: 2,
@@ -257,7 +258,7 @@ const Home = () => {
     let painting = root.folder('textures/painting');
     let baseImage = await createNewImage(defaultBedrockImage);
     let canvas = document.createElement('canvas');
-    const blockPixels = 16; // TODO allow selecting resolution
+    const blockPixels = resolution || 16;
     const fullSize = blockPixels * 16;
     canvas.width = fullSize;
     canvas.height = fullSize;
@@ -351,7 +352,7 @@ const Home = () => {
 
     const zipper = new JSZip();
     let root = zipper;
-    const userPaintingsCount = await fileBuilder(root, packFormat, packDesc, packName);
+    const userPaintingsCount = await fileBuilder(root, packFormat, packDesc, packName, packMeta.resolution);
 
     let zipBlob = await zipper.generateAsync({
       type: 'blob',
@@ -413,6 +414,7 @@ const Home = () => {
       case 'version':
         let pack_format = DEFAULT_PACK_META.pack_format;
         newPackMeta.extension = DEFAULT_EXTENSION;
+        let showResolution = false;
         switch (event.value) {
           case '1_14':
             pack_format = 4;
@@ -426,12 +428,17 @@ const Home = () => {
             // valid, but pack_format is irrelevant
             newPackMeta.fileBuilder = bedrockFileBuilder;
             newPackMeta.extension = 'mcpack';
+            showResolution = true;
             break;
           default:
             console.error('Invalid pack version');
         }
         newPackMeta.pack_format = pack_format;
+        setShowResolutionSelect(showResolution);
         break;
+      case 'resolution':
+        newPackMeta.resolution = event.value;
+        break
       default:
         console.error('Invalid handleInput type: ', type);
     }
@@ -452,6 +459,7 @@ const Home = () => {
           handleInput={handleInput}
           onDownload={createZip}
           onClose={() => setShowDownloadView(false)}
+          enableResolution={showResolutionSelect}
         />
       )}
       {showSupportView && (
