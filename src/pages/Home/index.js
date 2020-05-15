@@ -30,8 +30,10 @@ import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
 import FinishView from '../../components/FinishView';
 import ReactGA from '../../analytics';
+import defaultBedrockImage from './kz.png';
+import { v4 as uuid } from 'uuid';
 
-import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META } from './configs';
+import { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META, BR_1_14_POSITIONS } from './configs';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -234,26 +236,67 @@ const Home = () => {
 
   const bedrockFileBuilder = async (root, packFormat, packDesc, packName) => {
     root.file('manifest.json',
-    JSON.stringify({
-      format_version: 2,
-      header: {
-        description: packDesc,
-        name: `${packName} Resource Pack`,
-        uuid: "TODO",
-        version: [0,0,1],
-        min_engine_version: [1,14,0]
-      },
-      modules: [
-        {
+      JSON.stringify({
+        format_version: 2,
+        header: {
           description: packDesc,
-          type: 'resources',
-          uuid: 'TODO', 
-          version: [0,0,1]
-        }
-      ]
-    }));
+          name: `${packName} Resource Pack`,
+          uuid: uuid(),
+          version: [0, 0, 1],
+          min_engine_version: [1, 14, 0]
+        },
+        modules: [
+          {
+            description: packDesc,
+            type: 'resources',
+            uuid: uuid(), // yes this is supposed to be different from the one above
+            version: [0, 0, 1]
+          }
+        ]
+      }));
     let painting = root.folder('textures/painting');
-    
+    let baseImage = await createNewImage(defaultBedrockImage);
+    let canvas = document.createElement('canvas');
+    const blockPixels = 16; // TODO allow selecting resolution
+    const fullSize = blockPixels * 16;
+    canvas.width = fullSize;
+    canvas.height = fullSize;
+    let context = canvas.getContext('2d');
+    context.drawImage(baseImage, 0, 0, fullSize, fullSize);
+
+    let userPaintingsCount = 0;
+    for (let size in textureImages) {
+      let thisSize = textureImages[size];
+      let sizeAndPositions = BR_1_14_POSITIONS[size];
+      for (let i = 0; i < thisSize.length; i++) {
+        // At this point the image is in jpeg format so convert
+        // it to a png via a canvas
+        let jpegImage = thisSize[i];
+        if (!jpegImage) continue;
+
+        let imageObj = await createNewImage(jpegImage);
+
+        let positionConfig = sizeAndPositions.positions[i];
+        let sizeConfig = sizeAndPositions.size;
+        
+        context.drawImage(imageObj,
+          positionConfig.x * blockPixels, positionConfig.y * blockPixels,
+          sizeConfig.w * blockPixels, sizeConfig.h * blockPixels
+        );
+
+        userPaintingsCount += 1;
+      }
+    }
+    let imageString = canvas
+      .toDataURL()
+      .replace('data:image/png;base64,', '');
+    painting.file(`kz.png`, imageString, {
+      base64: true,
+    });
+
+    return userPaintingsCount;
+
+
   };
 
   const javaFileBuilder = async (root, packFormat, packDesc) => {
@@ -309,7 +352,7 @@ const Home = () => {
     const zipper = new JSZip();
     let root = zipper;
     const userPaintingsCount = await fileBuilder(root, packFormat, packDesc, packName);
-    
+
     let zipBlob = await zipper.generateAsync({
       type: 'blob',
     });
@@ -428,7 +471,7 @@ const Home = () => {
             onUpload={onImageUpload}
             text={
               selectedSize &&
-              uploadedImages[selectedSize.size][selectedSize.index]
+                uploadedImages[selectedSize.size][selectedSize.index]
                 ? 'Change image'
                 : 'Add an image'
             }
@@ -466,8 +509,8 @@ const Home = () => {
             onCropComplete={onCropComplete}
           />
         ) : (
-          <ImagePlaceHolder needsImage={!!selectedSize} />
-        )}
+            <ImagePlaceHolder needsImage={!!selectedSize} />
+          )}
         {selectedSize && (
           <h2>
             {uploadedImages[selectedSize.size][selectedSize.index] &&
