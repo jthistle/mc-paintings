@@ -25,9 +25,16 @@ import Select from 'react-select';
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
-  { value: '1_15', label: 'Minecraft 1.15' },
-  { value: '1_14', label: 'Minecraft 1.14' },
+  { value: '1_15', label: 'Java 1.15' },
+  { value: '1_14', label: 'Java 1.14' },
+  { value: 'BR_1_14', label: 'Bedrock 1.14' },
   { value: '', label: 'More versions coming soon!', isDisabled: true },
+];
+
+const resolutionOptions = [
+  { value: 16, label: '16x' },
+  { value: 32, label: '32x' },
+  { value: 64, label: '64x' },
 ];
 
 const sharedFunc = (provided, state) => {
@@ -59,7 +66,7 @@ const styles = {
   }),
 };
 
-export default ({ handleInput, onDownload, onClose }) => (
+export default ({ handleInput, onDownload, onClose, enableResolution }) => (
   <InfoPopup onReject={onClose}>
     <div className="wrapper">
       <h1>Download your resource pack</h1>
@@ -73,7 +80,7 @@ export default ({ handleInput, onDownload, onClose }) => (
               <TextInput
                 id="packName"
                 placeholder="Pack name"
-                onChange={e => handleInput(e, 'name')}
+                onChange={(e) => handleInput(e, 'name')}
               />
             </td>
           </tr>
@@ -85,7 +92,7 @@ export default ({ handleInput, onDownload, onClose }) => (
               <TextInput
                 id="packDesc"
                 placeholder="Pack description"
-                onChange={e => handleInput(e, 'description')}
+                onChange={(e) => handleInput(e, 'description')}
               />
             </td>
           </tr>
@@ -99,10 +106,26 @@ export default ({ handleInput, onDownload, onClose }) => (
                 styles={styles}
                 defaultValue={selectOptions[0]}
                 isSearchable={false}
-                onChange={e => handleInput(e, 'version')}
+                onChange={(e) => handleInput(e, 'version')}
               />
             </td>
           </tr>
+          {enableResolution && (
+            <tr>
+              <td>
+                <label htmlFor="resolution">Bedrock block pixels: </label>
+              </td>
+              <td>
+                <Select
+                  options={resolutionOptions}
+                  styles={styles}
+                  defaultValue={resolutionOptions[0]}
+                  isSearchable={false}
+                  onChange={(e) => handleInput(e, 'resolution')}
+                />
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       <br />
