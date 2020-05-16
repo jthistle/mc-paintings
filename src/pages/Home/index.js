@@ -75,8 +75,6 @@ function generateInitial() {
   return initial;
 }
 
-const DEFAULT_EXTENSION = 'zip';
-
 const Home = () => {
   // current image to use { size: string, index: int }, falsy if none selected
   const [selectedSize, setSelectedSize] = useState();
@@ -360,7 +358,7 @@ const Home = () => {
       DEFAULT_PACK_META.description;
     const packFormat = packMeta.pack_format || DEFAULT_PACK_META.pack_format;
     const fileBuilder = packMeta.fileBuilder || javaFileBuilder;
-    const extension = packMeta.extension || DEFAULT_EXTENSION;
+    const extension = packMeta.extension || DEFAULT_PACK_META.extension;
 
     const zipper = new JSZip();
     let root = zipper;
@@ -431,7 +429,7 @@ const Home = () => {
         break;
       case 'version':
         let pack_format = DEFAULT_PACK_META.pack_format;
-        newPackMeta.extension = DEFAULT_EXTENSION;
+        newPackMeta.extension = DEFAULT_PACK_META.extension;
         let showResolution = false;
         switch (event.value) {
           case '1_14':

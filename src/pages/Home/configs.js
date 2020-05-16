@@ -76,6 +76,7 @@ const DEFAULT_PACK_META = {
   name: 'MC Paintings Pack',
   description: 'Generated at mcpaintings.com',
   pack_format: 5,
+  extension: 'zip',
 };
 
 export { SIZES, MC_1_14_NAMES, DEFAULT_PACK_META, BR_1_14_POSITIONS };

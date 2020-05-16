@@ -110,21 +110,22 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => (
               />
             </td>
           </tr>
-          <tr>
-            <td>
-              <label htmlFor="resolution">Bedrock block pixels: </label>
-            </td>
-            <td>
-              <Select
-                options={resolutionOptions}
-                styles={styles}
-                defaultValue={resolutionOptions[0]}
-                isSearchable={false}
-                onChange={e => handleInput(e, 'resolution')}
-                isDisabled={!enableResolution}
-              />
-            </td>
-          </tr>
+          {enableResolution && (
+            <tr>
+              <td>
+                <label htmlFor="resolution">Bedrock block pixels: </label>
+              </td>
+              <td>
+                <Select
+                  options={resolutionOptions}
+                  styles={styles}
+                  defaultValue={resolutionOptions[0]}
+                  isSearchable={false}
+                  onChange={e => handleInput(e, 'resolution')}
+                />
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       <br />
