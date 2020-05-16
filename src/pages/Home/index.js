@@ -30,15 +30,10 @@ import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
 import FinishView from '../../components/FinishView';
 import ReactGA from '../../analytics';
-import defaultBedrockImage from './kz.png';
-import { v4 as uuid } from 'uuid';
+import fileBuilders from './fileBuilders';
 
-import {
-  SIZES,
-  MC_1_14_NAMES,
-  DEFAULT_PACK_META,
-  BR_1_14_POSITIONS,
-} from './configs';
+import { SIZES } from './configs';
+import DEFAULT_PACK_META from './defaultMeta';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -60,7 +55,7 @@ const ImagePlaceHolder = ({ needsImage }) => (
  *  Given a size string, return a float aspect ratio
  */
 function sizeToAspect(size) {
-  const [width, height] = size.split('x').map(val => parseInt(val));
+  const [width, height] = size.split('x').map((val) => parseInt(val));
   return width / height;
 }
 
@@ -69,7 +64,7 @@ function sizeToAspect(size) {
  */
 function generateInitial() {
   let initial = {};
-  Object.keys(SIZES).forEach(size => {
+  Object.keys(SIZES).forEach((size) => {
     initial[size] = Array(SIZES[size]).fill(undefined);
   });
   return initial;
@@ -103,11 +98,14 @@ const Home = () => {
   const [warning, setWarning] = useState();
 
   /*
-   *  The pack meta data. Should be formatted as:
+   *  Data relating to how to form the resource pack. Format:
    *    {
    *      name: string,
    *      description: string,
-   *      pack_format: int
+   *      packFormat: int || [int, int, int] for bedrock
+   *      resolution: int,
+   *      fileBuilder: function,
+   *      extension: string,
    *    }
    */
   const [packMeta, setPackMeta] = useState({});
@@ -116,7 +114,7 @@ const Home = () => {
   const [showResolutionSelect, setShowResolutionSelect] = useState(false);
   const [showSupportView, setShowSupportView] = useState(false);
 
-  const onCropChange = event => {
+  const onCropChange = (event) => {
     if (!selectedSize) return;
 
     let newConfigs = { ...cropConfigs };
@@ -124,7 +122,7 @@ const Home = () => {
     setCropConfigs(newConfigs);
   };
 
-  const onCropComplete = event => {
+  const onCropComplete = (event) => {
     if (!selectedSize) return;
 
     let newTextureImages = { ...textureImages };
@@ -136,12 +134,12 @@ const Home = () => {
   /*
    *  Callback for when the upload of an image has finished.
    */
-  const onImageUpload = event => {
+  const onImageUpload = (event) => {
     if (!selectedSize) return;
 
     const file = event.target.files[0];
     const reader = new FileReader();
-    reader.onload = event => {
+    reader.onload = (event) => {
       let imageData = event.target.result;
 
       let newUploadedImages = { ...uploadedImages };
@@ -167,7 +165,7 @@ const Home = () => {
       });
     };
 
-    reader.onerror = error => {
+    reader.onerror = (error) => {
       console.error('Error with image upload:', error);
       ReactGA.event({
         category: 'Image',
@@ -186,7 +184,7 @@ const Home = () => {
    *  Callback for when an ImageSize is clicked, and the menu should
    *  be expanded.
    */
-  const onImageSizeClick = size => {
+  const onImageSizeClick = (size) => {
     if (size === openedMenu) setOpenedMenu(null);
     else setOpenedMenu(size);
   };
@@ -228,147 +226,24 @@ const Home = () => {
     }
   };
 
-  const createNewImage = imageString => {
-    return new Promise((resolve, reject) => {
-      let imageObj = new Image();
-      imageObj.src = imageString;
-      imageObj.onload = () => {
-        resolve(imageObj);
-      };
-    });
-  };
-
-  const bedrockFileBuilder = async (
-    root,
-    packFormat,
-    packDesc,
-    packName,
-    resolution
-  ) => {
-    root.file(
-      'manifest.json',
-      JSON.stringify({
-        format_version: 2,
-        header: {
-          description: packDesc,
-          name: `${packName} Resource Pack`,
-          uuid: uuid(),
-          version: [0, 0, 1],
-          min_engine_version: [1, 14, 0],
-        },
-        modules: [
-          {
-            description: packDesc,
-            type: 'resources',
-            uuid: uuid(), // yes this is supposed to be different from the one above
-            version: [0, 0, 1],
-          },
-        ],
-      })
-    );
-    let painting = root.folder('textures/painting');
-    let baseImage = await createNewImage(defaultBedrockImage);
-    let canvas = document.createElement('canvas');
-    const blockPixels = resolution || 16;
-    const fullSize = blockPixels * 16;
-    canvas.width = fullSize;
-    canvas.height = fullSize;
-    let context = canvas.getContext('2d');
-    context.drawImage(baseImage, 0, 0, fullSize, fullSize);
-
-    let userPaintingsCount = 0;
-    for (let size in textureImages) {
-      let thisSize = textureImages[size];
-      let sizeAndPositions = BR_1_14_POSITIONS[size];
-      for (let i = 0; i < thisSize.length; i++) {
-        // At this point the image is in jpeg format so convert
-        // it to a png via a canvas
-        let jpegImage = thisSize[i];
-        if (!jpegImage) continue;
-
-        let imageObj = await createNewImage(jpegImage);
-
-        let positionConfig = sizeAndPositions.positions[i];
-        let sizeConfig = sizeAndPositions.size;
-
-        context.drawImage(
-          imageObj,
-          positionConfig.x * blockPixels,
-          positionConfig.y * blockPixels,
-          sizeConfig.w * blockPixels,
-          sizeConfig.h * blockPixels
-        );
-
-        userPaintingsCount += 1;
-      }
-    }
-    let imageString = canvas.toDataURL().replace('data:image/png;base64,', '');
-    painting.file(`kz.png`, imageString, {
-      base64: true,
-    });
-
-    return userPaintingsCount;
-  };
-
-  const javaFileBuilder = async (root, packFormat, packDesc) => {
-    root.file(
-      'pack.mcmeta',
-      JSON.stringify({
-        pack: {
-          pack_format: packFormat,
-          description: packDesc,
-        },
-      })
-    );
-    let paintings = root.folder('assets/minecraft/textures/painting');
-
-    let userPaintingsCount = 0;
-    for (let size in textureImages) {
-      let thisSize = textureImages[size];
-      for (let i = 0; i < thisSize.length; i++) {
-        // At this point the image is in jpeg format so convert
-        // it to a png via a canvas
-        let jpegImage = thisSize[i];
-        if (!jpegImage) continue;
-
-        let imageObj = await createNewImage(jpegImage);
-
-        let canvas = document.createElement('canvas');
-        canvas.width = imageObj.naturalWidth;
-        canvas.height = imageObj.naturalHeight;
-        let context = canvas.getContext('2d');
-        context.drawImage(imageObj, 0, 0);
-
-        let imageString = canvas
-          .toDataURL()
-          .replace('data:image/png;base64,', '');
-        paintings.file(`${MC_1_14_NAMES[size][i]}.png`, imageString, {
-          base64: true,
-        });
-        userPaintingsCount += 1;
-      }
-    }
-    return userPaintingsCount;
-  };
-
   const createZip = async () => {
     const packName = packMeta.name || DEFAULT_PACK_META.name;
     const packDesc =
       (packMeta.description ? packMeta.description + ' | ' : '') +
       DEFAULT_PACK_META.description;
-    const packFormat = packMeta.pack_format || DEFAULT_PACK_META.pack_format;
-    const fileBuilder = packMeta.fileBuilder || javaFileBuilder;
+    const packFormat = packMeta.packFormat || DEFAULT_PACK_META.packFormat;
+    const packResolution = packMeta.resolution || DEFAULT_PACK_META.resolution;
+    const fileBuilder = packMeta.fileBuilder || DEFAULT_PACK_META.fileBuilder;
     const extension = packMeta.extension || DEFAULT_PACK_META.extension;
 
     const zipper = new JSZip();
     let root = zipper;
-    const userPaintingsCount = await fileBuilder(
-      root,
-      packFormat,
-      packDesc,
-      packName,
-      packMeta.resolution
-    );
+    const userPaintingsCount = await fileBuilder(root, textureImages, {
+      format: packFormat,
+      desc: packDesc,
+      name: packName,
+      resolution: packResolution,
+    });
 
     let zipBlob = await zipper.generateAsync({
       type: 'blob',
@@ -419,47 +294,51 @@ const Home = () => {
   };
 
   const handleInput = (event, type) => {
-    let newPackMeta = { ...packMeta };
-    switch (type) {
-      case 'name':
-        newPackMeta.name = event.target.value;
-        break;
-      case 'description':
-        newPackMeta.description = event.target.value;
-        break;
-      case 'version':
-        let pack_format = DEFAULT_PACK_META.pack_format;
-        newPackMeta.extension = DEFAULT_PACK_META.extension;
-        let showResolution = false;
-        switch (event.value) {
-          case '1_14':
-            pack_format = 4;
-            newPackMeta.fileBuilder = javaFileBuilder;
-            break;
-          case '1_15':
-            pack_format = 5;
-            newPackMeta.fileBuilder = javaFileBuilder;
-            break;
-          case 'BR_1_14':
-            // valid, but pack_format is irrelevant
-            newPackMeta.fileBuilder = bedrockFileBuilder;
-            newPackMeta.extension = 'mcpack';
-            showResolution = true;
-            break;
-          default:
-            console.error('Invalid pack version');
-        }
-        newPackMeta.pack_format = pack_format;
-        setShowResolutionSelect(showResolution);
-        break;
-      case 'resolution':
-        newPackMeta.resolution = event.value;
-        break;
-      default:
-        console.error('Invalid handleInput type: ', type);
-    }
-
-    setPackMeta(newPackMeta);
+    const targetVal = event.target ? event.target.value : null;
+    const eventVal = event.value;
+    setPackMeta((oldPackMeta) => {
+      let newPackMeta = { ...oldPackMeta };
+      switch (type) {
+        case 'name':
+          newPackMeta.name = targetVal;
+          break;
+        case 'description':
+          newPackMeta.description = targetVal;
+          break;
+        case 'version':
+          let showResolution = false;
+          switch (eventVal) {
+            case '1_14':
+              newPackMeta.packFormat = 4;
+              newPackMeta.fileBuilder = fileBuilders.java;
+              newPackMeta.extension = 'zip';
+              break;
+            case '1_15':
+              newPackMeta.packFormat = 5;
+              newPackMeta.fileBuilder = fileBuilders.java;
+              newPackMeta.extension = 'zip';
+              break;
+            case 'BR_1_14':
+              newPackMeta.packFormat = [1, 14, 0];
+              newPackMeta.fileBuilder = fileBuilders.bedrock;
+              newPackMeta.extension = 'mcpack';
+              showResolution = true;
+              break;
+            default:
+              console.error('Invalid pack version');
+              break;
+          }
+          setShowResolutionSelect(showResolution);
+          break;
+        case 'resolution':
+          newPackMeta.resolution = eventVal;
+          break;
+        default:
+          console.error('Invalid handleInput type: ', type);
+          break;
+      }
+      return newPackMeta;
+    });
   };
 
   return (
@@ -507,7 +386,7 @@ const Home = () => {
           <div className="chooseSize">Choose a size to begin:</div>
         )}
         <div className="imageSizeContainer">
-          {Object.keys(SIZES).map(size => (
+          {Object.keys(SIZES).map((size) => (
             <ImageSize
               size={size}
               isExpanded={size === openedMenu}

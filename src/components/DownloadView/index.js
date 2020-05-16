@@ -25,8 +25,8 @@ import Select from 'react-select';
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
-  { value: '1_15', label: 'Minecraft 1.15' },
-  { value: '1_14', label: 'Minecraft 1.14' },
+  { value: '1_15', label: 'Java 1.15' },
+  { value: '1_14', label: 'Java 1.14' },
   { value: 'BR_1_14', label: 'Bedrock 1.14' },
   { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
@@ -80,7 +80,7 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => (
               <TextInput
                 id="packName"
                 placeholder="Pack name"
-                onChange={e => handleInput(e, 'name')}
+                onChange={(e) => handleInput(e, 'name')}
               />
             </td>
           </tr>
@@ -92,7 +92,7 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => (
               <TextInput
                 id="packDesc"
                 placeholder="Pack description"
-                onChange={e => handleInput(e, 'description')}
+                onChange={(e) => handleInput(e, 'description')}
               />
             </td>
           </tr>
@@ -106,7 +106,7 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => (
                 styles={styles}
                 defaultValue={selectOptions[0]}
                 isSearchable={false}
-                onChange={e => handleInput(e, 'version')}
+                onChange={(e) => handleInput(e, 'version')}
               />
             </td>
           </tr>
@@ -121,7 +121,7 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => (
                   styles={styles}
                   defaultValue={resolutionOptions[0]}
                   isSearchable={false}
-                  onChange={e => handleInput(e, 'resolution')}
+                  onChange={(e) => handleInput(e, 'resolution')}
                 />
               </td>
             </tr>
