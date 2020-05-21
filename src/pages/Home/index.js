@@ -106,6 +106,7 @@ const Home = () => {
    *      resolution: int,
    *      fileBuilder: function,
    *      extension: string,
+   *      versionTag: string
    *    }
    */
   const [packMeta, setPackMeta] = useState({});
@@ -256,7 +257,7 @@ const Home = () => {
     ReactGA.event({
       category: 'Pack',
       action: 'Download',
-      label: `v${packFormat}`,
+      label: `v${packMeta.versionTag}`,
       value: userPaintingsCount,
     });
   };
@@ -328,6 +329,7 @@ const Home = () => {
               console.error('Invalid pack version');
               break;
           }
+          newPackMeta.versionTag = eventVal;
           setShowResolutionSelect(showResolution);
           break;
         case 'resolution':
