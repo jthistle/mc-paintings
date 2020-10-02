@@ -25,7 +25,8 @@ import Select from 'react-select';
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
-  { value: '1_15', label: 'Java 1.15' },
+  { value: '1_16', label: 'Java 1.16.2+' },
+  { value: '1_15', label: 'Java 1.15 - 1.16.1' },
   { value: '1_14', label: 'Java 1.14' },
   { value: 'BR_1_14', label: 'Bedrock 1.14' },
   { value: '', label: 'More versions coming soon!', isDisabled: true },
