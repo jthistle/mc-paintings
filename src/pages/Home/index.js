@@ -236,6 +236,7 @@ const Home = () => {
     const packResolution = packMeta.resolution || DEFAULT_PACK_META.resolution;
     const fileBuilder = packMeta.fileBuilder || DEFAULT_PACK_META.fileBuilder;
     const extension = packMeta.extension || DEFAULT_PACK_META.extension;
+    const versionTag = packMeta.versionTag || DEFAULT_PACK_META.versionTag;
 
     const zipper = new JSZip();
     let root = zipper;
@@ -257,7 +258,7 @@ const Home = () => {
     ReactGA.event({
       category: 'Pack',
       action: 'Download',
-      label: `v${packMeta.versionTag}`,
+      label: `v${versionTag}`,
       value: userPaintingsCount,
     });
   };
@@ -311,24 +312,37 @@ const Home = () => {
           switch (eventVal) {
             case '1_14':
               newPackMeta.packFormat = 4;
-              newPackMeta.fileBuilder = fileBuilders.java;
-              newPackMeta.extension = 'zip';
               break;
             case '1_15':
               newPackMeta.packFormat = 5;
-              newPackMeta.fileBuilder = fileBuilders.java;
-              newPackMeta.extension = 'zip';
+              break;
+            case '1_16':
+              newPackMeta.packFormat = 6;
               break;
             case 'BR_1_14':
               newPackMeta.packFormat = [1, 14, 0];
-              newPackMeta.fileBuilder = fileBuilders.bedrock;
-              newPackMeta.extension = 'mcpack';
-              showResolution = true;
               break;
             default:
               console.error('Invalid pack version');
               break;
           }
+
+          switch (eventVal) {
+            case '1_14':
+            case '1_15':
+            case '1_16':
+              newPackMeta.fileBuilder = fileBuilders.java;
+              newPackMeta.extension = 'zip';
+              break;
+            case 'BR_1_14':
+              newPackMeta.fileBuilder = fileBuilders.bedrock;
+              newPackMeta.extension = 'mcpack';
+              showResolution = true;
+              break;
+            default:
+              break;
+          }
+
           newPackMeta.versionTag = eventVal;
           setShowResolutionSelect(showResolution);
           break;
