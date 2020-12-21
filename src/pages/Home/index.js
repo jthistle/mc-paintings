@@ -162,7 +162,7 @@ const Home = () => {
       ReactGA.event({
         category: 'Image',
         action: 'Upload Success',
-        label: `${selectedSize.size} [${selectedSize.index}]`,
+        label: `${selectedSize.size}`,
       });
     };
 
