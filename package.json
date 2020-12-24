@@ -16,6 +16,7 @@
     "react-select": "^3.0.4",
     "serve": "^11.1.0",
     "styled-jsx": "^3.2.1",
+    "three": "^0.123.0",
     "uuid": "^8.0.0"
   },
   "scripts": {

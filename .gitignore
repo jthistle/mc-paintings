@@ -1,3 +1,4 @@
 node_modules
 .env
 build/
+public/textures/minecraft
