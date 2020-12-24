@@ -103,10 +103,48 @@ function createGeometries(model) {
 }
 
 function createMaterials(model, textures) {
-  const order = ['north', 'south', 'up', 'down', 'east', 'west'];
+  const order = ['east', 'west', 'up', 'down', 'north', 'south'];
+  const faceInds = [
+    1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    1,
+    1,
+    1,
+    1,
+    0, // up
+    0,
+    0,
+    1,
+    1,
+    0,
+    0, // down
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+  ];
 
-  return model.elements.map((el, i) => {
-    return order.map((faceName) => {
+  return model.elements.map((el) => {
+    return order.map((faceName, i) => {
       const face = el.faces[faceName];
       if (!face) {
         return transparent;
@@ -118,8 +156,62 @@ function createMaterials(model, textures) {
         color = 0x32d827;
       }
 
+      let faceStart, faceEnd;
+      if (!face.uv) {
+        // Try to resize the texture to fit properly on the face
+        const thisFace = faceInds.slice(6 * i, 6 * (i + 1));
+        const points = [el.from, el.to];
+
+        faceStart = [
+          points[thisFace[0]][0],
+          points[thisFace[1]][1],
+          points[thisFace[2]][2],
+        ];
+        faceEnd = [
+          points[thisFace[3]][0],
+          points[thisFace[4]][1],
+          points[thisFace[5]][2],
+        ];
+      } else {
+        const { uv } = face;
+        faceStart = [uv[0], uv[1], 0];
+        faceEnd = [uv[1], uv[3], 0];
+      }
+
+      let dim = [];
+      let offset = [];
+      const fact = 16;
+      for (let i = 0; i < 3; ++i) {
+        if (faceStart[i] == faceEnd[i]) continue;
+
+        // This works through sheer willpower, so be careful
+        const thisDim = (faceEnd[i] - faceStart[i]) / fact;
+        dim.push(thisDim);
+        offset.push(-(1 - thisDim - (2 * faceStart[i]) / fact) / 2);
+      }
+
+      // Hack
+      if (i <= 1) {
+        dim = dim.reverse();
+        offset = offset.reverse();
+      }
+
+      // console.log(`face ${faceName} has dimensions`, dim, `offset`, offset);
+      // console.log(`starts at`, faceStart, `ends at`, faceEnd);
+
+      const txt = textures[ident].clone();
+      txt.repeat = new THREE.Vector2(...dim);
+      txt.offset = new THREE.Vector2(...offset);
+      txt.center = new THREE.Vector2(0.5, 0.5);
+
+      if (face.rotation) {
+        txt.rotation = (Math.PI * face.rotation) / 180;
+      }
+
+      txt.needsUpdate = true;
+
       return new THREE.MeshBasicMaterial({
-        map: textures[ident],
+        map: txt,
         transparent: true,
         color,
       });

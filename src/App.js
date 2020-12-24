@@ -37,7 +37,7 @@ function App() {
         <Privacy path="/privacy" />
         <Support path="/support" />
         <Enquiries path="/enquiries" />
-        <Textures path="/textures" />
+        <Textures path="/textures/:block" />
         <NotFound default />
       </Router>
     </div>

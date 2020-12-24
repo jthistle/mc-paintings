@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useMatch } from '@reach/router';
+
 import Layout, { Column } from '../../components/Layout';
 
 import * as THREE from 'three';
@@ -20,6 +22,8 @@ const Textures = () => {
     new THREE.Vector2(0.5, 0.5)
   );
   const [cameraZoom, setCameraZoom] = useState(30);
+
+  const match = useMatch('/textures/:block');
 
   const updateCameraPos = (rot, zoom) => {
     const rotx = new THREE.Quaternion().setFromAxisAngle(
@@ -78,7 +82,7 @@ const Textures = () => {
 
     const scene = new THREE.Scene();
 
-    createBlock('minecraft:block/cake', scene).then(() => {
+    createBlock(`minecraft:block/${match.block}`, scene).then(() => {
       console.log('done');
       renderer.render(scene, camera);
     });
