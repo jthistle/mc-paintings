@@ -104,43 +104,14 @@ function createGeometries(model) {
 
 function createMaterials(model, textures) {
   const order = ['east', 'west', 'up', 'down', 'north', 'south'];
+  // prettier-ignore
   const faceInds = [
-    1,
-    0,
-    0,
-    1,
-    1,
-    1,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    0,
-    1,
-    1,
-    1,
-    1,
-    0, // up
-    0,
-    0,
-    1,
-    1,
-    0,
-    0, // down
-    0,
-    0,
-    0,
-    1,
-    1,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
+    1, 0, 0,  1, 1, 1,
+    0, 0, 0,  0, 1, 1,
+    0, 1, 1,  1, 1, 0, // up
+    0, 0, 1,  1, 0, 0, // down
+    0, 0, 0,  1, 1, 0,
+    0, 0, 1,  1, 1, 1,
   ];
 
   return model.elements.map((el) => {
