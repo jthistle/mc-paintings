@@ -178,7 +178,7 @@ function createMaterials(model, textures) {
       }
 
       // Hack for top and bottom faces
-      if (i == 2 || i == 3) {
+      if (i === 2 || i === 3) {
         rotation += Math.PI;
         centre = new THREE.Vector2(0.5, 0.5);
       }
@@ -189,7 +189,7 @@ function createMaterials(model, textures) {
         (uv[3] - uv[1]) / txt.image.height,
       ];
 
-      // Set offset. Centre is bottom left corner, in this case.
+      // Set offset
       const txtCentre = new THREE.Vector2(
         (uv[0] + (uv[2] - uv[0]) * centre.x) / txt.image.width,
         1 - (uv[3] - (uv[3] - uv[1]) * centre.y) / txt.image.height
@@ -225,7 +225,34 @@ function addMeshes(model, geos, materials, scene) {
       pos[i] += el.from[i] + (el.to[i] - el.from[i]) / 2;
     }
 
-    mesh.position.set(...pos);
+    mesh.position.add(new THREE.Vector3(...pos));
+
+    // Rotate if necessary
+    if (el.rotation) {
+      const { origin, axis, angle: angle_d } = el.rotation;
+      const angle = (Math.PI * angle_d) / 180;
+      const pivotVector = new THREE.Vector3(...origin.map((x) => x - 8));
+      const pivotLength = -pivotVector.length();
+      pivotVector.normalize();
+
+      console.log(origin, pivotVector, pivotLength);
+      mesh.translateOnAxis(pivotVector, pivotLength);
+
+      let axisV;
+      if (axis === 'x') {
+        axisV = new THREE.Vector3(1, 0, 0);
+      } else if (axis === 'y') {
+        axisV = new THREE.Vector3(0, 1, 0);
+      } else if (axis === 'z') {
+        axisV = new THREE.Vector3(0, 0, 1);
+      }
+
+      mesh.position.applyAxisAngle(axisV, angle);
+
+      mesh.translateOnAxis(pivotVector, -pivotLength);
+      mesh.rotateOnAxis(axisV, angle);
+    }
+
     console.log(`el ${i} at`, mesh.position);
     return mesh;
   });

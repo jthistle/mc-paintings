@@ -82,6 +82,9 @@ const Textures = () => {
 
     const scene = new THREE.Scene();
 
+    // const axesHelper = new THREE.AxesHelper(16);
+    // scene.add( axesHelper );
+
     createBlock(`minecraft:block/${match.block}`, scene).then(() => {
       console.log('done');
       renderer.render(scene, camera);
