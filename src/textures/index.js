@@ -108,8 +108,8 @@ function createMaterials(model, textures) {
   const faceInds = [
     1, 0, 0,  1, 1, 1,
     0, 0, 0,  0, 1, 1,
-    0, 1, 1,  1, 1, 0, // up
-    0, 0, 1,  1, 0, 0, // down
+    0, 1, 0,  1, 1, 1, // up
+    0, 0, 0,  1, 0, 1, // down
     0, 0, 0,  1, 1, 0,
     0, 0, 1,  1, 1, 1,
   ];
@@ -120,66 +120,91 @@ function createMaterials(model, textures) {
       if (!face) {
         return transparent;
       }
+
+      // Get texture ident
       const ident = face.texture.slice(1);
 
+      // Set a tint colour if necessary
       let color = 0xffffff;
       if (face.tintindex !== undefined) {
         color = 0x32d827;
       }
 
-      let faceStart, faceEnd;
+      // Get texture
+      const txt = textures[ident].clone();
+
+      // Sort out the texture UV
+      let uv = [0, 0, 0, 0];
       if (!face.uv) {
-        // Try to resize the texture to fit properly on the face
+        // Intuit some UV values for this face
         const thisFace = faceInds.slice(6 * i, 6 * (i + 1));
         const points = [el.from, el.to];
 
-        faceStart = [
-          points[thisFace[0]][0],
-          points[thisFace[1]][1],
-          points[thisFace[2]][2],
-        ];
-        faceEnd = [
-          points[thisFace[3]][0],
-          points[thisFace[4]][1],
-          points[thisFace[5]][2],
-        ];
+        let faceStart = [];
+        let faceEnd = [];
+        for (let j = 0; j < 3; ++j) {
+          let a = points[thisFace[j]][j];
+          let b = points[thisFace[j + 3]][j];
+
+          if (a === b) continue;
+
+          faceStart.push(a);
+          faceEnd.push(b);
+        }
+
+        // Hack
+        if (i < 2) {
+          faceStart = faceStart.reverse();
+          faceEnd = faceEnd.reverse();
+        }
+
+        uv[0] = faceStart[0];
+        uv[1] = txt.image.height - faceEnd[1];
+        uv[2] = faceEnd[0];
+        uv[3] = txt.image.height - faceStart[1];
+
+        // console.log("face",order[i],"has points:",faceStart, faceEnd);
+        // console.log("this gives uv", uv);
       } else {
-        const { uv } = face;
-        faceStart = [uv[0], uv[1], 0];
-        faceEnd = [uv[1], uv[3], 0];
+        // Use given UV values
+        uv = face.uv;
       }
 
-      let dim = [];
-      let offset = [];
-      const fact = 16;
-      for (let i = 0; i < 3; ++i) {
-        if (faceStart[i] == faceEnd[i]) continue;
-
-        // This works through sheer willpower, so be careful
-        const thisDim = (faceEnd[i] - faceStart[i]) / fact;
-        dim.push(thisDim);
-        offset.push(-(1 - thisDim - (2 * faceStart[i]) / fact) / 2);
-      }
-
-      // Hack
-      if (i <= 1) {
-        dim = dim.reverse();
-        offset = offset.reverse();
-      }
-
-      // console.log(`face ${faceName} has dimensions`, dim, `offset`, offset);
-      // console.log(`starts at`, faceStart, `ends at`, faceEnd);
-
-      const txt = textures[ident].clone();
-      txt.repeat = new THREE.Vector2(...dim);
-      txt.offset = new THREE.Vector2(...offset);
-      txt.center = new THREE.Vector2(0.5, 0.5);
-
+      // Start by setting a texture centrepoint
+      let centre = new THREE.Vector2(0.5, 0.5);
+      let rotation = 0;
       if (face.rotation) {
-        txt.rotation = (Math.PI * face.rotation) / 180;
+        rotation += (Math.PI * face.rotation) / 180;
       }
 
+      // Hack for top and bottom faces
+      if (i == 2 || i == 3) {
+        rotation += Math.PI;
+        centre = new THREE.Vector2(0.5, 0.5);
+      }
+
+      // Now resize the texture for the UV
+      const resize = [
+        (uv[2] - uv[0]) / txt.image.width,
+        (uv[3] - uv[1]) / txt.image.height,
+      ];
+
+      // Set offset. Centre is bottom left corner, in this case.
+      const txtCentre = new THREE.Vector2(
+        (uv[0] + (uv[2] - uv[0]) * centre.x) / txt.image.width,
+        1 - (uv[3] - (uv[3] - uv[1]) * centre.y) / txt.image.height
+      );
+
+      const offset = [txtCentre.x - centre.x, txtCentre.y - centre.y];
+
+      // Apply changes
+      txt.center = centre;
+      txt.repeat = new THREE.Vector2(...resize);
+      txt.offset = new THREE.Vector2(...offset);
+      txt.rotation = rotation;
       txt.needsUpdate = true;
+
+      // console.log("face", faceName, "hase uv", uv, "resize", resize, "offset", offset);
 
       return new THREE.MeshBasicMaterial({
         map: txt,
