@@ -103,15 +103,15 @@ function createGeometries(model) {
 }
 
 function createMaterials(model, textures) {
-  const order = ['east', 'west', 'up', 'down', 'north', 'south'];
+  const order = ['east', 'west', 'up', 'down', 'south', 'north'];
   // prettier-ignore
   const faceInds = [
     1, 0, 0,  1, 1, 1,
     0, 0, 0,  0, 1, 1,
     0, 1, 0,  1, 1, 1, // up
     0, 0, 0,  1, 0, 1, // down
-    0, 0, 0,  1, 1, 0,
     0, 0, 1,  1, 1, 1,
+    0, 0, 0,  1, 1, 0,
   ];
 
   return model.elements.map((el) => {
@@ -152,18 +152,27 @@ function createMaterials(model, textures) {
           faceEnd.push(b);
         }
 
-        // Hack
+        // Hack - make UV values always increase
         if (i < 2) {
           faceStart = faceStart.reverse();
           faceEnd = faceEnd.reverse();
         }
 
-        uv[0] = faceStart[0];
         uv[1] = txt.image.height - faceEnd[1];
-        uv[2] = faceEnd[0];
         uv[3] = txt.image.height - faceStart[1];
 
-        // console.log("face",order[i],"has points:",faceStart, faceEnd);
+        // i === 1 may not be correct here, but something like it should exist for symmetry.
+        // Cannot verify this, however.
+        if (i === 1 || i === 5) {
+          // Hack, sort of
+          uv[0] = txt.image.width - faceEnd[0];
+          uv[2] = txt.image.width - faceStart[0];
+        } else {
+          uv[0] = faceStart[0];
+          uv[2] = faceEnd[0];
+        }
+
+        // console.log("face",faceName,"has points:",faceStart, faceEnd);
         // console.log("this gives uv", uv);
       } else {
         // Use given UV values
@@ -174,13 +183,7 @@ function createMaterials(model, textures) {
       let centre = new THREE.Vector2(0.5, 0.5);
       let rotation = 0;
       if (face.rotation) {
-        rotation += (Math.PI * face.rotation) / 180;
-      }
-
-      // Hack for top and bottom faces
-      if (i === 2 || i === 3) {
-        rotation += Math.PI;
-        centre = new THREE.Vector2(0.5, 0.5);
+        rotation += -(Math.PI * face.rotation) / 180;
       }
 
       // Now resize the texture for the UV
@@ -204,7 +207,7 @@ function createMaterials(model, textures) {
       txt.rotation = rotation;
       txt.needsUpdate = true;
 
-      // console.log("face", faceName, "hase uv", uv, "resize", resize, "offset", offset);
+      // console.log("face", faceName, "has uv", uv, "resize", resize, "offset", offset);
 
       return new THREE.MeshBasicMaterial({
         map: txt,
