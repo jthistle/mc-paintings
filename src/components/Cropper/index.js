@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2020 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,20 +32,57 @@ export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
   const [currentImageRef, setCurrentImageRef] = useState();
   const [crop, setCrop] = useState(initialCrop);
   const [imageToUse, setImageToUse] = useState();
+  const [stale, setStale] = useState({
+    image: true,
+    crop: true,
+  });
 
   useEffect(() => {
+    if (image === imageToUse) return;
+
+    // Image has changed, both crop and image are stale
+    setStale({
+      image: true,
+      crop: true,
+    });
+  }, [image, imageToUse]);
+
+  useEffect(() => {
+    // Only update crop for Cropper if we need to
+    if (!stale.crop) return;
+
     setCrop(initialCrop);
-  }, [initialCrop]);
+    setStale((v) => ({
+      ...v,
+      crop: false,
+    }));
+  }, [initialCrop, stale]);
 
   useEffect(() => {
-    // Make sure we load the image after setting the crop
+    if (Object.keys(crop).length === 0) {
+      // If the current initial crop is undecided (i.e. === {}), make
+      // sure that we update the crop the next time it becomes decided.
+      setStale((v) => ({
+        ...v,
+        crop: true,
+      }));
+    }
+
+    // Only reset image if crop has been set in order to
+    // make sure we load the image after setting the crop
+    if (!stale.image || stale.crop) return;
+
     setImageToUse(image);
+    setStale((v) => ({
+      ...v,
+      image: false,
+    }));
     // We don't want to depend on image, disable warning
     // eslint-disable-next-line
-  }, [crop]);
+  }, [crop, stale]);
 
   /*
-  `*  This was taken from the docs for `react-image-crop`
+   *  This was taken from the docs for `react-image-crop`
    */
   const getCroppedImg = (image, crop) => {
     if (crop.width <= 0 || crop.height <= 0 || !image) return;
@@ -73,7 +110,7 @@ export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
     return canvas.toDataURL('image/jpeg');
   };
 
-  const onChange = crop => {
+  const onChange = (crop) => {
     setCrop(crop);
     if (onCropChange)
       onCropChange({
@@ -81,7 +118,7 @@ export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
       });
   };
 
-  const onComplete = crop => {
+  const onComplete = (crop) => {
     setCrop(crop);
     if (onCropComplete)
       onCropComplete({
