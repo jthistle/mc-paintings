@@ -31,23 +31,31 @@ const Backers = ({ ...props }) => {
     'Fetching super backers...',
   ]);
   const [status, setStatus] = useState('init');
+  const [cancelToken] = useState(axios.CancelToken.source());
 
   const fetchBackers = async () => {
     if (status !== 'init') return;
 
     try {
-      let response = await axios.get(BACKERS_URL);
+      let response = await axios.get(BACKERS_URL, {
+        cancelToken: cancelToken.token,
+      });
       let bck = response.data.backers;
       let sup = response.data.superBackers;
+
       setBackers(
-        bck && ['No one has backed Minecraft Painting Generator yet.']
+        bck.length === 0
+          ? ['No one has backed Minecraft Painting Generator yet.']
+          : bck
       );
       setSuperBackers(
-        sup && ['No one has super backed Minecraft Painting Generator yet.']
+        sup.length === 0
+          ? ['No one has super backed Minecraft Painting Generator yet.']
+          : sup
       );
       setStatus('done');
     } catch (error) {
-      console.error(error);
+      console.error('Error:', error.message);
       setBackers(['Error fetching backers']);
       setSuperBackers(['Error fetching backers']);
       setStatus('error');
@@ -59,12 +67,20 @@ const Backers = ({ ...props }) => {
     // eslint-disable-next-line
   }, [props]);
 
+  // Cancel request on unmount
+  useEffect(() => {
+    return () => {
+      cancelToken.cancel();
+    };
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Layout>
       <Column>
         <div className="content">
           <h1>Super Backers</h1>
-          <p>For generous donations of £10 (or €10/$10) or more</p>
+          <p>For generous donations of £10 (or €10/$10) or more - thank you!</p>
           <div className="superBackers">
             {superBackers &&
               superBackers.map((name, i) => <h3 key={i}>{name}</h3>)}
