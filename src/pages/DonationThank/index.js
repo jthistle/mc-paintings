@@ -35,8 +35,10 @@ const DonationThank = () => {
             backers as soon as possible (at least within the next week).
             <br />
             If this hasn't happened,{' '}
-            <a href="mailto:jamesthistlewood@gmail.com">let me know</a>. Your
-            thank-you email will also be arriving soon.
+            <a href={'mailto:' + process.env.REACT_APP_PRIVATE_EMAIL}>
+              let me know
+            </a>
+            .
           </p>
           <p>Once again, thank you so much for your support.</p>
         </div>
