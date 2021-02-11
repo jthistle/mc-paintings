@@ -34,6 +34,7 @@ import fileBuilders from './fileBuilders';
 
 import { SIZES } from './configs';
 import DEFAULT_PACK_META from './defaultMeta';
+import { navigate } from '@reach/router';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -263,22 +264,39 @@ const Home = () => {
     });
   };
 
-  const onDownloadPressed = () => {
-    setPackMeta({});
-
-    // Perform check
-    let hasImage = false;
+  const hasImage = () => {
     for (let size in textureImages) {
       for (let image of textureImages[size]) {
         if (image) {
-          hasImage = true;
-          break;
+          return true;
         }
       }
-      if (hasImage) break;
     }
+    return false;
+  };
 
-    if (!hasImage) {
+  const navCapture = (to, e) => {
+    if (hasImage()) {
+      e.preventDefault();
+      e.stopPropagation();
+      setWarning({
+        title: 'Unsaved work',
+        message:
+          'Navigating away from this page will cause your work to be lost. Are you sure you want to continue?',
+        onAccept: () => {
+          navigate(to);
+        },
+        onReject: () => {
+          setWarning(null);
+        },
+      });
+    }
+  };
+
+  const onDownloadPressed = () => {
+    setPackMeta({});
+
+    if (!hasImage()) {
       setWarning({
         title: 'No images in resource pack',
         message:
@@ -358,7 +376,7 @@ const Home = () => {
   };
 
   return (
-    <Layout>
+    <Layout captureHeader={navCapture}>
       {warning && (
         <Warning onAccept={warning.onAccept} onReject={warning.onReject}>
           <h1>{warning.title}</h1>

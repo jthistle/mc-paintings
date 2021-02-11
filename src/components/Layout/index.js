@@ -38,7 +38,7 @@ const Column = ({ children }) => (
   </div>
 );
 
-const Layout = ({ children }) => {
+const Layout = ({ captureHeader, children }) => {
   const [showCookieBar, setShowCookieBar] = useState(
     !localStorage.getItem('canTrack')
   );
@@ -51,7 +51,7 @@ const Layout = ({ children }) => {
   return (
     <div>
       {showCookieBar || <Tracker />}
-      <Header />
+      <Header capture={captureHeader} />
       <div className="main">{children}</div>
       {showCookieBar && window.location.pathname !== PRIVACY_PATH && (
         <>

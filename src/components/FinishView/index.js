@@ -31,14 +31,15 @@ const FEEDBACK = links.FEEDBACK;
 export default ({ onClose }) => {
   return (
     <InfoPopup onReject={onClose}>
-      <ExtraInfo />
+      <Button external={PAYPAL} scheme="yellow" big>
+        Donate
+      </Button>
       <p className="text">
         Thanks for using this website! <br />
         Things like this take time to make and cost money to keep running.
+        <br />
+        <b>You are one of 1000 monthly users. &nbsp;999 don't donate.</b>
       </p>
-      <Button external={PAYPAL} scheme="yellow">
-        Donate
-      </Button>
       <Button external={TWITTER}>Tweet about it</Button>
       <Button external={GITHUB} scheme="black">
         Star on GitHub
