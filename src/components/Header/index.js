@@ -17,12 +17,13 @@
  */
 
 import React from 'react';
-import { Link, navigate } from '@reach/router';
+import { Link } from '@reach/router';
+import CapturedLink from '../CapturedLink';
 
 import Button from '../../components/Button';
 import { c_HEADER, c_PRIMARY } from '../../theme';
 
-export default () => {
+export default ({ capture }) => {
   return (
     <>
       <div className="header">
@@ -30,20 +31,23 @@ export default () => {
           <h1 className="text">Minecraft Painting Creator</h1>
         </Link>
         <div className="links">
-          <Button internal="/backers">Backers</Button>
+          <Button internal="/backers" capture={capture}>
+            Backers
+          </Button>
           <Button
-            onClick={() => navigate('/support')}
+            internal="/support"
             scheme="yellow"
             className="linkBtn"
+            capture={capture}
           >
             Support
           </Button>
-          <Link to="/privacy">
+          <CapturedLink to="/privacy" capture={capture}>
             <span className="privacyLink">Privacy</span>
-          </Link>
-          <Link to="/enquiries">
+          </CapturedLink>
+          <CapturedLink to="/enquiries" capture={capture}>
             <span className="enquiriesLink">Enquiries</span>
-          </Link>
+          </CapturedLink>
         </div>
         <style jsx>{`
           .header {

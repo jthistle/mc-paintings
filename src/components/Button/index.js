@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Link } from '@reach/router';
+import CapturedLink from '../CapturedLink';
 import {
   c_ACTION,
   c_HIGHLIGHT,
@@ -27,7 +27,14 @@ import {
   c_PRIMARY,
 } from '../../theme';
 
-const ButtonInternals = ({ children, onClick, disabled, scheme, noMargin }) => {
+const ButtonInternals = ({
+  children,
+  onClick,
+  disabled,
+  scheme,
+  noMargin,
+  big,
+}) => {
   let primary = c_PRIMARY;
   let secondary = c_ACTION;
   let secondaryHover = c_HIGHLIGHT;
@@ -62,9 +69,9 @@ const ButtonInternals = ({ children, onClick, disabled, scheme, noMargin }) => {
       <style jsx>{`
         .button {
           display: inline-block;
-          padding: 0 1rem;
-          height: 3rem;
-          line-height: 3rem;
+          padding: 0 ${big ? 2 : 1}rem;
+          height: ${big ? 5 : 3}rem;
+          line-height: ${big ? 5 : 3}rem;
           border-radius: 0.25rem;
           background: ${secondary};
           transition: all 0.3s;
@@ -74,6 +81,8 @@ const ButtonInternals = ({ children, onClick, disabled, scheme, noMargin }) => {
           text-decoration: none;
           color: ${primary};
           cursor: pointer;
+          font-size: ${big ? 2 : 1}rem;
+          font-size: ${big ? 2 : 1}rem;
         }
 
         .button:hover {
@@ -94,7 +103,7 @@ const ButtonInternals = ({ children, onClick, disabled, scheme, noMargin }) => {
   );
 };
 
-const Button = ({ external, internal, children, ...props }) => {
+const Button = ({ external, internal, children, capture, ...props }) => {
   if (external) {
     return (
       <a href={external} target="_blank" rel="noopener noreferrer">
@@ -103,9 +112,9 @@ const Button = ({ external, internal, children, ...props }) => {
     );
   } else if (internal) {
     return (
-      <Link to={internal}>
+      <CapturedLink to={internal} capture={capture}>
         <ButtonInternals {...props}>{children}</ButtonInternals>
-      </Link>
+      </CapturedLink>
     );
   } else {
     return <ButtonInternals {...props}>{children}</ButtonInternals>;
