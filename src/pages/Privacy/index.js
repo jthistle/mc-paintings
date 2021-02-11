@@ -55,7 +55,7 @@ const Privacy = () => {
               site. These analytics cookies collect your <b>anonymized</b> IP
               address, what kind of device you're using, your general location
               (i.e. which city), the date and time certain pages were accessed,
-              and how you use some functions of the website. This is data is, as
+              and how you use some functions of the website. This data is, as
               described above, all anonymized through IP anonymization. I use
               this information to improve the website.
             </li>
