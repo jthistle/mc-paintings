@@ -16,6 +16,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/* eslint jsx-a11y/img-redundant-alt: 0 */
+
 import React, { useEffect, useState } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
@@ -418,6 +420,11 @@ const Home = () => {
   useEffect(() => {
     if (!media.mobile) return;
     mobileOnSizeChange(0);
+    // god i hate these stupid dependency warnings
+    // no, eslint, my effect doesn't depend on a function it calls,
+    // even if it technically does
+    // i know u don't have any better way of knowing but anyway
+    // eslint-disable-next-line
   }, [media.mobile]);
 
   /// Rendering and stuff
@@ -463,6 +470,7 @@ const Home = () => {
               <img
                 className="buttonIcon"
                 src={disableCrop ? AddImage : ChangeImage}
+                alt="Upload image"
               ></img>
             </div>
           </UploadInput>
@@ -471,12 +479,16 @@ const Home = () => {
             onClick={() => !disableCrop && setCropOpenMob(true)}
           >
             <div className="iconContainer">
-              <img className="buttonIcon" src={CropIcon}></img>
+              <img className="buttonIcon" src={CropIcon} alt="Crop image"></img>
             </div>
           </Button>
           <Button onClick={onDownloadPressed}>
             <div className="iconContainer">
-              <img className="buttonIcon" src={DownloadIcon}></img>
+              <img
+                className="buttonIcon"
+                src={DownloadIcon}
+                alt="Download resource pack"
+              ></img>
             </div>
           </Button>
         </div>

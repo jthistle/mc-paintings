@@ -86,7 +86,7 @@ export default ({ capture }) => {
         </Link>
         {media.mobile ? (
           <div className="menuIcon" onClick={() => setShowDropdown(true)}>
-            <img src={MenuIcon} />
+            <img src={MenuIcon} alt="Menu" />
           </div>
         ) : (
           <Links capture={capture} />
