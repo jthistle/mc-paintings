@@ -4,7 +4,7 @@ const DEFAULT_PACK_META = {
   name: 'MC Paintings Pack',
   description: 'Generated at mcpaintings.com',
   packFormat: 6,
-  resolution: 16,
+  resolution: 64,
   extension: 'zip',
   fileBuilder: fileBuilders.java,
   versionTag: '1_16',

@@ -69,7 +69,7 @@ const Links = ({ capture, mobile }) => {
 };
 
 export default ({ capture }) => {
-  const media = useMedia(mediaQuery); // TODO: dropdown / fullscreen menu
+  const media = useMedia(mediaQuery);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const closeMenu = (e) => {
