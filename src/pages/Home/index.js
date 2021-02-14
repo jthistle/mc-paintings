@@ -45,6 +45,7 @@ import { useMedia } from 'react-media';
 import AddImage from './add_image.svg';
 import ChangeImage from './change_image.svg';
 import CropIcon from './crop.svg';
+import DownloadIcon from './download.svg';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -473,6 +474,11 @@ const Home = () => {
               <img className="buttonIcon" src={CropIcon}></img>
             </div>
           </Button>
+          <Button onClick={onDownloadPressed}>
+            <div className="iconContainer">
+              <img className="buttonIcon" src={DownloadIcon}></img>
+            </div>
+          </Button>
         </div>
         {cropOpenMob && (
           <>
@@ -523,11 +529,11 @@ const Home = () => {
 
           .cropper {
             position: absolute;
-            top: 20vh;
-            left: 0;
-            width: 100vw;
-            max-height: 75vh;
+            top: 10vh;
+            left: 10vw;
+            width: 80vw;
             z-index: 4;
+            text-align: center;
           }
 
           .blackout {
@@ -543,9 +549,13 @@ const Home = () => {
 
           .cropText {
             font-weight: bold;
-            margin-top: 2rem;
-            width: 100vw;
+            margin: 2rem 0;
             text-align: center;
+            display: inline-block;
+          }
+
+          .buttons {
+            margin-bottom: 2rem;
           }
         `}</style>
       </>
