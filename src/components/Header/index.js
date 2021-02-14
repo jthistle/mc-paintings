@@ -23,7 +23,11 @@ import CapturedLink from '../CapturedLink';
 import Button from '../../components/Button';
 import { c_HEADER, c_PRIMARY } from '../../theme';
 
+import mediaQuery from '../../components/media';
+import { useMedia } from 'react-media';
+
 export default ({ capture }) => {
+  const media = useMedia(mediaQuery); // TODO: dropdown / fullscreen menu
   return (
     <>
       <div className="header">

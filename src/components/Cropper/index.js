@@ -118,11 +118,12 @@ export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
       });
   };
 
-  const onComplete = (crop) => {
-    setCrop(crop);
+  const onComplete = (newCrop) => {
+    if (!currentImageRef) return;
+    setCrop(newCrop);
     if (onCropComplete)
       onCropComplete({
-        croppedImage: getCroppedImg(currentImageRef, crop),
+        croppedImage: getCroppedImg(currentImageRef, newCrop),
       });
   };
 
