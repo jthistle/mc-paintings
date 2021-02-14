@@ -555,7 +555,7 @@ const Home = () => {
           }
 
           .buttons {
-            margin-bottom: 2rem;
+            margin: 1rem 0 2rem 0;
           }
         `}</style>
       </>
