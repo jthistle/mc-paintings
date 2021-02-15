@@ -27,9 +27,12 @@ const Support = ({ ...props }) => {
     <Layout>
       <Column>
         <div className="content">
-          <ExtraInfo />
-          <div className="spacer" />
-          <Button external={PAYPAL} scheme="yellow">
+          <div className="spacer"></div>
+          <b>
+            Help keep this website alive for as little as the price of a coffee!
+          </b>
+          <div className="spacer"></div>
+          <Button external={PAYPAL} scheme="yellow" big>
             Donate
           </Button>
           <p>
