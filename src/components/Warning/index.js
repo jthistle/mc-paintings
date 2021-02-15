@@ -38,6 +38,7 @@ const Button = ({ children, onClick }) => (
         transition: all 0.2s;
         font-weight: bold;
         cursor: pointer;
+        margin: 0 1rem;
       }
 
       .button:hover {

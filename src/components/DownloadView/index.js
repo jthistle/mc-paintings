@@ -16,11 +16,14 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 import TextInput from '../TextInput';
 import Select from 'react-select';
+
+import mediaQuery from '../../components/media';
+import { useMedia } from 'react-media';
 
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
@@ -31,6 +34,10 @@ const selectOptions = [
   { value: 'BR_1_14', label: 'Bedrock 1.14+' },
   { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
+
+// Default versions selected for different
+const DEFAULT_DESKTOP = 0;
+const DEFAULT_MOBILE = 3;
 
 const resolutionOptions = [
   { value: 16, label: '16x' },
@@ -67,89 +74,103 @@ const styles = {
   }),
 };
 
-export default ({ handleInput, onDownload, onClose, enableResolution }) => (
-  <InfoPopup onReject={onClose}>
-    <div className="wrapper">
-      <h1>Download your resource pack</h1>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <label htmlFor="packName">Pack name:</label>
-            </td>
-            <td>
-              <TextInput
-                id="packName"
-                placeholder="Pack name"
-                onChange={(e) => handleInput(e, 'name')}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label htmlFor="packDesc">Pack description:</label>
-            </td>
-            <td>
-              <TextInput
-                id="packDesc"
-                placeholder="Pack description"
-                onChange={(e) => handleInput(e, 'description')}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label htmlFor="version">Minecraft Version: </label>
-            </td>
-            <td>
-              <Select
-                options={selectOptions}
-                styles={styles}
-                defaultValue={selectOptions[0]}
-                isSearchable={false}
-                onChange={(e) => handleInput(e, 'version')}
-              />
-            </td>
-          </tr>
-          {enableResolution && (
+export default ({ handleInput, onDownload, onClose, enableResolution }) => {
+  const media = useMedia(mediaQuery);
+  const def = media.mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
+
+  useEffect(() => {
+    handleInput(
+      {
+        value: selectOptions[def].value,
+      },
+      'version'
+    );
+  }, []);
+
+  return (
+    <InfoPopup onReject={onClose}>
+      <div className="wrapper">
+        <h1>Download your resource pack</h1>
+        <table>
+          <tbody>
             <tr>
               <td>
-                <label htmlFor="resolution">Bedrock block pixels: </label>
+                <label htmlFor="packName">Pack name:</label>
               </td>
               <td>
-                <Select
-                  options={resolutionOptions}
-                  styles={styles}
-                  defaultValue={resolutionOptions[0]}
-                  isSearchable={false}
-                  onChange={(e) => handleInput(e, 'resolution')}
+                <TextInput
+                  id="packName"
+                  placeholder="Pack name"
+                  onChange={(e) => handleInput(e, 'name')}
                 />
               </td>
             </tr>
-          )}
-        </tbody>
-      </table>
-      <br />
-      <Button onClick={onClose}>Go back</Button>
-      <Button onClick={onDownload}>Download resource pack</Button>
-    </div>
-    <style jsx>{`
-      .wrapper {
-        text-align: center;
-      }
+            <tr>
+              <td>
+                <label htmlFor="packDesc">Pack description:</label>
+              </td>
+              <td>
+                <TextInput
+                  id="packDesc"
+                  placeholder="Pack description"
+                  onChange={(e) => handleInput(e, 'description')}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="version">Minecraft Version: </label>
+              </td>
+              <td>
+                <Select
+                  options={selectOptions}
+                  styles={styles}
+                  defaultValue={selectOptions[def]}
+                  isSearchable={false}
+                  onChange={(e) => handleInput(e, 'version')}
+                />
+              </td>
+            </tr>
+            {enableResolution && (
+              <tr>
+                <td>
+                  <label htmlFor="resolution">Bedrock block pixels: </label>
+                </td>
+                <td>
+                  <Select
+                    options={resolutionOptions}
+                    styles={styles}
+                    defaultValue={resolutionOptions[2]}
+                    isSearchable={false}
+                    onChange={(e) => handleInput(e, 'resolution')}
+                  />
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <br />
+        <Button onClick={onClose}>Go back</Button>
+        <Button onClick={onDownload}>Download resource pack</Button>
+      </div>
+      <style jsx>{`
+        .wrapper {
+          text-align: center;
+        }
 
-      table {
-        display: inline-block;
-        margin-bottom: 3rem;
-      }
+        table {
+          display: inline-block;
+          margin-bottom: 3rem;
+        }
 
-      table tr {
-        text-align: left;
-      }
+        table tr {
+          text-align: left;
+        }
 
-      label {
-        padding: 0 1rem;
-      }
-    `}</style>
-  </InfoPopup>
-);
+        label {
+          padding: 0 1rem;
+        }
+      `}</style>
+    </InfoPopup>
+  );
+};

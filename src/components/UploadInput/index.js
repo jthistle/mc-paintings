@@ -28,10 +28,11 @@ import {
 const INPUT_HEIGHT = 3; // rem
 const INPUT_WIDTH = 15; // rem
 
-export default ({ onUpload, text, disabled }) => {
+export default ({ onUpload, children, disabled, width }) => {
+  width = width || INPUT_WIDTH;
   return (
     <div className={`fakeButton ${disabled && 'disabled'}`}>
-      <div className="textBox">{text}</div>
+      <div className="textBox">{children}</div>
       <input
         type="file"
         accept="image/png, image/jpeg"
@@ -65,7 +66,7 @@ export default ({ onUpload, text, disabled }) => {
 
         .textBox {
           height: ${INPUT_HEIGHT}rem;
-          width: ${INPUT_WIDTH}rem;
+          width: ${width}rem;
           z-index: 1;
           line-height: ${INPUT_HEIGHT}rem;
           font-weight: bold;
@@ -78,7 +79,7 @@ export default ({ onUpload, text, disabled }) => {
           z-index: 2;
           opacity: 0;
           height: ${INPUT_HEIGHT}rem;
-          width: ${INPUT_WIDTH}rem;
+          width: ${width}rem;
         }
 
         input:hover {

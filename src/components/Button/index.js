@@ -82,7 +82,6 @@ const ButtonInternals = ({
           color: ${primary};
           cursor: pointer;
           font-size: ${big ? 2 : 1}rem;
-          font-size: ${big ? 2 : 1}rem;
         }
 
         .button:hover {
