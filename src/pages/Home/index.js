@@ -16,7 +16,9 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { useState } from 'react';
+/* eslint jsx-a11y/img-redundant-alt: 0 */
+
+import React, { useEffect, useState } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
@@ -25,16 +27,27 @@ import { c_INACTIVE } from '../../theme';
 import UploadInput from '../../components/UploadInput';
 import Cropper from '../../components/Cropper';
 import ImageSize from '../../components/ImageSize';
+import ImageSelectMobile from '../../components/ImageSelectMobile';
 import Warning from '../../components/Warning';
 import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
 import FinishView from '../../components/FinishView';
+import Carousel from '../../components/Carousel';
+
 import ReactGA from '../../analytics';
 import fileBuilders from './fileBuilders';
 
 import { SIZES } from './configs';
 import DEFAULT_PACK_META from './defaultMeta';
 import { navigate } from '@reach/router';
+
+import mediaQuery from '../../components/media';
+import { useMedia } from 'react-media';
+
+import AddImage from './add_image.svg';
+import ChangeImage from './change_image.svg';
+import CropIcon from './crop.svg';
+import DownloadIcon from './download.svg';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -116,6 +129,19 @@ const Home = () => {
   const [showResolutionSelect, setShowResolutionSelect] = useState(false);
   const [showSupportView, setShowSupportView] = useState(false);
 
+  // Mobile-specific state
+  const [currentSizeMob, setCurrentSizeMob] = useState('1x1');
+  const [lastImageIdsMob, setLastImageIdsMob] = useState(() => {
+    let init = {};
+    Object.keys(SIZES).forEach((size) => {
+      init[size] = 0;
+    });
+    return init;
+  });
+  const [cropOpenMob, setCropOpenMob] = useState(false);
+
+  const media = useMedia(mediaQuery);
+
   const onCropChange = (event) => {
     if (!selectedSize) return;
 
@@ -159,6 +185,8 @@ const Home = () => {
       let newTextureImages = { ...textureImages };
       newTextureImages[selectedSize.size][selectedSize.index] = null;
       setTextureImages(newTextureImages);
+
+      setCropOpenMob(true);
 
       ReactGA.event({
         category: 'Image',
@@ -375,6 +403,261 @@ const Home = () => {
     });
   };
 
+  const mobileOnSizeChange = (i) => {
+    let size = Object.keys(SIZES)[i];
+    setCurrentSizeMob(size);
+    onImageSelect(size, lastImageIdsMob[size]);
+  };
+
+  const mobileOnImageChange = (size, i) => {
+    setLastImageIdsMob((old) => {
+      old[size] = i;
+      return old;
+    });
+    onImageSelect(size, i);
+  };
+
+  useEffect(() => {
+    if (!media.mobile) return;
+    mobileOnSizeChange(0);
+    // god i hate these stupid dependency warnings
+    // no, eslint, my effect doesn't depend on a function it calls,
+    // even if it technically does
+    // i know u don't have any better way of knowing but anyway
+    // eslint-disable-next-line
+  }, [media.mobile]);
+
+  /// Rendering and stuff
+  const renderMobile = () => {
+    const disableCrop = !uploadedImages[currentSizeMob][
+      lastImageIdsMob[currentSizeMob]
+    ];
+    return (
+      <>
+        <div className="spacer"></div>
+        <Carousel height="5vh" onChange={mobileOnSizeChange}>
+          {Object.keys(SIZES).map((size) => {
+            return (
+              <div className="sizeText" key={size}>
+                {size}
+              </div>
+            );
+          })}
+        </Carousel>
+        <div className="spacer"></div>
+        {Object.keys(SIZES).map((size) => (
+          <div key={size} className={size === currentSizeMob ? 'show' : 'hide'}>
+            <Carousel
+              height="30vh"
+              onChange={(i) => mobileOnImageChange(size, i)}
+            >
+              {new Array(SIZES[size]).fill(0).map((_, i) => {
+                return (
+                  <ImageSelectMobile
+                    image={textureImages[size][i]}
+                    size={size}
+                    index={i}
+                    key={i}
+                  />
+                );
+              })}
+            </Carousel>
+          </div>
+        ))}
+        <div className="buttons">
+          <UploadInput width={5} onUpload={onImageUpload}>
+            <div className="iconContainer">
+              <img
+                className="buttonIcon"
+                src={disableCrop ? AddImage : ChangeImage}
+                alt="Upload image"
+              ></img>
+            </div>
+          </UploadInput>
+          <Button
+            disabled={disableCrop}
+            onClick={() => !disableCrop && setCropOpenMob(true)}
+          >
+            <div className="iconContainer">
+              <img className="buttonIcon" src={CropIcon} alt="Crop image"></img>
+            </div>
+          </Button>
+          <Button onClick={onDownloadPressed}>
+            <div className="iconContainer">
+              <img
+                className="buttonIcon"
+                src={DownloadIcon}
+                alt="Download resource pack"
+              ></img>
+            </div>
+          </Button>
+        </div>
+        {cropOpenMob && (
+          <>
+            <div
+              className="blackout"
+              onClick={() => setCropOpenMob(false)}
+            ></div>
+            <div className="cropper">
+              <Cropper
+                image={uploadedImages[selectedSize.size][selectedSize.index]}
+                initialCrop={
+                  cropConfigs[selectedSize.size][selectedSize.index] || {}
+                }
+                onCropChange={onCropChange}
+                onCropComplete={onCropComplete}
+              />
+              <div className="cropText">Drag to crop</div>
+            </div>
+          </>
+        )}
+        <style jsx>{`
+          .spacer {
+            height: 2rem;
+          }
+
+          .sizeText {
+            letter-spacing: 0.5rem;
+            font-weight: bold;
+            line-height: 5vh;
+          }
+
+          .hide {
+            display: none;
+          }
+
+          .iconContainer {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .buttonIcon {
+            height: 1.5rem;
+            display: inline-block;
+          }
+
+          .cropper {
+            position: absolute;
+            top: 10vh;
+            left: 10vw;
+            width: 80vw;
+            z-index: 4;
+            text-align: center;
+          }
+
+          .blackout {
+            z-index: 3;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: black;
+            opacity: 0.7;
+          }
+
+          .cropText {
+            font-weight: bold;
+            margin: 2rem 0;
+            text-align: center;
+            display: inline-block;
+          }
+
+          .buttons {
+            margin: 1rem 0 2rem 0;
+          }
+        `}</style>
+      </>
+    );
+  };
+
+  // Render for desktop users
+  const renderNormal = () => {
+    return (
+      <>
+        <Column>
+          <div className="buttonsContainer">
+            <UploadInput onUpload={onImageUpload} disabled={!selectedSize}>
+              {selectedSize &&
+              uploadedImages[selectedSize.size][selectedSize.index]
+                ? 'Change image'
+                : 'Add an image'}
+            </UploadInput>
+            <Button onClick={onDownloadPressed}>Download pack</Button>
+          </div>
+          {!selectedSize && window.innerWidth < 600 && (
+            <div className="chooseSize">Choose a size to begin:</div>
+          )}
+          <div className="imageSizeContainer">
+            {Object.keys(SIZES).map((size) => (
+              <ImageSize
+                size={size}
+                isExpanded={size === openedMenu}
+                onClick={onImageSizeClick}
+                images={textureImages[size]}
+                onImageSelect={onImageSelect}
+                hasSelected={
+                  selectedSize &&
+                  selectedSize.size === size &&
+                  selectedSize.index
+                }
+                key={size}
+              />
+            ))}
+          </div>
+        </Column>
+        <Column>
+          {isCropping() ? (
+            <Cropper
+              image={uploadedImages[selectedSize.size][selectedSize.index]}
+              initialCrop={
+                cropConfigs[selectedSize.size][selectedSize.index] || {}
+              }
+              onCropChange={onCropChange}
+              onCropComplete={onCropComplete}
+            />
+          ) : (
+            <ImagePlaceHolder needsImage={!!selectedSize} />
+          )}
+          {selectedSize && (
+            <h2>
+              {uploadedImages[selectedSize.size][selectedSize.index] &&
+                'Crop your image | '}
+              Current size: {selectedSize.size}
+            </h2>
+          )}
+        </Column>
+        <style jsx>{`
+          .imageSizeContainer {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+          }
+
+          .buttonsContainer {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+          }
+
+          .chooseSize {
+            text-align: center;
+            width: 100%;
+            margin: 1rem 0;
+          }
+
+          :global(.imageSizeContainer > *) {
+            margin-bottom: 1rem;
+          }
+        `}</style>
+      </>
+    );
+  };
+
   return (
     <Layout captureHeader={navCapture}>
       {warning && (
@@ -402,84 +685,7 @@ const Home = () => {
           }}
         />
       )}
-      <Column>
-        <div className="buttonsContainer">
-          <UploadInput
-            onUpload={onImageUpload}
-            text={
-              selectedSize &&
-              uploadedImages[selectedSize.size][selectedSize.index]
-                ? 'Change image'
-                : 'Add an image'
-            }
-            disabled={!selectedSize}
-          />
-          <Button onClick={onDownloadPressed}>Download pack</Button>
-        </div>
-        {!selectedSize && window.innerWidth < 600 && (
-          <div className="chooseSize">Choose a size to begin:</div>
-        )}
-        <div className="imageSizeContainer">
-          {Object.keys(SIZES).map((size) => (
-            <ImageSize
-              size={size}
-              isExpanded={size === openedMenu}
-              onClick={onImageSizeClick}
-              images={textureImages[size]}
-              onImageSelect={onImageSelect}
-              hasSelected={
-                selectedSize && selectedSize.size === size && selectedSize.index
-              }
-              key={size}
-            />
-          ))}
-        </div>
-      </Column>
-      <Column>
-        {isCropping() ? (
-          <Cropper
-            image={uploadedImages[selectedSize.size][selectedSize.index]}
-            initialCrop={
-              cropConfigs[selectedSize.size][selectedSize.index] || {}
-            }
-            onCropChange={onCropChange}
-            onCropComplete={onCropComplete}
-          />
-        ) : (
-          <ImagePlaceHolder needsImage={!!selectedSize} />
-        )}
-        {selectedSize && (
-          <h2>
-            {uploadedImages[selectedSize.size][selectedSize.index] &&
-              'Crop your image | '}
-            Current size: {selectedSize.size}
-          </h2>
-        )}
-      </Column>
-      <style jsx>{`
-        .imageSizeContainer {
-          margin-top: 1rem;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-evenly;
-        }
-
-        .buttonsContainer {
-          display: flex;
-          justify-content: space-evenly;
-          flex-wrap: wrap;
-        }
-
-        .chooseSize {
-          text-align: center;
-          width: 100%;
-          margin: 1rem 0;
-        }
-
-        :global(.imageSizeContainer > *) {
-          margin-bottom: 1rem;
-        }
-      `}</style>
+      {media.mobile ? renderMobile() : renderNormal()}
     </Layout>
   );
 };
