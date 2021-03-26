@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import Layout, { Column } from '../../components/Layout';
+import Layout, { Column } from '../src/components/Layout';
 
 const Guide = () => {
   return (

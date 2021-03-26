@@ -22,26 +22,26 @@ import React, { useEffect, useState } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-import Layout, { Column } from '../../components/Layout';
-import { c_INACTIVE } from '../../theme';
-import UploadInput from '../../components/UploadInput';
-import Cropper from '../../components/Cropper';
-import ImageSize from '../../components/ImageSize';
-import ImageSelectMobile from '../../components/ImageSelectMobile';
-import Warning from '../../components/Warning';
-import Button from '../../components/Button';
-import DownloadView from '../../components/DownloadView';
-import FinishView from '../../components/FinishView';
-import Carousel from '../../components/Carousel';
+import Layout, { Column } from '../src/components/Layout';
+import { c_INACTIVE } from '../src/theme';
+import UploadInput from '../src/components/UploadInput';
+import Cropper from '../src/components/Cropper';
+import ImageSize from '../src/components/ImageSize';
+import ImageSelectMobile from '../src/components/ImageSelectMobile';
+import Warning from '../src/components/Warning';
+import Button from '../src/components/Button';
+import DownloadView from '../src/components/DownloadView';
+import FinishView from '../src/components/FinishView';
+import Carousel from '../src/components/Carousel';
 
-import ReactGA from '../../analytics';
+import ReactGA from '../src/analytics';
 import fileBuilders from './fileBuilders';
 
-import { SIZES } from './configs';
-import DEFAULT_PACK_META from './defaultMeta';
+import { SIZES } from '../src/pageutil/home/configs';
+import DEFAULT_PACK_META from '../src/pageutil/home/defaultMeta';
 import { navigate } from '@reach/router';
 
-import mediaQuery from '../../components/media';
+import mediaQuery from '../src/components/media';
 import { useMedia } from 'react-media';
 
 import AddImage from './add_image.svg';
