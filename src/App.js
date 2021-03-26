@@ -25,6 +25,7 @@ import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 import Support from './pages/Support';
 import Enquiries from './pages/Enquiries';
+import Guide from './pages/Guide';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Privacy path="/privacy" />
         <Support path="/support" />
         <Enquiries path="/enquiries" />
+        <Guide path="/guide" />
         <NotFound default />
       </Router>
     </div>
