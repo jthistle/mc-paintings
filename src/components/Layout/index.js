@@ -38,7 +38,7 @@ const Column = ({ children }) => (
   </div>
 );
 
-const Layout = ({ captureHeader, children }) => {
+const Layout = ({ device, captureHeader, children }) => {
   const [showCookieBar, setShowCookieBar] = useState(false);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const Layout = ({ captureHeader, children }) => {
   return (
     <div>
       {showCookieBar || <Tracker />}
-      <Header capture={captureHeader} />
+      <Header device={device} capture={captureHeader} />
       <div className="main">{children}</div>
       {showCookieBar && window.location.pathname !== PRIVACY_PATH && (
         <>

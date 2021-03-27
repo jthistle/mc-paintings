@@ -1,4 +1,3 @@
-import React from 'react';
 import campaignLink from './link';
 import { c_SUBTLE } from '../../theme';
 import campaignImage from './image.png';

@@ -16,15 +16,14 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Link from 'next/link';
 import CapturedLink from '../CapturedLink';
 
 import Button from '../../components/Button';
 import { c_DARKEST, c_HEADER, c_PRIMARY } from '../../misc/theme';
 
-import mediaQuery from '../../components/media';
-import { useMedia } from 'react-media';
+import { DeviceContext } from '../../context/device';
 
 import MenuIcon from './menu.svg';
 
@@ -72,8 +71,8 @@ const Links = ({ capture, mobile }) => {
 };
 
 const Header = ({ capture }) => {
-  const media = useMedia(mediaQuery);
   const [showDropdown, setShowDropdown] = useState(false);
+  const { mobile } = useContext(DeviceContext);
 
   const closeMenu = (e) => {
     e.preventDefault();
@@ -87,7 +86,7 @@ const Header = ({ capture }) => {
         <Link href="/">
           <h1 className="title">Minecraft Painting Creator</h1>
         </Link>
-        {media.mobile ? (
+        {mobile ? (
           <div className="menuIcon" onClick={() => setShowDropdown(true)}>
             <img src={MenuIcon} alt="Menu" />
           </div>

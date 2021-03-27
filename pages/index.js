@@ -18,9 +18,11 @@
 
 /* eslint jsx-a11y/img-redundant-alt: 0 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+
+import { DeviceContext } from '../src/context/device';
 
 import Layout, { Column } from '../src/components/Layout';
 import { c_INACTIVE } from '../src/misc/theme';
@@ -40,9 +42,6 @@ import fileBuilders from '../src/misc/fileBuilders';
 import { SIZES } from '../src/misc/configs';
 import DEFAULT_PACK_META from '../src/misc/defaultMeta';
 import { navigate } from 'next/router';
-
-import mediaQuery from '../src/components/media';
-import { useMedia } from 'react-media';
 
 import AddImage from '../src/misc/add_image.svg';
 import ChangeImage from '../src/misc/change_image.svg';
@@ -85,6 +84,8 @@ function generateInitial() {
 }
 
 const Home = () => {
+  const device = useContext(DeviceContext);
+
   // current image to use { size: string, index: int }, falsy if none selected
   const [selectedSize, setSelectedSize] = useState();
   // the current opened menu (size string), falsy if none open
@@ -139,8 +140,6 @@ const Home = () => {
     return init;
   });
   const [cropOpenMob, setCropOpenMob] = useState(false);
-
-  const media = useMedia(mediaQuery);
 
   const onCropChange = (event) => {
     if (!selectedSize) return;
@@ -418,14 +417,14 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!media.mobile) return;
+    if (!device.mobile) return;
     mobileOnSizeChange(0);
     // god i hate these stupid dependency warnings
     // no, eslint, my effect doesn't depend on a function it calls,
     // even if it technically does
     // i know u don't have any better way of knowing but anyway
     // eslint-disable-next-line
-  }, [media.mobile]);
+  }, [device.mobile]);
 
   /// Rendering and stuff
   const renderMobile = () => {
@@ -588,7 +587,7 @@ const Home = () => {
             </UploadInput>
             <Button onClick={onDownloadPressed}>Download pack</Button>
           </div>
-          {!selectedSize && window.innerWidth < 600 && (
+          {!selectedSize && device.mobile && (
             <div className="chooseSize">Choose a size to begin:</div>
           )}
           <div className="imageSizeContainer">
@@ -659,7 +658,7 @@ const Home = () => {
   };
 
   return (
-    <Layout captureHeader={navCapture}>
+    <Layout device={device} captureHeader={navCapture}>
       {warning && (
         <Warning onAccept={warning.onAccept} onReject={warning.onReject}>
           <h1>{warning.title}</h1>
@@ -685,7 +684,7 @@ const Home = () => {
           }}
         />
       )}
-      {media.mobile ? renderMobile() : renderNormal()}
+      {device.mobile ? renderMobile() : renderNormal()}
     </Layout>
   );
 };

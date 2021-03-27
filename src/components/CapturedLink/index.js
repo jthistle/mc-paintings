@@ -16,7 +16,6 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React from 'react';
 import Link from 'next/link';
 
 const CapturedLink = ({ to, capture, children, ...props }) => {

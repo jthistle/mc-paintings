@@ -16,7 +16,6 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React from 'react';
 import { c_ACTION, c_HIGHLIGHT, c_PRIMARY, c_ACTIVE } from '../../misc/theme';
 
 const TextInput = ({ onChange, ...props }) => {

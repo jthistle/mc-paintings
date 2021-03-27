@@ -16,7 +16,6 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 

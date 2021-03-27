@@ -1,6 +1,11 @@
+import { useState } from 'react';
 import Head from 'next/head';
+import { DeviceContext } from '../src/context/device';
+import getDevice from '../src/misc/getDevice';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, device }) {
+  const [storedDevice] = useState(device);
+
   return (
     <>
       <Head>
@@ -21,7 +26,9 @@ function MyApp({ Component, pageProps }) {
         />
         <meta name="yandex-verification" content="44172bf8c8280819" />
       </Head>
-      <Component {...pageProps} />
+      <DeviceContext.Provider value={storedDevice}>
+        <Component {...pageProps} />
+      </DeviceContext.Provider>
       <style global jsx>{`
         @font-face {
           font-family: Rubik;
@@ -86,5 +93,17 @@ function MyApp({ Component, pageProps }) {
     </>
   );
 }
+
+MyApp.getInitialProps = async ({ ctx }) => {
+  // This disables https://nextjs.org/docs/advanced-features/automatic-static-optimization
+  // TODO keep an eye out for ways to do this better.
+  if (!ctx?.req) {
+    return { device: null };
+  }
+
+  return {
+    device: getDevice(ctx),
+  };
+};
 
 export default MyApp;
