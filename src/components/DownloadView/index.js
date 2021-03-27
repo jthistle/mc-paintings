@@ -16,14 +16,13 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 import TextInput from '../TextInput';
 import Select from 'react-select';
 
-import mediaQuery from '../../components/media';
-import { useMedia } from 'react-media';
+import { DeviceContext } from '../../context/device';
 
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../misc/theme';
 
@@ -80,8 +79,8 @@ const DownloadView = ({
   onClose,
   enableResolution,
 }) => {
-  const media = useMedia(mediaQuery);
-  const def = media.mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
+  const { mobile } = useContext(DeviceContext);
+  const def = mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
 
   useEffect(() => {
     handleInput(
