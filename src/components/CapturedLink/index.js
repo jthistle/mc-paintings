@@ -16,19 +16,20 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-const CapturedLink = ({ to, capture, children, ...props }) => {
-  let callback = () => {};
+const CapturedLink = ({ to, capture, children }) => {
+  const router = useRouter();
+
+  let callback = () => {
+    router.push(to);
+  };
+
   if (capture) {
     callback = (e) => capture(to, e);
   }
 
-  return (
-    <Link href={to} onClick={callback} {...props}>
-      {children}
-    </Link>
-  );
+  return <span onClick={callback}>{children}</span>;
 };
 
 export default CapturedLink;

@@ -41,7 +41,7 @@ import fileBuilders from '../src/misc/fileBuilders';
 
 import { SIZES } from '../src/misc/configs';
 import DEFAULT_PACK_META from '../src/misc/defaultMeta';
-import { navigate } from 'next/router';
+import { useRouter } from 'next/router';
 
 import AddImage from '../src/misc/add_image.svg';
 import ChangeImage from '../src/misc/change_image.svg';
@@ -84,6 +84,7 @@ function generateInitial() {
 }
 
 const Home = () => {
+  const router = useRouter();
   const device = useContext(DeviceContext);
 
   // current image to use { size: string, index: int }, falsy if none selected
@@ -311,12 +312,14 @@ const Home = () => {
         message:
           'Navigating away from this page will cause your work to be lost. Are you sure you want to continue?',
         onAccept: () => {
-          navigate(to);
+          router.push(to);
         },
         onReject: () => {
           setWarning(null);
         },
       });
+    } else {
+      router.push(to);
     }
   };
 
@@ -658,7 +661,7 @@ const Home = () => {
   };
 
   return (
-    <Layout device={device} captureHeader={navCapture}>
+    <Layout captureHeader={navCapture}>
       {warning && (
         <Warning onAccept={warning.onAccept} onReject={warning.onReject}>
           <h1>{warning.title}</h1>

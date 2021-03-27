@@ -57,6 +57,7 @@ const Links = ({ capture, mobile }) => {
         color ${c_PRIMARY};
         font-size: 0.8rem;
         text-decoration: none;
+        cursor: pointer;
       }
 
       .links {
