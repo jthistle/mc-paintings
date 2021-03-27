@@ -13,8 +13,7 @@
     "react-ga": "^2.6.0",
     "react-image-crop": "^8.5.0",
     "react-select": "^3.0.4",
-    "serve": "^11.1.0",
-    "styled-jsx": "3.2.1",
+    "styled-jsx": "^3.2.1",
     "ua-parser-js": "^0.7.26",
     "uuid": "^8.0.0"
   },
