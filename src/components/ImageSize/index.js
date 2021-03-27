@@ -25,7 +25,7 @@ import {
   c_BLANK,
   c_BLANK_HIGHLIGHT,
   c_BLANK_ACTIVE,
-} from '../../theme';
+} from '../../misc/theme';
 
 const BASE_SIZE = 3; // rem
 

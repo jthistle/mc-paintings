@@ -23,7 +23,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
 import Layout, { Column } from '../src/components/Layout';
-import { c_INACTIVE } from '../src/theme';
+import { c_INACTIVE } from '../src/misc/theme';
 import UploadInput from '../src/components/UploadInput';
 import Cropper from '../src/components/Cropper';
 import ImageSize from '../src/components/ImageSize';
@@ -34,20 +34,20 @@ import DownloadView from '../src/components/DownloadView';
 import FinishView from '../src/components/FinishView';
 import Carousel from '../src/components/Carousel';
 
-import ReactGA from '../src/analytics';
-import fileBuilders from '../src/pageutil/home/fileBuilders';
+import ReactGA from '../src/misc/analytics';
+import fileBuilders from '../src/misc/fileBuilders';
 
-import { SIZES } from '../src/pageutil/home/configs';
-import DEFAULT_PACK_META from '../src/pageutil/home/defaultMeta';
+import { SIZES } from '../src/misc/configs';
+import DEFAULT_PACK_META from '../src/misc/defaultMeta';
 import { navigate } from 'next/router';
 
 import mediaQuery from '../src/components/media';
 import { useMedia } from 'react-media';
 
-import AddImage from '../src/pageutil/home/add_image.svg';
-import ChangeImage from '../src/pageutil/home/change_image.svg';
-import CropIcon from '../src/pageutil/home/crop.svg';
-import DownloadIcon from '../src/pageutil/home/download.svg';
+import AddImage from '../src/misc/add_image.svg';
+import ChangeImage from '../src/misc/change_image.svg';
+import CropIcon from '../src/misc/crop.svg';
+import DownloadIcon from '../src/misc/download.svg';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">

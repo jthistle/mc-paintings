@@ -12,7 +12,7 @@ function Analytics() {
     init = true;
   }
 
-  const curry = func => {
+  const curry = (func) => {
     return (...args) => {
       if (init) {
         console.log(args);

@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import Layout, { Column } from '../../components/Layout';
-import Button from '../../components/Button';
-import { c_INACTIVE } from '../../theme';
-import ReactGA from '../../analytics';
+import Layout, { Column } from '../src/components/Layout';
+import Button from '../src/components/Button';
+import { c_INACTIVE } from '../src/misc/theme';
+import ReactGA from '../src/misc/analytics';
 
 function Enquiries(props) {
   const [revealed, setRevealed] = useState(false);

@@ -25,7 +25,7 @@ import {
   c_INACTIVE,
   c_INACTIVE_TEXT,
   c_PRIMARY,
-} from '../../theme';
+} from '../../misc/theme';
 
 const ButtonInternals = ({
   children,

@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { c_ACTION, c_HIGHLIGHT, c_PRIMARY, c_ACTIVE } from '../../theme';
+import { c_ACTION, c_HIGHLIGHT, c_PRIMARY, c_ACTIVE } from '../../misc/theme';
 
 const TextInput = ({ onChange, ...props }) => {
   return (

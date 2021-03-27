@@ -23,7 +23,7 @@ import {
   c_WARNING_ACTIVE,
   c_WARNING_HIGHLIGHT,
   c_WARNING_INACTIVE,
-} from '../../theme';
+} from '../../misc/theme';
 
 const Button = ({ children, onClick }) => (
   <div className="button" onClick={onClick}>

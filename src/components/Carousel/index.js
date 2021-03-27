@@ -21,7 +21,7 @@ import React, { useState } from 'react';
 import chevronLeftImg from './chevron_left.svg';
 import chevronRightImg from './chevron_right.svg';
 
-import { c_HIGHLIGHT, c_INACTIVE } from '../../theme';
+import { c_HIGHLIGHT, c_INACTIVE } from '../../misc/theme';
 
 const Carousel = ({ height, onChange, children, ...props }) => {
   const [currentInd, setCurrentInd] = useState(0);

@@ -20,12 +20,7 @@ import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 
-import links from '../../supportLinks.json';
-
-const PAYPAL = links.PAYPAL;
-const TWITTER = links.TWITTER;
-const GITHUB = links.GITHUB;
-const FEEDBACK = links.FEEDBACK;
+import { PAYPAL, TWITTER, GITHUB, FEEDBACK } from '../../misc/supportLinks';
 
 const FinishView = ({ onClose }) => {
   return (

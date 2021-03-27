@@ -4,7 +4,6 @@
   "version": "1.10.1",
   "private": false,
   "dependencies": {
-    "@svgr/webpack": "^5.5.0",
     "axios": "^0.21.1",
     "file-saver": "^2.0.2",
     "jszip": "^3.2.2",

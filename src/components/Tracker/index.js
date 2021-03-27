@@ -17,7 +17,7 @@
  */
 
 import React, { useEffect } from 'react';
-import ReactGA from '../../analytics';
+import ReactGA from '../../misc/analytics';
 
 const Tracker = () => {
   const init = ReactGA.isInit();

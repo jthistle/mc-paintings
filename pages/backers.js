@@ -17,11 +17,11 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import Layout, { Column } from '../../components/Layout';
-import Button from '../../components/Button';
+import Layout, { Column } from '../src/components/Layout';
+import Button from '../src/components/Button';
 import axios from 'axios';
-import links from '../../supportLinks.json';
-import { c_INACTIVE } from '../../theme';
+import { PAYPAL } from '../src/misc/supportLinks';
+import { c_INACTIVE } from '../src/misc/theme';
 
 const BACKERS_URL = 'https://api.jsonbin.io/b/5d4daabeabd41027db5da01e/latest';
 
@@ -90,7 +90,7 @@ const Backers = ({ ...props }) => {
             {backers && backers.map((name, i) => <p key={i}>{name}</p>)}
           </div>
           <h2>Get your name here!</h2>
-          <Button scheme="yellow" external={links.PAYPAL}>
+          <Button big scheme="yellow" external={PAYPAL}>
             Donate
           </Button>
         </div>

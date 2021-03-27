@@ -17,10 +17,9 @@
  */
 
 import React from 'react';
-import Layout, { Column } from '../../components/Layout';
-import Button from '../../components/Button';
-import ExtraInfo from '../../components/ExtraInfo';
-import { PAYPAL, TWITTER, GITHUB, FEEDBACK } from '../../supportLinks.json';
+import Layout, { Column } from '../src/components/Layout';
+import Button from '../src/components/Button';
+import { PAYPAL, TWITTER, GITHUB, FEEDBACK } from '../src/misc/supportLinks';
 
 const Support = ({ ...props }) => {
   return (

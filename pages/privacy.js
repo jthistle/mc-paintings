@@ -17,13 +17,11 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import Layout, { Column } from '../../components/Layout';
-import Button from '../../components/Button';
+import Layout, { Column } from '../src/components/Layout';
+import Button from '../src/components/Button';
 
 const Privacy = () => {
-  const [isOptedOut, setIsOptedOut] = useState(
-    localStorage.getItem('canTrack') === 'no'
-  );
+  const [isOptedOut, setIsOptedOut] = useState(false);
 
   const setOptout = () => {
     localStorage.setItem('canTrack', 'no');

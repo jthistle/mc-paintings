@@ -19,7 +19,7 @@
 import React from 'react';
 import Button from '../Button';
 import { Link } from 'next/link';
-import { c_DARKEST, c_PRIMARY } from '../../theme';
+import { c_DARKEST, c_PRIMARY } from '../../misc/theme';
 
 const CookiesBar = ({ onAccept }) => {
   return (

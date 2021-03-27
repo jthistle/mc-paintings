@@ -18,7 +18,7 @@
 
 import React from 'react';
 
-import { c_BLANK } from '../../theme';
+import { c_BLANK } from '../../misc/theme';
 
 function dimensionsFromSize(size) {
   return size.split('x').map((val) => parseInt(val));

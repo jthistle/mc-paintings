@@ -23,7 +23,7 @@ import {
   c_ACTIVE,
   c_INACTIVE,
   c_INACTIVE_TEXT,
-} from '../../theme';
+} from '../../misc/theme';
 
 const INPUT_HEIGHT = 3; // rem
 const INPUT_WIDTH = 15; // rem

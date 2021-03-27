@@ -25,7 +25,7 @@ import Select from 'react-select';
 import mediaQuery from '../../components/media';
 import { useMedia } from 'react-media';
 
-import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
+import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../misc/theme';
 
 const selectOptions = [
   { value: '1_16', label: 'Java 1.16.2+' },

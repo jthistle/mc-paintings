@@ -21,7 +21,7 @@ import Link from 'next/link';
 import CapturedLink from '../CapturedLink';
 
 import Button from '../../components/Button';
-import { c_DARKEST, c_HEADER, c_PRIMARY } from '../../theme';
+import { c_DARKEST, c_HEADER, c_PRIMARY } from '../../misc/theme';
 
 import mediaQuery from '../../components/media';
 import { useMedia } from 'react-media';
@@ -85,7 +85,7 @@ const Header = ({ capture }) => {
     <>
       <div className="header">
         <Link href="/">
-          <h1 className="text">Minecraft Painting Creator</h1>
+          <h1 className="title">Minecraft Painting Creator</h1>
         </Link>
         {media.mobile ? (
           <div className="menuIcon" onClick={() => setShowDropdown(true)}>
@@ -109,9 +109,11 @@ const Header = ({ capture }) => {
             align-items: center;
           }
 
-          .text {
+          .title {
+            font-weight: bold;
             font-size: 1.5rem;
             color: ${c_PRIMARY};
+            cursor: pointer;
           }
 
           .menuIcon {

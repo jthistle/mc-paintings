@@ -17,7 +17,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { c_INACTIVE } from '../../theme';
+import { c_INACTIVE } from '../../misc/theme';
 
 const InfoPopup = ({ children, bgColour, onReject }) => {
   const handleKeyPress = (event) => {
