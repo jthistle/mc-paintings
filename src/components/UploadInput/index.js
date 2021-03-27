@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ import {
 const INPUT_HEIGHT = 3; // rem
 const INPUT_WIDTH = 15; // rem
 
-export default ({ onUpload, children, disabled, width }) => {
+const UploadInput = ({ onUpload, children, disabled, width }) => {
   width = width || INPUT_WIDTH;
   return (
     <div className={`fakeButton ${disabled && 'disabled'}`}>
@@ -89,3 +89,5 @@ export default ({ onUpload, children, disabled, width }) => {
     </div>
   );
 };
+
+export default UploadInput;

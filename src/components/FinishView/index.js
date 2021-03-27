@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ const TWITTER = links.TWITTER;
 const GITHUB = links.GITHUB;
 const FEEDBACK = links.FEEDBACK;
 
-export default ({ onClose }) => {
+const FinishView = ({ onClose }) => {
   return (
     <InfoPopup onReject={onClose}>
       <Button external={PAYPAL} scheme="yellow" big>
@@ -66,3 +66,5 @@ export default ({ onClose }) => {
     </InfoPopup>
   );
 };
+
+export default FinishView;

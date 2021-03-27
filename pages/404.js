@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  */
 
 import React from 'react';
-import Layout, { Column } from '../../components/Layout';
-import Button from '../../components/Button';
+import Layout, { Column } from '../src/components/Layout';
+import Button from '../src/components/Button';
 
 const NotFound = () => {
   return (

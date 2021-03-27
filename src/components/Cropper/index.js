@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import Cropper from 'react-image-crop';
+import ImageCropper from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 /*
@@ -28,7 +28,7 @@ import 'react-image-crop/dist/ReactCrop.css';
  *    initialCrop: the initial crop object
  *    onCropChange: a callback function that will be passed the change event
  */
-export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
+const Cropper = ({ image, initialCrop, onCropChange, onCropComplete }) => {
   const [currentImageRef, setCurrentImageRef] = useState();
   const [crop, setCrop] = useState(initialCrop);
   const [imageToUse, setImageToUse] = useState();
@@ -128,7 +128,7 @@ export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
   };
 
   return (
-    <Cropper
+    <ImageCropper
       src={imageToUse}
       crop={crop}
       onChange={onChange}
@@ -137,3 +137,5 @@ export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
     />
   );
 };
+
+export default Cropper;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import React, { useEffect } from 'react';
 import { c_INACTIVE } from '../../theme';
 
 const InfoPopup = ({ children, bgColour, onReject }) => {
-  const handleKeyPress = event => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Escape') {
       // escape
       onReject();

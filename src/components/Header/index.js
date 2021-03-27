@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 import React, { useState } from 'react';
-import { Link } from '@reach/router';
+import Link from 'next/link';
 import CapturedLink from '../CapturedLink';
 
 import Button from '../../components/Button';
@@ -71,7 +71,7 @@ const Links = ({ capture, mobile }) => {
   );
 };
 
-export default ({ capture }) => {
+const Header = ({ capture }) => {
   const media = useMedia(mediaQuery);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -84,7 +84,7 @@ export default ({ capture }) => {
   return (
     <>
       <div className="header">
-        <Link to="/">
+        <Link href="/">
           <h1 className="text">Minecraft Painting Creator</h1>
         </Link>
         {media.mobile ? (
@@ -150,3 +150,5 @@ export default ({ capture }) => {
     </>
   );
 };
+
+export default Header;

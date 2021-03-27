@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../Header';
 import CookiesBar from '../CookiesBar';
 import Tracker from '../Tracker';
@@ -39,9 +39,11 @@ const Column = ({ children }) => (
 );
 
 const Layout = ({ captureHeader, children }) => {
-  const [showCookieBar, setShowCookieBar] = useState(
-    !localStorage.getItem('canTrack')
-  );
+  const [showCookieBar, setShowCookieBar] = useState(false);
+
+  useEffect(() => {
+    setShowCookieBar(!localStorage.getItem('canTrack'));
+  }, []);
 
   const onCookiesAccept = () => {
     localStorage.setItem('canTrack', 'yes');

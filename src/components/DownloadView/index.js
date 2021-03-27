@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -74,7 +74,12 @@ const styles = {
   }),
 };
 
-export default ({ handleInput, onDownload, onClose, enableResolution }) => {
+const DownloadView = ({
+  handleInput,
+  onDownload,
+  onClose,
+  enableResolution,
+}) => {
   const media = useMedia(mediaQuery);
   const def = media.mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
 
@@ -174,3 +179,5 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => {
     </InfoPopup>
   );
 };
+
+export default DownloadView;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,19 +35,19 @@ import FinishView from '../src/components/FinishView';
 import Carousel from '../src/components/Carousel';
 
 import ReactGA from '../src/analytics';
-import fileBuilders from './fileBuilders';
+import fileBuilders from '../src/pageutil/home/fileBuilders';
 
 import { SIZES } from '../src/pageutil/home/configs';
 import DEFAULT_PACK_META from '../src/pageutil/home/defaultMeta';
-import { navigate } from '@reach/router';
+import { navigate } from 'next/router';
 
 import mediaQuery from '../src/components/media';
 import { useMedia } from 'react-media';
 
-import AddImage from './add_image.svg';
-import ChangeImage from './change_image.svg';
-import CropIcon from './crop.svg';
-import DownloadIcon from './download.svg';
+import AddImage from '../src/pageutil/home/add_image.svg';
+import ChangeImage from '../src/pageutil/home/change_image.svg';
+import CropIcon from '../src/pageutil/home/crop.svg';
+import DownloadIcon from '../src/pageutil/home/download.svg';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">

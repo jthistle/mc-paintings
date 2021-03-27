@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,13 +20,17 @@ import React, { useEffect } from 'react';
 import ReactGA from '../../analytics';
 
 const Tracker = () => {
-  const pathName = window.location.pathname + window.location.search;
   const init = ReactGA.isInit();
+  const pathName =
+    typeof window === 'undefined'
+      ? null
+      : window.location.pathname + window.location.search;
 
   useEffect(() => {
     // Log page view
+    if (pathName === null) return;
     ReactGA.pageview(pathName);
-  }, [init, pathName]);
+  }, [pathName, init]);
 
   return <div />;
 };

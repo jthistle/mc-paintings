@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2021 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,10 @@
 
 import React from 'react';
 import Button from '../Button';
-import { Link } from '@reach/router';
+import { Link } from 'next/link';
 import { c_DARKEST, c_PRIMARY } from '../../theme';
 
-export default ({ onAccept }) => {
+const CookiesBar = ({ onAccept }) => {
   return (
     <div className="bar">
       <div className="text">
@@ -66,3 +66,5 @@ export default ({ onAccept }) => {
     </div>
   );
 };
+
+export default CookiesBar;

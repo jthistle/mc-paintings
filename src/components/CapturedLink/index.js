@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Link } from '@reach/router';
+import Link from 'next/link';
 
 const CapturedLink = ({ to, capture, children, ...props }) => {
   let callback = () => {};
@@ -26,7 +26,7 @@ const CapturedLink = ({ to, capture, children, ...props }) => {
   }
 
   return (
-    <Link to={to} onClick={callback} {...props}>
+    <Link href={to} onClick={callback} {...props}>
       {children}
     </Link>
   );
