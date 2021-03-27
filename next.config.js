@@ -7,7 +7,7 @@ module.exports = {
   webpack(config) {
     config.module.rules.push({
       test: /\.(png|svg)$/,
-      type: 'asset/resource',
+      type: 'asset/inline',
     });
 
     return config;
