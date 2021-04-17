@@ -16,8 +16,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { forwardRef } from 'react';
-import CapturedLink from '../CapturedLink';
+import React, { ForwardedRef, forwardRef, ReactElement } from 'react';
 import {
   c_ACTION,
   c_HIGHLIGHT,
@@ -27,8 +26,31 @@ import {
   c_PRIMARY,
 } from '../../misc/theme';
 
+import CapturedLink, { CaptureFunction } from '../CapturedLink';
+
+type ColourScheme = 'yellow' | 'black';
+
+interface ButtonInternalsProps {
+  children: React.ReactNode;
+  onClick?(): void;
+  disabled?: boolean;
+  scheme?: ColourScheme;
+  noMargin?: boolean;
+  big?: boolean;
+}
+
 const ButtonInternals = forwardRef(
-  ({ children, onClick, disabled, scheme, noMargin, big }, ref) => {
+  (
+    {
+      children,
+      onClick,
+      disabled,
+      scheme,
+      noMargin,
+      big,
+    }: ButtonInternalsProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ): ReactElement => {
     let primary = c_PRIMARY;
     let secondary = c_ACTION;
     let secondaryHover = c_HIGHLIGHT;
@@ -58,7 +80,7 @@ const ButtonInternals = forwardRef(
     }
 
     return (
-      <div ref={ref} className="button" onClick={onClick} disabled={disabled}>
+      <div ref={ref} className="button" onClick={onClick}>
         {children}
         <style jsx>{`
           .button {
@@ -67,14 +89,14 @@ const ButtonInternals = forwardRef(
             height: ${big ? 5 : 3}rem;
             line-height: ${big ? 5 : 3}rem;
             border-radius: 0.25rem;
-            background: ${secondary};
+            background: ${disabled ? secondaryDisabled : secondary};
             transition: all 0.3s;
             text-align: center;
             font-weight: bold;
             margin: ${noMargin ? '0' : '0.25rem'};
             text-decoration: none;
-            color: ${primary};
-            cursor: pointer;
+            color: ${disabled ? primaryDisabled : primary};
+            cursor: ${disabled ? 'default' : 'pointer'};
             font-size: ${big ? 2 : 1}rem;
           }
 
@@ -85,19 +107,26 @@ const ButtonInternals = forwardRef(
           .button:active {
             background: ${secondaryActive};
           }
-
-          .button[disabled] {
-            background: ${secondaryDisabled};
-            color: ${primaryDisabled};
-            cursor: default;
-          }
         `}</style>
       </div>
     );
   }
 );
 
-const Button = ({ external, internal, children, capture, ...props }) => {
+interface ButtonProps extends ButtonInternalsProps {
+  children: React.ReactNode;
+  capture?: CaptureFunction;
+  internal?: string;
+  external?: string;
+}
+
+const Button = ({
+  external,
+  internal,
+  children,
+  capture,
+  ...props
+}: ButtonProps): ReactElement => {
   if (external) {
     return (
       <a href={external} target="_blank" rel="noopener noreferrer">

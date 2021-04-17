@@ -73,6 +73,9 @@ const styles = {
   }),
 };
 
+interface DownloadViewProps {
+  handleInput(e: InputEvent, id: string): void;
+}
 const DownloadView = ({
   handleInput,
   onDownload,

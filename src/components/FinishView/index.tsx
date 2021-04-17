@@ -16,12 +16,17 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 
 import { PAYPAL, TWITTER, GITHUB, FEEDBACK } from '../../misc/supportLinks';
 
-const FinishView = ({ onClose }) => {
+interface FinishViewProps {
+  onClose(): void;
+}
+
+const FinishView = ({ onClose }: FinishViewProps) => {
   return (
     <InfoPopup onReject={onClose}>
       <Button external={PAYPAL} scheme="yellow" big>

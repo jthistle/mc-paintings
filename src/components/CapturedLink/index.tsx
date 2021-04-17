@@ -16,12 +16,23 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import React from 'react';
 import { useRouter } from 'next/router';
 
-const CapturedLink = ({ to, capture, children }) => {
+export interface CaptureFunction {
+  (to: string, e: React.MouseEvent): void;
+}
+
+interface CapturedLinkProps {
+  to: string;
+  capture?: CaptureFunction;
+  children: React.ReactNode;
+}
+
+const CapturedLink = ({ to, capture, children }: CapturedLinkProps) => {
   const router = useRouter();
 
-  let callback = () => {
+  let callback = (_: React.MouseEvent) => {
     router.push(to);
   };
 

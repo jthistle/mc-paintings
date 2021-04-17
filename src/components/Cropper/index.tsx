@@ -17,7 +17,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import ImageCropper from 'react-image-crop';
+import ImageCropper, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 /*
@@ -28,10 +28,22 @@ import 'react-image-crop/dist/ReactCrop.css';
  *    initialCrop: the initial crop object
  *    onCropChange: a callback function that will be passed the change event
  */
-const Cropper = ({ image, initialCrop, onCropChange, onCropComplete }) => {
-  const [currentImageRef, setCurrentImageRef] = useState();
+interface CropperProps {
+  image: string;
+  initialCrop: Crop;
+  onCropChange({ crop }: { crop: Crop }): void;
+  onCropComplete({ croppedImage }: { croppedImage?: string }): void;
+}
+
+const Cropper = ({
+  image,
+  initialCrop,
+  onCropChange,
+  onCropComplete,
+}: CropperProps) => {
+  const [currentImageRef, setCurrentImageRef] = useState<HTMLImageElement>();
   const [crop, setCrop] = useState(initialCrop);
-  const [imageToUse, setImageToUse] = useState();
+  const [imageToUse, setImageToUse] = useState<string>();
   const [stale, setStale] = useState({
     image: true,
     crop: true,
@@ -84,7 +96,8 @@ const Cropper = ({ image, initialCrop, onCropChange, onCropComplete }) => {
   /*
    *  This was taken from the docs for `react-image-crop`
    */
-  const getCroppedImg = (image, crop) => {
+  const getCroppedImg = (image: HTMLImageElement, crop: Crop) => {
+    if (!crop.width || !crop.height || !crop.x || !crop.y) return;
     if (crop.width <= 0 || crop.height <= 0 || !image) return;
 
     const canvas = document.createElement('canvas');
@@ -93,6 +106,8 @@ const Cropper = ({ image, initialCrop, onCropChange, onCropComplete }) => {
     canvas.width = crop.width;
     canvas.height = crop.height;
     const ctx = canvas.getContext('2d');
+
+    if (ctx === null) return;
 
     ctx.drawImage(
       image,
@@ -110,7 +125,7 @@ const Cropper = ({ image, initialCrop, onCropChange, onCropComplete }) => {
     return canvas.toDataURL('image/jpeg');
   };
 
-  const onChange = (crop) => {
+  const onChange = (crop: Crop) => {
     setCrop(crop);
     if (onCropChange)
       onCropChange({
@@ -118,7 +133,7 @@ const Cropper = ({ image, initialCrop, onCropChange, onCropComplete }) => {
       });
   };
 
-  const onComplete = (newCrop) => {
+  const onComplete = (newCrop: Crop) => {
     if (!currentImageRef) return;
     setCrop(newCrop);
     if (onCropComplete)
@@ -126,6 +141,8 @@ const Cropper = ({ image, initialCrop, onCropChange, onCropComplete }) => {
         croppedImage: getCroppedImg(currentImageRef, newCrop),
       });
   };
+
+  if (!imageToUse) return <></>;
 
   return (
     <ImageCropper

@@ -16,9 +16,14 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import React from 'react';
 import { c_ACTION, c_HIGHLIGHT, c_PRIMARY, c_ACTIVE } from '../../misc/theme';
 
-const TextInput = ({ onChange, ...props }) => {
+interface TextInputProps extends React.HTMLProps<HTMLInputElement> {
+  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+}
+
+const TextInput = ({ onChange, ...props }: TextInputProps) => {
   return (
     <>
       <input className="textInput" type="text" onChange={onChange} {...props} />

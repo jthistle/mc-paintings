@@ -16,16 +16,21 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import React from 'react';
 import Button from '../Button';
 import Link from 'next/link';
 import { c_DARKEST, c_PRIMARY } from '../../misc/theme';
 
-const CookiesBar = ({ onAccept }) => {
+interface CookiesBarProps {
+  onAccept(): void;
+}
+
+const CookiesBar = ({ onAccept }: CookiesBarProps) => {
   return (
     <div className="bar">
       <div className="text">
         This website uses cookies.{' '}
-        <Link to="privacy/">
+        <Link href="privacy/">
           <span className="more">More details</span>
         </Link>
         .

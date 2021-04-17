@@ -19,8 +19,13 @@
 import React, { useEffect } from 'react';
 import { c_INACTIVE } from '../../misc/theme';
 
-const InfoPopup = ({ children, bgColour, onReject }) => {
-  const handleKeyPress = (event) => {
+interface InfoPopupProps {
+  children: React.ReactNode;
+  bgColour?: string;
+  onReject(): void;
+}
+const InfoPopup = ({ children, bgColour, onReject }: InfoPopupProps) => {
+  const handleKeyPress = (event: KeyboardEvent | React.KeyboardEvent) => {
     if (event.key === 'Escape') {
       // escape
       onReject();

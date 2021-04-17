@@ -18,7 +18,7 @@
 
 import React, { useState, useContext } from 'react';
 import Link from 'next/link';
-import CapturedLink from '../CapturedLink';
+import CapturedLink, { CaptureFunction } from '../CapturedLink';
 
 import Button from '../../components/Button';
 import { c_DARKEST, c_HEADER, c_PRIMARY } from '../../misc/theme';
@@ -27,18 +27,18 @@ import { DeviceContext } from '../../context/device';
 
 import MenuIcon from './menu.svg';
 
-const Links = ({ capture, mobile }) => {
+interface LinksProps {
+  capture: CaptureFunction;
+  mobile?: boolean;
+}
+
+const Links = ({ capture, mobile }: LinksProps) => {
   return (
     <div className="links">
       <Button internal="/backers" capture={capture}>
         Backers
       </Button>
-      <Button
-        internal="/support"
-        scheme="yellow"
-        className="linkBtn"
-        capture={capture}
-      >
+      <Button internal="/support" scheme="yellow" capture={capture}>
         Support
       </Button>
       <CapturedLink to="/guide" capture={capture}>
@@ -72,11 +72,15 @@ const Links = ({ capture, mobile }) => {
   );
 };
 
-const Header = ({ capture }) => {
+interface HeaderProps {
+  capture: CaptureFunction;
+}
+
+const Header = ({ capture }: HeaderProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { mobile } = useContext(DeviceContext);
 
-  const closeMenu = (e) => {
+  const closeMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setShowDropdown(false);

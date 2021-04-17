@@ -16,15 +16,22 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import React from 'react';
 import { c_BLANK } from '../../misc/theme';
 
-function dimensionsFromSize(size) {
+function dimensionsFromSize(size: string) {
   return size.split('x').map((val) => parseInt(val));
 }
 
 const BASE_SIZE = 3; // rem
 
-const ImageSelectMobile = ({ size, image, index }) => {
+interface ImageSelectMobileProps {
+  size: string;
+  image: string;
+  index: number;
+}
+
+const ImageSelectMobile = ({ size, image, index }: ImageSelectMobileProps) => {
   const [width, height] = dimensionsFromSize(size);
 
   return (

@@ -40,10 +40,20 @@
   },
   "license": "GPL-2.0",
   "devDependencies": {
+    "@types/file-saver": "^2.0.1",
+    "@types/node": "^14.14.37",
     "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-image-crop": "^8.1.2",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-select": "^4.0.13",
+    "@types/styled-jsx": "^2.2.8",
+    "@types/ua-parser-js": "^0.7.35",
+    "@types/uuid": "^8.3.0",
     "husky": "^3.0.2",
     "prettier": "^2.0.5",
     "pretty-quick": "^1.11.1",
+    "typescript": "^4.2.3",
     "version-bump-prompt": "^5.0.4"
   },
   "husky": {

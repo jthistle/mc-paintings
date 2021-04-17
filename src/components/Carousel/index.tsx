@@ -23,10 +23,16 @@ import chevronRightImg from './chevron_right.svg';
 
 import { c_HIGHLIGHT, c_INACTIVE } from '../../misc/theme';
 
-const Carousel = ({ height, onChange, children, ...props }) => {
+interface CarouselProps {
+  height: string;
+  onChange?(newInd: number): void;
+  children: React.ReactNodeArray;
+}
+
+const Carousel = ({ height, onChange, children }: CarouselProps) => {
   const [currentInd, setCurrentInd] = useState(0);
 
-  const move = (dir) => {
+  const move = (dir: 1 | -1) => {
     let n = children.length;
     let newInd = (((currentInd + dir) % n) + n) % n;
     onChange && onChange(newInd);
