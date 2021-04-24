@@ -85,6 +85,7 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => {
       },
       'version'
     );
+    // eslint-disable-next-line
   }, []);
 
   return (

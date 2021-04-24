@@ -176,8 +176,14 @@ const Home = () => {
 
       // Reset the crop config for this image
       let newCropConfigs = { ...cropConfigs };
+      const aspect = sizeToAspect(selectedSize.size);
       newCropConfigs[selectedSize.size][selectedSize.index] = {
-        aspect: sizeToAspect(selectedSize.size),
+        unit: '%',
+        x: 20,
+        y: 20,
+        width: 60,
+        height: 60 / aspect,
+        aspect,
       };
       setCropConfigs(newCropConfigs);
 
