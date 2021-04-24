@@ -42,14 +42,17 @@ const Links = ({ capture, mobile }) => {
       >
         Support
       </Button>
-      <CapturedLink to="/privacy" capture={capture}>
-        <span className="privacyLink">Privacy</span>
+      <CapturedLink to="/guide" capture={capture}>
+        <span className="textLink">Guide</span>
       </CapturedLink>
-      <CapturedLink to="/enquiries" capture={capture}>
-        <span className="enquiriesLink">Enquiries</span>
+      <CapturedLink to="/privacy" capture={capture}>
+        <span className="textLink">Privacy</span>
+      </CapturedLink>
+      <CapturedLink to="/about" capture={capture}>
+        <span className="textLink">About</span>
       </CapturedLink>
       <style jsx>{`
-      .privacyLink, .enquiriesLink {
+      .textLink {
         display: inline-block;
         margin: 0.25rem 1rem;
         color ${c_PRIMARY};

@@ -65,7 +65,8 @@ const Privacy = () => {
             <li>
               Your uploaded images and the texture pack are all managed and
               created client-side, which means none of your images are ever sent
-              off to a server.
+              off to a server - only you, and people you share your texture pack
+              with, can see the images that you use.
             </li>
           </ul>
           <p>If you really want, you can:</p>

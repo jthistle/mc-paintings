@@ -35,20 +35,21 @@ export default ({ onClose }) => {
       </Button>
       <p className="text">
         Thanks for using this website! <br />
-        Things like this take time to make and cost money to keep running.
-        <br />
-        <b>You are one of 1000 monthly users. &nbsp;999 don't donate.</b>
+        <b>
+          This website survives through donations. Please consider donating.
+        </b>
       </p>
+      <p>
+        When you donate, your name will be added to the list of backers - if you
+        don't want your name added please leave a message.
+      </p>
+      <p>Other ways to support:</p>
       <Button external={TWITTER}>Tweet about it</Button>
       <Button external={GITHUB} scheme="black">
         Star on GitHub
       </Button>
       <div className="break" />
-      <p>
-        When you donate, I will add your name to the list of backers - if you
-        don't want your name added leave a message.
-      </p>
-      <p>Or, just</p>
+      <p>Found a problem? Just want to say hi? Please:</p>
       <Button external={FEEDBACK}>Give some feedback</Button>
       <style jsx>{`
         .highlight {
