@@ -127,6 +127,13 @@ export default ({ image, initialCrop, onCropChange, onCropComplete }) => {
       });
   };
 
+  // Set image with initial crop
+  useEffect(() => {
+    if (Object.keys(crop).length === 0) return;
+    onComplete(initialCrop);
+    // eslint-disable-next-line
+  }, [currentImageRef]);
+
   return (
     <Cropper
       src={imageToUse}
