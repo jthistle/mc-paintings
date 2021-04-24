@@ -24,7 +24,7 @@ import DonationThank from './pages/DonationThank';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 import Support from './pages/Support';
-import Enquiries from './pages/Enquiries';
+import About from './pages/About';
 import Guide from './pages/Guide';
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
         <DonationThank path="/postdonation" />
         <Privacy path="/privacy" />
         <Support path="/support" />
-        <Enquiries path="/enquiries" />
+        <About path="/about" />
         <Guide path="/guide" />
         <NotFound default />
       </Router>

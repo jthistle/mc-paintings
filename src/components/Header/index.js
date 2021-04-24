@@ -48,8 +48,8 @@ const Links = ({ capture, mobile }) => {
       <CapturedLink to="/privacy" capture={capture}>
         <span className="textLink">Privacy</span>
       </CapturedLink>
-      <CapturedLink to="/enquiries" capture={capture}>
-        <span className="textLink">Enquiries</span>
+      <CapturedLink to="/about" capture={capture}>
+        <span className="textLink">About</span>
       </CapturedLink>
       <style jsx>{`
       .textLink {

@@ -19,7 +19,6 @@
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
 import Button from '../../components/Button';
-import ExtraInfo from '../../components/ExtraInfo';
 import { PAYPAL, TWITTER, GITHUB, FEEDBACK } from '../../supportLinks.json';
 
 const Support = ({ ...props }) => {
