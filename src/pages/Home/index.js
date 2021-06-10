@@ -371,6 +371,9 @@ const Home = () => {
             case '1_16':
               newPackMeta.packFormat = 6;
               break;
+            case '1_17':
+              newPackMeta.packFormat = 7;
+              break;
             case 'BR_1_14':
               newPackMeta.packFormat = [1, 14, 0];
               break;
