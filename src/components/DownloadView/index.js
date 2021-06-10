@@ -28,6 +28,7 @@ import { useMedia } from 'react-media';
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
+  { value: '1_17', label: 'Java 1.17' },
   { value: '1_16', label: 'Java 1.16.2+' },
   { value: '1_15', label: 'Java 1.15 - 1.16.1' },
   { value: '1_14', label: 'Java 1.14' },
@@ -37,7 +38,7 @@ const selectOptions = [
 
 // Default versions selected for different
 const DEFAULT_DESKTOP = 0;
-const DEFAULT_MOBILE = 3;
+const DEFAULT_MOBILE = selectOptions.length - 2;
 
 const resolutionOptions = [
   { value: 16, label: '16x' },
