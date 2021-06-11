@@ -75,7 +75,10 @@ async function generalizedSingleTexture(meta, baseImage, textureImages) {
   canvas.width = fullSize;
   canvas.height = fullSize;
   const context = canvas.getContext('2d');
+
+  context.imageSmoothingEnabled = false;
   context.drawImage(baseImage, 0, 0, fullSize, fullSize);
+  context.imageSmoothingEnabled = true;
 
   let userPaintingsCount = 0;
   for (let size in textureImages) {
