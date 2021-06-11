@@ -29,20 +29,20 @@ import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
   { value: '1_17', label: 'Java 1.17' },
-  { value: '1_16', label: 'Java 1.16.2+' },
+  { value: '1_16', label: 'Java 1.16.2 - 1.16.5' },
   { value: '1_15', label: 'Java 1.15 - 1.16.1' },
-  { value: '1_14', label: 'Java 1.14' },
-  { value: '1_13', label: 'Java 1.13' },
+  { value: '1_14', label: 'Java 1.14 - 1.14.4' },
+  { value: '1_13', label: 'Java 1.13 - 1.13.2' },
   { value: '1_11', label: 'Java 1.11 - 1.12.2' },
   { value: '1_9', label: 'Java 1.9 - 1.10.2' },
   { value: '1_6', label: 'Java 1.6.1 - 1.8.9' },
   { value: 'BR_1_14', label: 'Bedrock 1.14+' },
-  { value: '', label: 'More versions coming soon!', isDisabled: true },
+  // { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
 
 // Default versions selected for different
 const DEFAULT_DESKTOP = 0;
-const DEFAULT_MOBILE = selectOptions.length - 2;
+const DEFAULT_MOBILE = selectOptions.length - 1;
 
 const resolutionOptions = [
   { value: 16, label: '16x' },
