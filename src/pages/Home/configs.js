@@ -36,6 +36,23 @@ const MC_1_14_NAMES = {
   '4x4': ['burning_skull', 'pigscene', 'pointer'],
 };
 
+const _v = (f, c) => ({
+  packFormat: f,
+  class: c,
+});
+
+const VERSION_MAP = {
+  '1_17': _v(7, 1),
+  '1_16': _v(6, 1),
+  '1_15': _v(5, 1),
+  '1_14': _v(4, 1),
+  '1_13': _v(4, 3),
+  '1_11': _v(3, 3),
+  '1_9': _v(2, 3),
+  '1_6': _v(1, 3),
+  BR_1_14: _v([1, 14, 0], 2),
+};
+
 const _p = (x, y) => {
   return { x, y };
 };
@@ -45,7 +62,7 @@ const _s = (w, h) => {
 };
 
 // positions and sizes are defined as number of blocks - pixel size depends on the resolution chosen
-const BR_1_14_POSITIONS = {
+const SINGLE_TEX_POSITIONS = {
   '1x1': {
     size: _s(1, 1),
     positions: [
@@ -72,4 +89,4 @@ const BR_1_14_POSITIONS = {
   '4x4': { size: _s(4, 4), positions: [_p(0, 12), _p(4, 12), _p(8, 12)] },
 };
 
-export { SIZES, MC_1_14_NAMES, BR_1_14_POSITIONS };
+export { SIZES, MC_1_14_NAMES, SINGLE_TEX_POSITIONS, VERSION_MAP };
