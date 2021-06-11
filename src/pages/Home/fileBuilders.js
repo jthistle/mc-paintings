@@ -1,6 +1,7 @@
-import { MC_1_14_NAMES, BR_1_14_POSITIONS } from './configs';
+import { MC_1_14_NAMES, SINGLE_TEX_POSITIONS } from './configs';
 import { v4 as uuid } from 'uuid';
-import defaultBedrockImage from './kz.png';
+import defaultBedrockImage from './template_br.png';
+import defaultJavaImage from './template_java.png';
 
 function createNewImage(imageString) {
   return new Promise((resolve, reject) => {
@@ -63,6 +64,54 @@ async function java(root, textureImages, meta) {
 }
 
 /**
+ * For Minecraft versions which use a single texture to hold all painting textures.
+ *
+ * This is all Bedrock versions and Java versions up to and including 1.13.x.
+ */
+async function generalizedSingleTexture(meta, baseImage, textureImages) {
+  const canvas = document.createElement('canvas');
+  const blockPixels = meta.resolution;
+  const fullSize = blockPixels * 16;
+  canvas.width = fullSize;
+  canvas.height = fullSize;
+  const context = canvas.getContext('2d');
+
+  context.imageSmoothingEnabled = false;
+  context.drawImage(baseImage, 0, 0, fullSize, fullSize);
+  context.imageSmoothingEnabled = true;
+
+  let userPaintingsCount = 0;
+  for (let size in textureImages) {
+    let thisSize = textureImages[size];
+    let sizeAndPositions = SINGLE_TEX_POSITIONS[size];
+    for (let i = 0; i < thisSize.length; i++) {
+      // At this point the image is in jpeg format so convert
+      // it to a png via a canvas
+      let jpegImage = thisSize[i];
+      if (!jpegImage) continue;
+
+      let imageObj = await createNewImage(jpegImage);
+
+      let positionConfig = sizeAndPositions.positions[i];
+      let sizeConfig = sizeAndPositions.size;
+
+      context.drawImage(
+        imageObj,
+        positionConfig.x * blockPixels,
+        positionConfig.y * blockPixels,
+        sizeConfig.w * blockPixels,
+        sizeConfig.h * blockPixels
+      );
+
+      userPaintingsCount += 1;
+    }
+  }
+
+  let imageString = canvas.toDataURL().replace('data:image/png;base64,', '');
+  return [imageString, userPaintingsCount];
+}
+
+/**
  * Bedrock file builder. Requires meta:
  *    {
  *      desc: String,
@@ -93,45 +142,51 @@ async function bedrock(root, textureImages, meta) {
       ],
     })
   );
-  const painting = root.folder('textures/painting');
+
+  const paintingDir = root.folder('textures/painting');
   const baseImage = await createNewImage(defaultBedrockImage);
-  const canvas = document.createElement('canvas');
-  const blockPixels = meta.resolution;
-  const fullSize = blockPixels * 16;
-  canvas.width = fullSize;
-  canvas.height = fullSize;
-  const context = canvas.getContext('2d');
-  context.drawImage(baseImage, 0, 0, fullSize, fullSize);
+  const [imageString, userPaintingsCount] = await generalizedSingleTexture(
+    meta,
+    baseImage,
+    textureImages
+  );
 
-  let userPaintingsCount = 0;
-  for (let size in textureImages) {
-    let thisSize = textureImages[size];
-    let sizeAndPositions = BR_1_14_POSITIONS[size];
-    for (let i = 0; i < thisSize.length; i++) {
-      // At this point the image is in jpeg format so convert
-      // it to a png via a canvas
-      let jpegImage = thisSize[i];
-      if (!jpegImage) continue;
+  paintingDir.file('kz.png', imageString, {
+    base64: true,
+  });
 
-      let imageObj = await createNewImage(jpegImage);
+  return userPaintingsCount;
+}
 
-      let positionConfig = sizeAndPositions.positions[i];
-      let sizeConfig = sizeAndPositions.size;
+/**
+ * Java file builder for versions < 1.14.
+ *
+ * Requires meta as:
+ *    {
+ *      format: Number,
+ *      desc: String,
+ *    }
+ */
+async function java_old(root, textureImages, meta) {
+  root.file(
+    'pack.mcmeta',
+    JSON.stringify({
+      pack: {
+        pack_format: meta.format,
+        description: meta.desc,
+      },
+    })
+  );
 
-      context.drawImage(
-        imageObj,
-        positionConfig.x * blockPixels,
-        positionConfig.y * blockPixels,
-        sizeConfig.w * blockPixels,
-        sizeConfig.h * blockPixels
-      );
+  const paintingDir = root.folder('assets/minecraft/textures/painting');
+  const baseImage = await createNewImage(defaultJavaImage);
+  const [imageString, userPaintingsCount] = await generalizedSingleTexture(
+    meta,
+    baseImage,
+    textureImages
+  );
 
-      userPaintingsCount += 1;
-    }
-  }
-
-  let imageString = canvas.toDataURL().replace('data:image/png;base64,', '');
-  painting.file(`kz.png`, imageString, {
+  paintingDir.file('paintings_kristoffer_zetterstrand.png', imageString, {
     base64: true,
   });
 
@@ -140,5 +195,6 @@ async function bedrock(root, textureImages, meta) {
 
 export default {
   java,
+  java_old,
   bedrock,
 };

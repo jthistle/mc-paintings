@@ -34,6 +34,14 @@ const TextInput = ({ onChange, ...props }) => {
           transition: all 0.2s;
         }
 
+        .textInput::placeholder {
+          color: #74a5c2;
+        }
+
+        .textInput:focus::placeholder {
+          color: #18618b;
+        }
+
         .textInput {
           font-weight: bold;
         }

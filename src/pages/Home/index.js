@@ -37,17 +37,17 @@ import Carousel from '../../components/Carousel';
 import ReactGA from '../../analytics';
 import fileBuilders from './fileBuilders';
 
-import { SIZES } from './configs';
+import { SIZES, VERSION_MAP } from './configs';
 import DEFAULT_PACK_META from './defaultMeta';
 import { navigate } from '@reach/router';
 
 import mediaQuery from '../../components/media';
 import { useMedia } from 'react-media';
 
-import AddImage from './add_image.svg';
-import ChangeImage from './change_image.svg';
-import CropIcon from './crop.svg';
-import DownloadIcon from './download.svg';
+import AddImage from './icons/add_image.svg';
+import ChangeImage from './icons/change_image.svg';
+import CropIcon from './icons/crop.svg';
+import DownloadIcon from './icons/download.svg';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -361,37 +361,28 @@ const Home = () => {
           break;
         case 'version':
           let showResolution = false;
-          switch (eventVal) {
-            case '1_14':
-              newPackMeta.packFormat = 4;
-              break;
-            case '1_15':
-              newPackMeta.packFormat = 5;
-              break;
-            case '1_16':
-              newPackMeta.packFormat = 6;
-              break;
-            case '1_17':
-              newPackMeta.packFormat = 7;
-              break;
-            case 'BR_1_14':
-              newPackMeta.packFormat = [1, 14, 0];
-              break;
-            default:
-              console.error('Invalid pack version');
-              break;
+          const versionInfo = VERSION_MAP[eventVal];
+
+          if (versionInfo === undefined) {
+            console.error('Unexpected pack version!');
+            break;
           }
 
-          switch (eventVal) {
-            case '1_14':
-            case '1_15':
-            case '1_16':
+          newPackMeta.packFormat = versionInfo.packFormat;
+
+          switch (versionInfo.class) {
+            case 1:
               newPackMeta.fileBuilder = fileBuilders.java;
               newPackMeta.extension = 'zip';
               break;
-            case 'BR_1_14':
+            case 2:
               newPackMeta.fileBuilder = fileBuilders.bedrock;
               newPackMeta.extension = 'mcpack';
+              showResolution = true;
+              break;
+            case 3:
+              newPackMeta.fileBuilder = fileBuilders.java_old;
+              newPackMeta.extension = 'zip';
               showResolution = true;
               break;
             default:

@@ -32,6 +32,10 @@ const selectOptions = [
   { value: '1_16', label: 'Java 1.16.2+' },
   { value: '1_15', label: 'Java 1.15 - 1.16.1' },
   { value: '1_14', label: 'Java 1.14' },
+  { value: '1_13', label: 'Java 1.13' },
+  { value: '1_11', label: 'Java 1.11 - 1.12.2' },
+  { value: '1_9', label: 'Java 1.9 - 1.10.2' },
+  { value: '1_6', label: 'Java 1.6.1 - 1.8.9' },
   { value: 'BR_1_14', label: 'Bedrock 1.14+' },
   { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
@@ -46,7 +50,7 @@ const resolutionOptions = [
   { value: 64, label: '64x' },
 ];
 
-const sharedFunc = (provided, state) => {
+const dropdownStyler = (provided, state) => {
   let bg;
   if (state.isDisabled) bg = c_INACTIVE;
   else if (state.isSelected) bg = c_ACTIVE;
@@ -61,11 +65,11 @@ const sharedFunc = (provided, state) => {
 };
 
 const styles = {
-  control: sharedFunc,
-  menu: sharedFunc,
-  option: sharedFunc,
-  placeholder: sharedFunc,
-  singleValue: sharedFunc,
+  control: dropdownStyler,
+  menu: dropdownStyler,
+  option: dropdownStyler,
+  placeholder: dropdownStyler,
+  singleValue: dropdownStyler,
   dropdownIndicator: (provided, state) => ({
     ...provided,
     color: c_PRIMARY,
@@ -136,7 +140,7 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => {
             {enableResolution && (
               <tr>
                 <td>
-                  <label htmlFor="resolution">Bedrock block pixels: </label>
+                  <label htmlFor="resolution">Block pixels: </label>
                 </td>
                 <td>
                   <Select

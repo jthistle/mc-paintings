@@ -5,11 +5,35 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="25.846592mm"
-   height="55.142567mm"
-   viewBox="0 0 25.846592 55.142567"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22.698929mm"
+   height="55.226231mm"
+   viewBox="0 0 22.698929 55.226231"
    version="1.1"
-   id="svg8">
+   id="svg8"
+   sodipodi:docname="chevron_right.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1596"
+     inkscape:window-height="861"
+     id="namedview1309"
+     showgrid="false"
+     inkscape:zoom="2.3105088"
+     inkscape:cx="74.049117"
+     inkscape:cy="108.86486"
+     inkscape:window-x="0"
+     inkscape:window-y="18"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g855" />
   <defs
      id="defs2" />
   <metadata
@@ -26,9 +50,9 @@
   </metadata>
   <g
      id="layer1"
-     transform="translate(88.503179,-80.662385)">
+     transform="translate(85.355516,-80.620553)">
     <rect
-       style="fill:#051a26;fill-opacity:1;stroke:none;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
+       style="fill:#051a26;fill-opacity:1;stroke:none;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect837"
        width="265.01718"
        height="228.55754"
@@ -39,22 +63,21 @@
       <path
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m -169.46945,84.162385 -15.67164,24.071285 15.67164,24.07128"
-         id="path843" />
+         id="path843"
+         inkscape:connector-curvature="0" />
       <path
          style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m -172.64447,84.162385 -15.67164,24.071285 15.67164,24.07128"
-         id="path833" />
+         id="path833"
+         inkscape:connector-curvature="0" />
     </g>
     <g
        id="g855">
       <path
-         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m -85.003179,132.30495 15.67164,-24.07128 -15.67164,-24.071285"
-         id="path845" />
-      <path
          style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m -81.828159,132.30495 15.67164,-24.07128 -15.67164,-24.071285"
-         id="path847" />
+         id="path847"
+         inkscape:connector-curvature="0" />
     </g>
   </g>
 </svg>
