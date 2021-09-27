@@ -23,7 +23,7 @@ import axios from 'axios';
 import links from '../../supportLinks.json';
 import { c_INACTIVE } from '../../theme';
 
-const BACKERS_URL = 'https://api.jsonbin.io/b/5d4daabeabd41027db5da01e/latest';
+const BACKERS_URL = 'https://d24ckqemmplms5.cloudfront.net/backers.json';
 
 const Backers = ({ ...props }) => {
   const [backers, setBackers] = useState(['Fetching backers...']);
