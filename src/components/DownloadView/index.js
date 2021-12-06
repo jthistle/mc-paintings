@@ -28,7 +28,8 @@ import { useMedia } from 'react-media';
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
-  { value: '1_17', label: 'Java 1.17' },
+  { value: '1_18', label: 'Java 1.18' },
+  { value: '1_17', label: 'Java 1.17 - 1.17.1' },
   { value: '1_16', label: 'Java 1.16.2 - 1.16.5' },
   { value: '1_15', label: 'Java 1.15 - 1.16.1' },
   { value: '1_14', label: 'Java 1.14 - 1.14.4' },
