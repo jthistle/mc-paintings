@@ -18,7 +18,7 @@
 
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
-import { FEEDBACK } from '../../supportLinks.json';
+import { GITHUB, FEEDBACK } from '../../supportLinks.json';
 
 function About(props) {
   return (
@@ -29,18 +29,23 @@ function About(props) {
           <p>
             Minecraft Painting Creator (or just 'mcpaintings', since I never
             actually decided on a decent brand identity for this thing) is a
-            website which makes it easier to make custom resource packs
-            (specifically, ones which change the painting textures) in
-            Minecraft.
+            website which makes it easier to make Minecraft resource packs with
+            images as your choice replacing the normal painting textures.
           </p>
           <p>
             I made this back in the Summer of 2019, and occasionally pay it a
             visit to update it to new Minecraft versions, or to make small
             fixes.
           </p>
+          <h1>This website is free - forever</h1>
           <p>
-            It's by far the most popular website I've ever made, attracting (as
-            of April 2021) about 1500 visitors per month.
+            This website is free software. It's free as in 'free beer', but also
+            free as in 'freedom'. Anyone can{' '}
+            <a href={GITHUB} rel="noopener noreferrer" target="_blank">
+              download the source code
+            </a>{' '}
+            and run it themselves. You can see how it works, and even contribute
+            code to it should you wish.
           </p>
           <h1>The website is broken. What should I do?</h1>
           <p>
@@ -50,19 +55,20 @@ function About(props) {
             </a>{' '}
             to let me know. I'll try to get issues fixed as quickly as I can,
             but I can only do so if you provide clear instructions on how to
-            reproduce the problem.
+            reproduce the problem. Leave your email in the form if you want to
+            be contacted back.
           </p>
           <h1>About me</h1>
           <p>
             I'm James. You can{' '}
             <a href="https://jamesthistlewood.co.uk/about" target="_blank">
-              find out more about me at my website
+              find out more about me and the things I work on at my website
             </a>
-            . I'm a student in the UK, but work as a web developer on the side,
-            and make things like this on the side of that :)
+            .
           </p>
           <p>
-            If you want to check out other things I've made, be sure to{' '}
+            If you want to keep up to date with other projects of mine, be sure
+            to{' '}
             <a href="https://github.com/jthistle" target="_blank">
               follow me on GitHub
             </a>

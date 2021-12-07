@@ -17,10 +17,10 @@
  */
 
 import React, { useEffect } from 'react';
-import { c_INACTIVE } from '../../theme';
+import { c_INACTIVE, c_WARNING_ACTION } from '../../theme';
 
-const InfoPopup = ({ children, bgColour, onReject }) => {
-  const handleKeyPress = event => {
+const InfoPopup = ({ children, warning, onReject }) => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Escape') {
       // escape
       onReject();
@@ -52,7 +52,8 @@ const InfoPopup = ({ children, bgColour, onReject }) => {
           width: 60vw;
           padding: 2rem;
           text-align: center;
-          background: ${bgColour || c_INACTIVE};
+          background: ${c_INACTIVE};
+          border: ${warning ? `5px solid ${c_WARNING_ACTION}` : `none`};
           border-radius: 0.5rem;
           z-index: 100;
           margin-bottom: 3rem;
@@ -74,6 +75,7 @@ const InfoPopup = ({ children, bgColour, onReject }) => {
             left: 5vw;
             top: 10vh;
             width: 90vw;
+            padding: 1rem;
           }
         }
 

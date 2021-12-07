@@ -32,6 +32,7 @@ const TextInput = ({ onChange, ...props }) => {
           padding: 0 0.5rem;
           color: ${c_PRIMARY};
           transition: all 0.2s;
+          width: 100%;
         }
 
         .textInput::placeholder {

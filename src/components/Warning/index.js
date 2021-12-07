@@ -18,14 +18,14 @@
 
 import React from 'react';
 import InfoPopup from '../InfoPopup';
+import Button from '../Button';
 import {
   c_WARNING_ACTION,
   c_WARNING_ACTIVE,
   c_WARNING_HIGHLIGHT,
-  c_WARNING_INACTIVE,
 } from '../../theme';
 
-const Button = ({ children, onClick }) => (
+const ButtonOld = ({ children, onClick }) => (
   <div className="button" onClick={onClick}>
     {children}
     <style jsx>{`
@@ -54,16 +54,19 @@ const Button = ({ children, onClick }) => (
 
 const Warning = ({ children, onAccept, onReject }) => {
   return (
-    <InfoPopup bgColour={c_WARNING_INACTIVE} onReject={onReject}>
+    <InfoPopup warning onReject={onReject}>
       {children}
       <div className="buttonContainer">
         <Button onClick={onReject}>Go back</Button>
-        <Button onClick={onAccept}>Continue anyway</Button>
+        <Button scheme={'red'} onClick={onAccept}>
+          Continue anyway
+        </Button>
       </div>
       <style jsx>{`
         .buttonContainer {
           display: flex;
           justify-content: space-evenly;
+          flex-wrap: wrap;
           margin-top: 3rem;
         }
       `}</style>

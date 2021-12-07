@@ -25,6 +25,10 @@ import {
   c_INACTIVE,
   c_INACTIVE_TEXT,
   c_PRIMARY,
+  c_WARNING_ACTION,
+  c_WARNING_HIGHLIGHT,
+  c_WARNING_ACTIVE,
+  c_WARNING_INACTIVE,
 } from '../../theme';
 
 const ButtonInternals = ({
@@ -58,6 +62,22 @@ const ButtonInternals = ({
       secondaryActive = '#333';
       primaryDisabled = '#AAA';
       secondaryDisabled = '#111';
+      break;
+    case 'red':
+      primary = '#FFF';
+      secondary = c_WARNING_ACTION;
+      secondaryHover = c_WARNING_HIGHLIGHT;
+      secondaryActive = c_WARNING_ACTIVE;
+      primaryDisabled = '#AAA';
+      secondaryDisabled = c_WARNING_INACTIVE;
+      break;
+    case 'green':
+      primary = '#FFF';
+      secondary = '#09a319';
+      secondaryHover = '#43c650';
+      secondaryActive = '#65d370';
+      primaryDisabled = '#AAA';
+      secondaryDisabled = '#356639';
       break;
     default:
       break;

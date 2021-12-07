@@ -98,84 +98,114 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => {
     <InfoPopup onReject={onClose}>
       <div className="wrapper">
         <h1>Download your resource pack</h1>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <label htmlFor="packName">Pack name:</label>
-              </td>
-              <td>
-                <TextInput
-                  id="packName"
-                  placeholder="Pack name"
-                  onChange={(e) => handleInput(e, 'name')}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label htmlFor="packDesc">Pack description:</label>
-              </td>
-              <td>
-                <TextInput
-                  id="packDesc"
-                  placeholder="Pack description"
-                  onChange={(e) => handleInput(e, 'description')}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label htmlFor="version">Minecraft Version: </label>
-              </td>
-              <td>
+        <div className="optionsForm">
+          <div>
+            <label htmlFor="packName">Pack name:</label>
+          </div>
+          <div>
+            <TextInput
+              id="packName"
+              placeholder="Pack name"
+              onChange={(e) => handleInput(e, 'name')}
+            />
+          </div>
+          <div>
+            <label htmlFor="packDesc">Pack description:</label>
+          </div>
+          <div>
+            <TextInput
+              id="packDesc"
+              placeholder="Pack description"
+              onChange={(e) => handleInput(e, 'description')}
+            />
+          </div>
+          <div>
+            <label htmlFor="version">Minecraft Version: </label>
+          </div>
+          <div>
+            <Select
+              options={selectOptions}
+              styles={styles}
+              defaultValue={selectOptions[def]}
+              isSearchable={false}
+              onChange={(e) => handleInput(e, 'version')}
+            />
+          </div>
+          {enableResolution && (
+            <>
+              <div>
+                <label htmlFor="resolution">Block pixels: </label>
+              </div>
+              <div>
                 <Select
-                  options={selectOptions}
+                  options={resolutionOptions}
                   styles={styles}
-                  defaultValue={selectOptions[def]}
+                  defaultValue={resolutionOptions[2]}
                   isSearchable={false}
-                  onChange={(e) => handleInput(e, 'version')}
+                  onChange={(e) => handleInput(e, 'resolution')}
                 />
-              </td>
-            </tr>
-            {enableResolution && (
-              <tr>
-                <td>
-                  <label htmlFor="resolution">Block pixels: </label>
-                </td>
-                <td>
-                  <Select
-                    options={resolutionOptions}
-                    styles={styles}
-                    defaultValue={resolutionOptions[2]}
-                    isSearchable={false}
-                    onChange={(e) => handleInput(e, 'resolution')}
-                  />
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </div>
+            </>
+          )}
+        </div>
         <br />
         <Button onClick={onClose}>Go back</Button>
-        <Button onClick={onDownload}>Download resource pack</Button>
+        <Button onClick={onDownload} scheme={'green'}>
+          Download resource pack
+        </Button>
       </div>
       <style jsx>{`
         .wrapper {
-          text-align: center;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
-        table {
-          display: inline-block;
-          margin-bottom: 3rem;
-        }
-
-        table tr {
+        .optionsForm {
+          margin: 0;
+          margin-bottom: 2rem;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
           text-align: left;
+          flex-basis: 100%;
+          padding: 0 6rem;
+        }
+
+        .optionsForm div {
+          flex-basis: 50%;
+          margin: 0.2rem 0;
         }
 
         label {
           padding: 0 1rem;
+          text-align: left;
+          width: 100%;
+          display: block;
+          margin: 0;
+        }
+
+        @media (max-width: 960px) {
+          .optionsForm {
+            padding: 0;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .optionsForm {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            padding: 0 1rem;
+          }
+
+          .optionsForm div {
+            flex-basis: 100%;
+            margin: none;
+          }
+
+          label {
+            padding: 0.5rem 0 0.2rem 0;
+          }
         }
       `}</style>
     </InfoPopup>
