@@ -3,6 +3,8 @@
 This is a website that allows users to crop images and automatically compile them into a resource pack, without
 any server-side processing - it uses tools that all work in the browser, and base64 image encoding.
 
+Currently online at [https://www.mcpaintings.com/](https://www.mcpaintings.com/).
+
 ## Development
 
 ### Yarn commands
@@ -30,7 +32,7 @@ Serve the compiled website in the `build` folder.
 This website is developed on the branch `develop`. `master` only accepts pull requests from `develop`. Any changes
 should be made as commits to `develop` (or, if you're an external contributor, as a PR to `develop`).
 
-Heroku automatically builds and deploys master when it is pushed to.
+TODO: setup AWS to automatically build and deploy pushed to `master`.
 
 ### Project structure overview
 
