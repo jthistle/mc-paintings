@@ -128,6 +128,7 @@ const Home = () => {
   const [showDownloadView, setShowDownloadView] = useState(false);
   const [showResolutionSelect, setShowResolutionSelect] = useState(false);
   const [showSupportView, setShowSupportView] = useState(false);
+  const [processingDownload, setProcessingDownload] = useState(false);
 
   // Mobile-specific state
   const [currentSizeMob, setCurrentSizeMob] = useState('1x1');
@@ -263,6 +264,8 @@ const Home = () => {
   };
 
   const createZip = async () => {
+    setProcessingDownload(true);
+
     const packName = packMeta.name || DEFAULT_PACK_META.name;
     const packDesc =
       (packMeta.description ? packMeta.description + ' | ' : '') +
@@ -289,6 +292,7 @@ const Home = () => {
     saveAs(zipBlob, `${packName}.${extension}`);
 
     setShowDownloadView(false);
+    setProcessingDownload(false);
     setShowSupportView(true);
     ReactGA.event({
       category: 'Pack',
@@ -672,6 +676,7 @@ const Home = () => {
           onDownload={createZip}
           onClose={() => setShowDownloadView(false)}
           enableResolution={showResolutionSelect}
+          processing={processingDownload}
         />
       )}
       {showSupportView && (

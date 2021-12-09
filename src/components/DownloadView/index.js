@@ -80,7 +80,13 @@ const styles = {
   }),
 };
 
-export default ({ handleInput, onDownload, onClose, enableResolution }) => {
+export default ({
+  handleInput,
+  onDownload,
+  onClose,
+  processing,
+  enableResolution,
+}) => {
   const media = useMedia(mediaQuery);
   const def = media.mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
 
@@ -150,8 +156,8 @@ export default ({ handleInput, onDownload, onClose, enableResolution }) => {
         </div>
         <br />
         <Button onClick={onClose}>Go back</Button>
-        <Button onClick={onDownload} scheme={'green'}>
-          Download resource pack
+        <Button onClick={onDownload} disabled={processing} scheme={'green'}>
+          {processing ? `Working...` : `Download resource pack`}
         </Button>
       </div>
       <style jsx>{`
