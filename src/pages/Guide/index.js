@@ -53,23 +53,31 @@ const Guide = () => {
           <h2 id="android">How to install a resource pack (Android)</h2>
           <ol>
             <li>
-              Download your resource pack (it will be a .zip or .mcpack file)
+              Download your resource pack - it will be a .zip or .mcpack file
             </li>
             <li>Open your file explorer</li>
+            <li>If your file is a .zip file, rename it to be a .mcpack file</li>
             <li>
-              Move the downloaded file to your Minecraft data folder
+              Tap on the file, and open it with Minecraft
               <ul>
                 <li>
-                  This will usually be 'Internal Storage' &gt; 'games' &gt;
-                  'com.mojang' &gt; 'resource_packs'
+                  If this doesn't work, you may need to install a third-party
+                  file explorer from the Play Store.
                 </li>
               </ul>
             </li>
-            <li>Launch Minecraft</li>
+            <li>Minecraft should now be open</li>
             <li>Press 'Options'</li>
             <li>Select 'Global Resources' on the left</li>
             <li>Expand 'My Packs'</li>
-            <li>Select the new resource pack</li>
+            <li>
+              Select the new resource pack
+              <ul>
+                <li>
+                  If it doesn't show up, you might need to restart Minecraft
+                </li>
+              </ul>
+            </li>
             <li>Press 'Activate'</li>
             <li>You have successfully installed the resource pack!</li>
           </ol>

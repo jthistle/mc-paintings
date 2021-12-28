@@ -28,7 +28,7 @@ import { useMedia } from 'react-media';
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptions = [
-  { value: '1_18', label: 'Java 1.18' },
+  { value: '1_18', label: 'Java 1.18+' },
   { value: '1_17', label: 'Java 1.17 - 1.17.1' },
   { value: '1_16', label: 'Java 1.16.2 - 1.16.5' },
   { value: '1_15', label: 'Java 1.15 - 1.16.1' },
@@ -46,10 +46,13 @@ const DEFAULT_DESKTOP = 0;
 const DEFAULT_MOBILE = selectOptions.length - 1;
 
 const resolutionOptions = [
-  { value: 16, label: '16x' },
-  { value: 32, label: '32x' },
-  { value: 64, label: '64x' },
+  { value: 16, label: 'Native (16x)' },
+  { value: 64, label: 'Low (64x)' },
+  { value: 128, label: 'Medium (128x)' },
+  { value: 256, label: 'High (256x)' },
+  { value: 512, label: 'Ultra (512x)' },
 ];
+const DEFAULT_RES = 3;
 
 const dropdownStyler = (provided, state) => {
   let bg;
@@ -140,13 +143,13 @@ export default ({
           {enableResolution && (
             <>
               <div>
-                <label htmlFor="resolution">Block pixels: </label>
+                <label htmlFor="resolution">Resolution: </label>
               </div>
               <div>
                 <Select
                   options={resolutionOptions}
                   styles={styles}
-                  defaultValue={resolutionOptions[2]}
+                  defaultValue={resolutionOptions[DEFAULT_RES]}
                   isSearchable={false}
                   onChange={(e) => handleInput(e, 'resolution')}
                 />
