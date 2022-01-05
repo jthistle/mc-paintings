@@ -79,6 +79,13 @@ const ButtonInternals = ({
       primaryDisabled = '#AAA';
       secondaryDisabled = '#356639';
       break;
+    case 'tblue':
+      primary = '#FFF';
+      secondary = '#1DA1F2';
+      secondaryHover = '#1a8cd8';
+      secondaryActive = '#1a8cd8';
+      primaryDisabled = '#AAA';
+      secondaryDisabled = '#4583a8';
     default:
       break;
   }

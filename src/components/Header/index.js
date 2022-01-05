@@ -56,7 +56,7 @@ const Links = ({ capture, mobile }) => {
         display: inline-block;
         margin: 0.25rem 1rem;
         color ${c_PRIMARY};
-        font-size: 0.8rem;
+        font-size: ${mobile ? '1rem' : '0.8rem'};
       }
 
       .links {

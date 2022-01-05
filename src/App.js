@@ -26,6 +26,7 @@ import NotFound from './pages/NotFound';
 import Support from './pages/Support';
 import About from './pages/About';
 import Guide from './pages/Guide';
+import Donate from './pages/Donate';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Support path="/support" />
         <About path="/about" />
         <Guide path="/guide" />
+        <Donate path="/donate" />
         <NotFound default />
       </Router>
     </div>

@@ -90,7 +90,7 @@ const Backers = ({ ...props }) => {
             {backers && backers.map((name, i) => <p key={i}>{name}</p>)}
           </div>
           <h2>Get your name here!</h2>
-          <Button scheme="yellow" external={links.PAYPAL}>
+          <Button scheme="yellow" internal="/donate">
             Donate
           </Button>
         </div>

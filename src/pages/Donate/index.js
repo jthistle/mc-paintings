@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 James Thistlewood
+ *  Copyright (C) 2022 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,50 +19,30 @@
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
 import Button from '../../components/Button';
-import {
-  TWITTER,
-  GITHUB,
-  FEEDBACK,
-  TWITTER_FOLLOW,
-} from '../../supportLinks.json';
+import { PAYPAL } from '../../supportLinks.json';
 
-const Support = ({ ...props }) => {
+const Donate = ({ ...props }) => {
   return (
     <Layout>
       <Column>
         <div className="content">
           <div className="spacer"></div>
-          <b>
-            Help keep this website alive for as little as the price of a coffee!
-          </b>
-          <div className="spacer"></div>
-          <Button internal="/donate" scheme="yellow" big>
-            Donate
-          </Button>
+          <b>Thank you for choosing to donate.</b>
           <p>
-            I'm incredibly grateful for any donations.
-            <br />
-            When you donate, I will add your name to the list of backers - leave
-            a message if you don't want your name added.
+            Please note that when you donate, I will add your name to the list
+            of backers - please leave a message if you don't want your name
+            added.
           </p>
-          <p>Other ways to support:</p>
-          <Button external={FEEDBACK}>Give some feedback</Button>
-          <Button external={TWITTER_FOLLOW} scheme="tblue">
-            Follow on Twitter
-          </Button>
-          <Button external={TWITTER} scheme="tblue">
-            Tweet about it
-          </Button>
-          <Button external={GITHUB} scheme="black">
-            Star on GitHub
+          <p>
+            To continue to PayPal, simply press the button below. Thanks again!
+          </p>
+          <div className="spacer"></div>
+          <Button external={PAYPAL} scheme="yellow">
+            Donate via PayPal
           </Button>
         </div>
       </Column>
       <style jsx>{`
-        .highlight {
-          font-weight: bold;
-        }
-
         .spacer {
           height: 2rem;
         }
@@ -75,4 +55,4 @@ const Support = ({ ...props }) => {
   );
 };
 
-export default Support;
+export default Donate;

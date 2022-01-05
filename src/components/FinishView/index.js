@@ -20,37 +20,34 @@ import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 
-import links from '../../supportLinks.json';
-
-const PAYPAL = links.PAYPAL;
-const TWITTER = links.TWITTER;
-const GITHUB = links.GITHUB;
-const FEEDBACK = links.FEEDBACK;
+import {
+  TWITTER,
+  GITHUB,
+  FEEDBACK,
+  TWITTER_FOLLOW,
+} from '../../supportLinks.json';
 
 export default ({ onClose }) => {
   return (
     <InfoPopup onReject={onClose}>
-      <Button external={PAYPAL} scheme="yellow" big>
+      <Button internal="/donate" scheme="yellow" big>
         Donate
       </Button>
       <p className="text">
         Thanks for using this website! <br />
-        <b>
-          This website survives through donations. Please consider donating.
-        </b>
+        <b>This website survives through donations.</b>
       </p>
-      <p>
-        When you donate, your name will be added to the list of backers - if you
-        don't want your name added please leave a message.
-      </p>
+      <p>Found a problem? Just want to say hi?</p>
+      <Button external={FEEDBACK}>Give some feedback</Button>
+      <Button external={TWITTER}>Tweet at me</Button>
+
       <p>Other ways to support:</p>
+      <Button external={TWITTER_FOLLOW}>Follow on Twitter</Button>
       <Button external={TWITTER}>Tweet about it</Button>
       <Button external={GITHUB} scheme="black">
         Star on GitHub
       </Button>
       <div className="break" />
-      <p>Found a problem? Just want to say hi? Please:</p>
-      <Button external={FEEDBACK}>Give some feedback</Button>
       <style jsx>{`
         .highlight {
           font-weight: bold;

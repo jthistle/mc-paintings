@@ -49,6 +49,8 @@ import ChangeImage from './icons/change_image.svg';
 import CropIcon from './icons/crop.svg';
 import DownloadIcon from './icons/download.svg';
 
+import { TWITTER_FOLLOW, TWEET_AT } from '../../supportLinks.json';
+
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
     {needsImage ? 'Upload an image' : 'Choose a size to begin'}
@@ -633,6 +635,17 @@ const Home = () => {
               Current size: {selectedSize.size}
             </h2>
           )}
+          <div className="twitter">
+            <div>Now on twitter!</div>
+            <div className="twitterBtns">
+              <Button external={TWITTER_FOLLOW} scheme="tblue">
+                Follow
+              </Button>
+              <Button external={TWEET_AT} scheme="tblue">
+                Tweet at me
+              </Button>
+            </div>
+          </div>
         </Column>
         <style jsx>{`
           .imageSizeContainer {
@@ -652,6 +665,18 @@ const Home = () => {
             text-align: center;
             width: 100%;
             margin: 1rem 0;
+          }
+
+          .twitter {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 4rem;
+          }
+
+          .twitterBtns {
+            margin-top: 1rem;
           }
 
           :global(.imageSizeContainer > *) {
