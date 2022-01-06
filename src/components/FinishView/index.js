@@ -39,11 +39,17 @@ export default ({ onClose }) => {
       </p>
       <p>Found a problem? Just want to say hi?</p>
       <Button external={FEEDBACK}>Give some feedback</Button>
-      <Button external={TWITTER}>Tweet at me</Button>
+      <Button external={TWITTER} scheme="tblue">
+        Tweet at me
+      </Button>
 
       <p>Other ways to support:</p>
-      <Button external={TWITTER_FOLLOW}>Follow on Twitter</Button>
-      <Button external={TWITTER}>Tweet about it</Button>
+      <Button external={TWITTER_FOLLOW} scheme="tblue">
+        Follow on Twitter
+      </Button>
+      <Button external={TWITTER} scheme="tblue">
+        Tweet about it
+      </Button>
       <Button external={GITHUB} scheme="black">
         Star on GitHub
       </Button>
