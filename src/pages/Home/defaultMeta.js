@@ -7,7 +7,7 @@ const DEFAULT_PACK_META = {
   resolution: 256,
   extension: 'zip',
   fileBuilder: fileBuilders.java,
-  versionTag: '1_18',
+  versionTag: '1_18_2',
 };
 
 export default DEFAULT_PACK_META;
