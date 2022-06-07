@@ -44,7 +44,7 @@ const selectOptions = [
 ];
 
 // Default versions selected for different
-const DEFAULT_DESKTOP = 1;
+const DEFAULT_DESKTOP = 0;
 const DEFAULT_MOBILE = selectOptions.length - 1;
 
 const resolutionOptions = [
