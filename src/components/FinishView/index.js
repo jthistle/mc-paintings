@@ -20,7 +20,13 @@ import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 
-import { TWITTER, GITHUB, FEEDBACK, TWEET_AT } from '../../supportLinks.json';
+import {
+  TWITTER,
+  GITHUB,
+  FEEDBACK,
+  TWEET_AT,
+  TWITTER_FOLLOW,
+} from '../../supportLinks.json';
 
 export default ({ onClose }) => {
   return (
@@ -43,8 +49,16 @@ export default ({ onClose }) => {
         Star on GitHub
       </Button>
 
-      <p>You can also get in contact via our official Twitter account:</p>
-      <Button external={TWEET_AT}>Tweet at me</Button>
+      <p>
+        You can also get in contact via our{' '}
+        <a href={TWITTER_FOLLOW} target="_blank" rel="noopener noreferrer">
+          official Twitter account
+        </a>
+        :
+      </p>
+      <Button external={TWEET_AT} scheme="tblue">
+        Tweet at me
+      </Button>
       <div className="break" />
       <style jsx>{`
         .highlight {
@@ -57,6 +71,10 @@ export default ({ onClose }) => {
 
         .text {
           line-height: 1.5rem;
+        }
+
+        a {
+          color: white;
         }
       `}</style>
     </InfoPopup>
