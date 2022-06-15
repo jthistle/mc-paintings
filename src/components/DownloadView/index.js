@@ -95,6 +95,8 @@ export default ({
   const media = useMedia(mediaQuery);
   const def = media.mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
 
+  // Set version field in meta object since we change the default based on whether
+  // user is mobile or desktop
   useEffect(() => {
     handleInput(
       {
