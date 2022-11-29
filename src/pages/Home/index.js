@@ -127,7 +127,7 @@ const Home = () => {
 
   const [showDownloadView, setShowDownloadView] = useState(false);
   const [showResolutionSelect, setShowResolutionSelect] = useState(false);
-  const [showSupportView, setShowSupportView] = useState(false);
+  const [showSupportView, setShowSupportView] = useState(true);
   const [processingDownload, setProcessingDownload] = useState(false);
 
   // Mobile-specific state
@@ -247,6 +247,7 @@ const Home = () => {
       return;
     }
 
+    // This is obsolete since a new image now starts with a crop set.
     if (currentCrop.width === 0 && currentCrop.height === 0) {
       setWarning({
         title: 'Warning: you have not set a crop',
