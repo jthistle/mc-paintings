@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 James Thistlewood
+ *  Copyright (C) 2022 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,13 +30,13 @@ import {
 const BASE_SIZE = 3; // rem
 
 function dimensionsFromSize(size) {
-  return size.split('x').map(val => parseInt(val));
+  return size.split('x').map((val) => parseInt(val));
 }
 
 const ImageSelect = ({ image, size, index, onSelect, isSelected }) => {
   const [width, height] = dimensionsFromSize(size);
 
-  const onClick = event => {
+  const onClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
     onSelect(size, index);
