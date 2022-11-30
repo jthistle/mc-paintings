@@ -33,7 +33,7 @@ function About(props) {
             images as your choice replacing the normal painting textures.
           </p>
           <p>
-            I made this back in the Summer of 2022, and occasionally pay it a
+            I made this back in the Summer of 2019, and occasionally pay it a
             visit to update it to new Minecraft versions, or to make small
             fixes.
           </p>
