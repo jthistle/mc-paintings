@@ -20,6 +20,7 @@ import React, { useState } from 'react';
 import Header from '../Header';
 import CookiesBar from '../CookiesBar';
 import Tracker from '../Tracker';
+import ReactGA from '../../analytics';
 
 const PRIVACY_PATH = '/privacy';
 
@@ -50,6 +51,7 @@ const Layout = ({ captureHeader, children }) => {
   const onCookiesAccept = () => {
     localStorage.setItem('canTrack', 'yes');
     setShowCookieBar(false);
+    ReactGA.tryInit();
   };
 
   return (
