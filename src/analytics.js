@@ -1,6 +1,8 @@
 import ReactGA from 'react-ga';
 
-console.log('analytics file run');
+const debug = (...args) => false && console.log(args);
+
+debug('analytics file run');
 
 function Analytics() {
   let init = false;
@@ -13,7 +15,7 @@ function Analytics() {
       ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
       ReactGA.set({ anonymizeIp: true });
       init = true;
-      console.log('analytics init');
+      debug('analytics init');
     }
   };
 
@@ -22,10 +24,10 @@ function Analytics() {
   const curry = (func) => {
     return (...args) => {
       if (init) {
-        console.log('analytics event:', args);
+        debug('analytics event:', args);
         return func(...args);
       }
-      console.log('skipped (not init):', args);
+      debug('analytics event (not sent):', args);
       return null;
     };
   };
