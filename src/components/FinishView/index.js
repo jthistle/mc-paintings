@@ -19,6 +19,10 @@
 import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
+import { Link } from '@reach/router';
+
+import AffiliateImage from '../../misc/affiliate-logo.webp';
+import ReactGA from '../../analytics';
 
 import {
   TWITTER,
@@ -26,22 +30,50 @@ import {
   FEEDBACK,
   TWEET_AT,
   TWITTER_FOLLOW,
+  AFFILIATE_LINK,
 } from '../../supportLinks.json';
+import { SINGLE_TEX_POSITIONS } from '../../pages/Home/configs';
 
 export default ({ onClose }) => {
   return (
     <InfoPopup onReject={onClose}>
-      <Button internal="/donate" scheme="yellow" big>
-        Donate
-      </Button>
-      <p className="text">
-        Thanks for using this website! <br />
-        <b>This website survives through donations.</b>
+      <div className="partnerContainer">
+        <div className="disclaimer">
+          <Link to="/partnership" style={{ textDecoration: 'none' }}>
+            <span className="disclaimerText">sponsored</span>
+          </Link>
+        </div>
+        <a
+          href={AFFILIATE_LINK}
+          target="_blank"
+          onClick={(e) =>
+            ReactGA.event({
+              category: 'Affiliate',
+              action: 'Click',
+              label: 'finish',
+            })
+          }
+        >
+          <div className="partnerLink">
+            <img src={AffiliateImage} className="logo" />
+            <p className="headline">
+              Your game server. Top performance. No monthly costs.
+            </p>
+            <p>Your own Minecraft server, for as little as $0.02/hour.</p>
+            <p className="bolded">Try for free today.</p>
+          </div>
+        </a>
+      </div>
+      <div className="spacer"></div>
+      <p>
+        Thanks for using this website! Found a problem? Just want to say hi?
       </p>
-      <p>Found a problem? Just want to say hi?</p>
       <Button external={FEEDBACK}>Give some feedback</Button>
 
       <p>Other ways to support:</p>
+      <Button internal="/donate" scheme="yellow">
+        Donate
+      </Button>
       <Button external={TWITTER} scheme="tblue">
         Tweet about it
       </Button>
@@ -49,24 +81,14 @@ export default ({ onClose }) => {
         Star on GitHub
       </Button>
 
-      <p>
-        You can also get in contact via our{' '}
-        <a href={TWITTER_FOLLOW} target="_blank" rel="noopener noreferrer">
-          official Twitter account
-        </a>
-        :
-      </p>
-      <Button external={TWEET_AT} scheme="tblue">
-        Tweet at me
-      </Button>
       <div className="break" />
       <style jsx>{`
         .highlight {
           font-weight: bold;
         }
 
-        .break {
-          margin-top: 2rem;
+        .spacer {
+          height: 2rem;
         }
 
         .text {
@@ -74,7 +96,54 @@ export default ({ onClose }) => {
         }
 
         a {
+          text-decoration: none;
+        }
+
+        .partnerContainer {
+          display: inline-block;
+          text-align: left;
+        }
+
+        .partnerLink {
+          display: inline-block;
+          padding: 1.5rem 1rem 1rem 1rem;
+          border-radius: 0.25rem;
           color: white;
+          text-decoration: none;
+          background-color: rgba(255, 255, 255, 0.05);
+          transition: background-color 0.3s;
+          text-align: center;
+        }
+
+        .partnerLink:hover,
+        .partnerLink:active {
+          background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .headline {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+
+        .bolded {
+          font-weight: bold;
+        }
+
+        .logo {
+          width: 100%;
+          max-width: 20rem;
+        }
+
+        .disclaimer {
+          width: 100%;
+          text-align: left;
+          margin-bottom: 0.2rem;
+        }
+
+        .disclaimerText {
+          font-size: 0.8rem;
+          color: #888;
+          font-style: italic;
         }
       `}</style>
     </InfoPopup>

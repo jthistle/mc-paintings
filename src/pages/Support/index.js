@@ -47,9 +47,6 @@ const Support = ({ ...props }) => {
           </p>
           <p>Other ways to support:</p>
           <Button external={FEEDBACK}>Give some feedback</Button>
-          <Button external={TWITTER_FOLLOW} scheme="tblue">
-            Follow on Twitter
-          </Button>
           <Button external={TWITTER} scheme="tblue">
             Tweet about it
           </Button>

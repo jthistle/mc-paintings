@@ -33,13 +33,15 @@ import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
 import FinishView from '../../components/FinishView';
 import Carousel from '../../components/Carousel';
+import CapturedLink from '../../components/CapturedLink';
 
 import ReactGA from '../../analytics';
 import fileBuilders from './fileBuilders';
 
 import { SIZES, VERSION_MAP } from './configs';
+import { AFFILIATE_LINK } from '../../supportLinks.json';
 import DEFAULT_PACK_META from './defaultMeta';
-import { navigate } from '@reach/router';
+import { Link, navigate } from '@reach/router';
 
 import mediaQuery from '../../components/media';
 import { useMedia } from 'react-media';
@@ -48,6 +50,7 @@ import AddImage from './icons/add_image.svg';
 import ChangeImage from './icons/change_image.svg';
 import CropIcon from './icons/crop.svg';
 import DownloadIcon from './icons/download.svg';
+import AffiliateImage from '../../misc/affiliate-logo.webp';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -612,6 +615,45 @@ const Home = () => {
               />
             ))}
           </div>
+          <div className="partnerContainer">
+            <div className="disclaimer">
+              <CapturedLink
+                to="/partnership"
+                capture={navCapture}
+                style={{ textDecoration: 'none' }}
+              >
+                <span className="disclaimerText">sponsored</span>
+              </CapturedLink>
+            </div>
+            <a
+              href={AFFILIATE_LINK}
+              target="_blank"
+              onClick={(e) =>
+                ReactGA.event({
+                  category: 'Affiliate',
+                  action: 'Click',
+                  label: 'home',
+                })
+              }
+            >
+              <div className="partnerLink">
+                <div className="content">
+                  <div>
+                    <div className="logoContainer">
+                      <img src={AffiliateImage} className="logo" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="headline">
+                      Your game server. Top performance. No monthly costs.
+                    </p>
+                    <p>Your own Minecraft server, from $0.02/hour.</p>
+                    <p className="bolded">Try for free today.</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
         </Column>
         <Column>
           {isCropping() ? (
@@ -656,6 +698,65 @@ const Home = () => {
 
           :global(.imageSizeContainer > *) {
             margin-bottom: 1rem;
+          }
+
+          /* partnership stuff */
+          .partnerContainer {
+            display: inline-block;
+            width: 80%;
+            margin-top: 4rem;
+          }
+
+          .partnerLink {
+            width: 100%;
+            display: inline-block;
+            border-radius: 0.25rem;
+            color: white;
+            text-decoration: none;
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: background-color 0.3s;
+          }
+
+          .partnerLink .content {
+            margin: 0.5rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+          }
+
+          .partnerLink .content > div {
+            margin: 0 1rem;
+          }
+
+          .partnerLink:hover,
+          .partnerLink:active {
+            background-color: rgba(255, 255, 255, 0.15);
+          }
+
+          .headline {
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+
+          .bolded {
+            font-weight: bold;
+          }
+
+          .logo {
+            width: 100%;
+            max-width: 20rem;
+          }
+
+          .disclaimer {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 0.2rem;
+          }
+
+          .disclaimerText {
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
           }
         `}</style>
       </>
