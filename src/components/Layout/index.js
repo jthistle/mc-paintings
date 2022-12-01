@@ -33,6 +33,10 @@ const Column = ({ children }) => (
         flex-grow: 1;
         flex-basis: 0;
         min-width: 300px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
     `}</style>
   </div>

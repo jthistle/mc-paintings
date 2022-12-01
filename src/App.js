@@ -26,6 +26,7 @@ import NotFound from './pages/NotFound';
 import Support from './pages/Support';
 import About from './pages/About';
 import Guide from './pages/Guide';
+import Partnership from './pages/Partnership';
 import Donate from './pages/Donate';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <About path="/about" />
         <Guide path="/guide" />
         <Donate path="/donate" />
+        <Partnership path="/partnership" />
         <NotFound default />
       </Router>
     </div>

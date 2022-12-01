@@ -19,8 +19,10 @@
 import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
+import { Link } from '@reach/router';
 
-import SponsorImage from './sponsor-logo.webp';
+import AffiliateImage from '../../misc/affiliate-logo.webp';
+import ReactGA from '../../analytics';
 
 import {
   TWITTER,
@@ -35,20 +37,34 @@ import { SINGLE_TEX_POSITIONS } from '../../pages/Home/configs';
 export default ({ onClose }) => {
   return (
     <InfoPopup onReject={onClose}>
-      <a href={AFFILIATE_LINK} target="_blank">
-        <div className="partnerLink">
-          {/* <p className="headline">Get your own Minecraft server, for as little as $0.02/hour!</p>
-          <img src={SponsorImage} className="logo" />
-          <p>Your game server. Top performance. No monthly costs.</p> */}
-          <img src={SponsorImage} className="logo" />
-          <p className="headline">
-            Your game server. Top performance. No monthly costs.
-          </p>
-          <p>Your own Minecraft server, for as little as $0.02/hour.</p>
-          <p className="bolded">Try for free today.</p>
+      <div className="partnerContainer">
+        <div className="disclaimer">
+          <Link to="/partnership" style={{ textDecoration: 'none' }}>
+            <span className="disclaimerText">sponsored</span>
+          </Link>
         </div>
-      </a>
-      <p class="spacer">&nbsp;</p>
+        <a
+          href={AFFILIATE_LINK}
+          target="_blank"
+          onClick={(e) =>
+            ReactGA.event({
+              category: 'Affiliate',
+              action: 'Click',
+              label: 'finish',
+            })
+          }
+        >
+          <div className="partnerLink">
+            <img src={AffiliateImage} className="logo" />
+            <p className="headline">
+              Your game server. Top performance. No monthly costs.
+            </p>
+            <p>Your own Minecraft server, for as little as $0.02/hour.</p>
+            <p className="bolded">Try for free today.</p>
+          </div>
+        </a>
+      </div>
+      <div className="spacer"></div>
       <p>
         Thanks for using this website! Found a problem? Just want to say hi?
       </p>
@@ -72,7 +88,7 @@ export default ({ onClose }) => {
         }
 
         .spacer {
-          margin-top: 4rem;
+          height: 2rem;
         }
 
         .text {
@@ -83,14 +99,20 @@ export default ({ onClose }) => {
           text-decoration: none;
         }
 
+        .partnerContainer {
+          display: inline-block;
+          text-align: left;
+        }
+
         .partnerLink {
           display: inline-block;
-          padding: 2rem;
+          padding: 1.5rem 1rem 1rem 1rem;
           border-radius: 0.25rem;
           color: white;
           text-decoration: none;
           background-color: rgba(255, 255, 255, 0.05);
           transition: background-color 0.3s;
+          text-align: center;
         }
 
         .partnerLink:hover,
@@ -110,6 +132,18 @@ export default ({ onClose }) => {
         .logo {
           width: 100%;
           max-width: 20rem;
+        }
+
+        .disclaimer {
+          width: 100%;
+          text-align: left;
+          margin-bottom: 0.2rem;
+        }
+
+        .disclaimerText {
+          font-size: 0.8rem;
+          color: #888;
+          font-style: italic;
         }
       `}</style>
     </InfoPopup>
