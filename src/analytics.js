@@ -8,6 +8,8 @@ function Analytics() {
   let init = false;
 
   const tryInit = () => {
+    if (init) return;
+
     if (
       process.env.REACT_APP_GA_TRACKING_ID &&
       localStorage.getItem('canTrack') === 'yes'
