@@ -117,6 +117,7 @@ const ImageSize = ({
           line-height: ${BASE_SIZE * height}rem;
           font-weight: ${typeof hasSelected === 'number' ? 'bold' : 'normal'};
           transition: background 0.2s;
+          margin: 0.25rem;
         }
 
         .imageSize:hover {
