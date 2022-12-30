@@ -524,7 +524,11 @@ const Home = () => {
               <div className="content">
                 <div>
                   <div className="logoContainer">
-                    <img src={AffiliateImage} className="logo" />
+                    <img
+                      src={AffiliateImage}
+                      className="logo"
+                      alt="Affiliate logo"
+                    />
                   </div>
                 </div>
                 <div>
@@ -735,7 +739,11 @@ const Home = () => {
                 <div className="content">
                   <div>
                     <div className="logoContainer">
-                      <img src={AffiliateImage} className="logo" />
+                      <img
+                        src={AffiliateImage}
+                        className="logo"
+                        alt="Affiliate logo"
+                      />
                     </div>
                   </div>
                   <div>
