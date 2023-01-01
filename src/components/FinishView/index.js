@@ -21,7 +21,6 @@ import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 import { Link } from '@reach/router';
 
-import AffiliateImage from '../../misc/affiliate-logo.webp';
 import ReactGA from '../../analytics';
 
 import {
@@ -55,7 +54,7 @@ export default ({ onClose }) => {
           }
         >
           <div className="partnerLink">
-            <img src={AffiliateImage} className="logo" />
+            <img src="/res/affiliate_logo.webp" className="logo" />
             <p className="headline">
               Your game server. Top performance. No monthly costs.
             </p>

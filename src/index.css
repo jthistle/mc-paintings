@@ -7,6 +7,7 @@
   src: local(Rubik), url(./fonts/Rubik-Regular.ttf);
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -14,6 +15,7 @@
   src: local(Rubik), url(./fonts/Rubik-RegularItalic.ttf);
   font-weight: normal;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -21,6 +23,7 @@
   src: local(Rubik), url(./fonts/Rubik-Bold.ttf);
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -28,6 +31,7 @@
   src: local(Rubik), url(./fonts/Rubik-BoldItalic.ttf);
   font-weight: bold;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -35,6 +39,7 @@
   src: local(Rubik), url(./fonts/Rubik-Light.ttf);
   font-weight: lighter;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -42,6 +47,7 @@
   src: local(Rubik), url(./fonts/Rubik-LightItalic.ttf);
   font-weight: lighter;
   font-style: italic;
+  font-display: swap;
 }
 
 /*
@@ -55,7 +61,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #051a26;
   color: #cfe0f7;
-  font-display: swap;
 }
 
 code {

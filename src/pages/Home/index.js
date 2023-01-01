@@ -50,7 +50,6 @@ import AddImage from './icons/add_image.svg';
 import ChangeImage from './icons/change_image.svg';
 import CropIcon from './icons/crop.svg';
 import DownloadIcon from './icons/download.svg';
-import AffiliateImage from '../../misc/affiliate-logo.webp';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -525,7 +524,7 @@ const Home = () => {
                 <div>
                   <div className="logoContainer">
                     <img
-                      src={AffiliateImage}
+                      src="/res/affiliate_logo.webp"
                       className="logo"
                       alt="Affiliate logo"
                     />
@@ -740,7 +739,7 @@ const Home = () => {
                   <div>
                     <div className="logoContainer">
                       <img
-                        src={AffiliateImage}
+                        src="/res/affiliate_logo.webp"
                         className="logo"
                         alt="Affiliate logo"
                       />
