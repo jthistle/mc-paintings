@@ -19,7 +19,6 @@
 import React from 'react';
 import Button from '../../components/Button';
 import Layout, { Column } from '../../components/Layout';
-import { GITHUB, FEEDBACK } from '../../supportLinks.json';
 
 function Partnership(props) {
   return (

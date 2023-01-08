@@ -16,7 +16,10 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-/* eslint jsx-a11y/img-redundant-alt: 0 */
+// disable target blank warning since affiliate links need referrer
+/* eslint-disable react/jsx-no-target-blank */
+// misguided warning about the word 'image' appearing in alt text
+/* eslint-disable jsx-a11y/img-redundant-alt */
 
 import React, { useEffect, useState } from 'react';
 import JSZip from 'jszip';
@@ -41,7 +44,7 @@ import fileBuilders from './fileBuilders';
 import { SIZES, VERSION_MAP } from './configs';
 import { AFFILIATE_LINK } from '../../supportLinks.json';
 import DEFAULT_PACK_META from './defaultMeta';
-import { Link, navigate } from '@reach/router';
+import { navigate } from '@reach/router';
 
 import mediaQuery from '../../components/media';
 import { useMedia } from 'react-media';

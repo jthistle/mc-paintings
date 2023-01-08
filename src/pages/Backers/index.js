@@ -20,7 +20,6 @@ import React, { useState, useEffect } from 'react';
 import Layout, { Column } from '../../components/Layout';
 import Button from '../../components/Button';
 import axios from 'axios';
-import links from '../../supportLinks.json';
 import { c_INACTIVE } from '../../theme';
 
 const BACKERS_URL = 'https://d24ckqemmplms5.cloudfront.net/backers.json';

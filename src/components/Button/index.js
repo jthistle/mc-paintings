@@ -86,6 +86,7 @@ const ButtonInternals = ({
       secondaryActive = '#1a8cd8';
       primaryDisabled = '#AAA';
       secondaryDisabled = '#4583a8';
+      break;
     default:
       break;
   }

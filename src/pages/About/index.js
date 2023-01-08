@@ -16,6 +16,9 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+// most of the links on this page are trustworthy
+/* eslint-disable react/jsx-no-target-blank */
+
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
 import { GITHUB, FEEDBACK } from '../../supportLinks.json';

@@ -16,6 +16,9 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+// disable target blank warning since affiliate links need referrer
+/* eslint-disable react/jsx-no-target-blank */
+
 import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
@@ -27,11 +30,8 @@ import {
   TWITTER,
   GITHUB,
   FEEDBACK,
-  TWEET_AT,
-  TWITTER_FOLLOW,
   AFFILIATE_LINK,
 } from '../../supportLinks.json';
-import { SINGLE_TEX_POSITIONS } from '../../pages/Home/configs';
 
 export default ({ onClose }) => {
   return (
@@ -54,7 +54,11 @@ export default ({ onClose }) => {
           }
         >
           <div className="partnerLink">
-            <img src="/res/affiliate_logo.webp" className="logo" />
+            <img
+              src="/res/affiliate_logo.webp"
+              className="logo"
+              alt="Affiliate logo"
+            />
             <p className="headline">
               Your game server. Top performance. No monthly costs.
             </p>

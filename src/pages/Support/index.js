@@ -19,12 +19,7 @@
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
 import Button from '../../components/Button';
-import {
-  TWITTER,
-  GITHUB,
-  FEEDBACK,
-  TWITTER_FOLLOW,
-} from '../../supportLinks.json';
+import { TWITTER, GITHUB, FEEDBACK } from '../../supportLinks.json';
 
 const Support = ({ ...props }) => {
   return (

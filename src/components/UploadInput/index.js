@@ -39,6 +39,7 @@ export default ({ onUpload, children, disabled, width }) => {
         onChange={onUpload}
         className="fileInput"
         disabled={!!disabled}
+        aria-label="Upload an image"
       />
       <style jsx>{`
         .fakeButton {
