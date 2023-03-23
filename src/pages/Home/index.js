@@ -16,8 +16,6 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-// disable target blank warning since affiliate links need referrer
-/* eslint-disable react/jsx-no-target-blank */
 // misguided warning about the word 'image' appearing in alt text
 /* eslint-disable jsx-a11y/img-redundant-alt */
 
@@ -36,13 +34,11 @@ import Button from '../../components/Button';
 import DownloadView from '../../components/DownloadView';
 import FinishView from '../../components/FinishView';
 import Carousel from '../../components/Carousel';
-import CapturedLink from '../../components/CapturedLink';
 
 import ReactGA from '../../analytics';
 import fileBuilders from './fileBuilders';
 
 import { SIZES, VERSION_MAP } from './configs';
-import { AFFILIATE_LINK } from '../../supportLinks.json';
 import DEFAULT_PACK_META from './defaultMeta';
 import { navigate } from '@reach/router';
 
@@ -501,46 +497,6 @@ const Home = () => {
             </div>
           </Button>
         </div>
-        <div className="partnerContainer">
-          <div className="disclaimer">
-            <CapturedLink
-              to="/partnership"
-              capture={navCapture}
-              style={{ textDecoration: 'none' }}
-            >
-              <span className="disclaimerText">sponsored</span>
-            </CapturedLink>
-          </div>
-          <a
-            href={AFFILIATE_LINK}
-            target="_blank"
-            onClick={(e) =>
-              ReactGA.event({
-                category: 'Affiliate',
-                action: 'Click',
-                label: 'home_mobile',
-              })
-            }
-          >
-            <div className="partnerLink">
-              <div className="content">
-                <div>
-                  <div className="logoContainer">
-                    <img
-                      src="/res/affiliate_logo.webp"
-                      className="logo"
-                      alt="Affiliate logo"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <p>Your own Minecraft server, from $0.02/hour.</p>
-                  <p className="bolded">Try for free today.</p>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
         {cropOpenMob && (
           <>
             <div
@@ -618,65 +574,6 @@ const Home = () => {
           .buttons {
             margin: 1rem 0 2rem 0;
           }
-
-          /* partnership stuff */
-          .partnerContainer {
-            display: inline-block;
-            width: 100%;
-            margin: 1rem 0;
-          }
-
-          .partnerLink {
-            width: 100%;
-            display: inline-block;
-            border-radius: 0.25rem;
-            color: white;
-            text-decoration: none;
-            background-color: rgba(255, 255, 255, 0.05);
-            transition: background-color 0.3s;
-          }
-
-          .partnerLink .content {
-            margin: 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-
-          .partnerLink .content > div {
-            margin: 0 1rem;
-          }
-
-          .partnerLink:hover,
-          .partnerLink:active {
-            background-color: rgba(255, 255, 255, 0.15);
-          }
-
-          .headline {
-            font-size: 1.2rem;
-            font-weight: bold;
-          }
-
-          .bolded {
-            font-weight: bold;
-          }
-
-          .logo {
-            width: 100%;
-            max-width: 16rem;
-          }
-
-          .disclaimer {
-            width: 100%;
-            text-align: left;
-            margin-bottom: 0.2rem;
-          }
-
-          .disclaimerText {
-            font-size: 0.8rem;
-            color: #888;
-            font-style: italic;
-          }
         `}</style>
       </>
     );
@@ -715,49 +612,6 @@ const Home = () => {
                 key={size}
               />
             ))}
-          </div>
-          <div className="partnerContainer">
-            <div className="disclaimer">
-              <CapturedLink
-                to="/partnership"
-                capture={navCapture}
-                style={{ textDecoration: 'none' }}
-              >
-                <span className="disclaimerText">sponsored</span>
-              </CapturedLink>
-            </div>
-            <a
-              href={AFFILIATE_LINK}
-              target="_blank"
-              onClick={(e) =>
-                ReactGA.event({
-                  category: 'Affiliate',
-                  action: 'Click',
-                  label: 'home_desktop',
-                })
-              }
-            >
-              <div className="partnerLink">
-                <div className="content">
-                  <div>
-                    <div className="logoContainer">
-                      <img
-                        src="/res/affiliate_logo.webp"
-                        className="logo"
-                        alt="Affiliate logo"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="headline">
-                      Your game server. Top performance. No monthly costs.
-                    </p>
-                    <p>Your own Minecraft server, from $0.02/hour.</p>
-                    <p className="bolded">Try for free today.</p>
-                  </div>
-                </div>
-              </div>
-            </a>
           </div>
         </Column>
         <Column>
@@ -803,65 +657,6 @@ const Home = () => {
 
           :global(.imageSizeContainer > *) {
             margin-bottom: 1rem;
-          }
-
-          /* partnership stuff */
-          .partnerContainer {
-            display: inline-block;
-            width: 80%;
-            margin-top: 4rem;
-          }
-
-          .partnerLink {
-            width: 100%;
-            display: inline-block;
-            border-radius: 0.25rem;
-            color: white;
-            text-decoration: none;
-            background-color: rgba(255, 255, 255, 0.05);
-            transition: background-color 0.3s;
-          }
-
-          .partnerLink .content {
-            margin: 0.5rem;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-          }
-
-          .partnerLink .content > div {
-            margin: 0 1rem;
-          }
-
-          .partnerLink:hover,
-          .partnerLink:active {
-            background-color: rgba(255, 255, 255, 0.15);
-          }
-
-          .headline {
-            font-size: 1.2rem;
-            font-weight: bold;
-          }
-
-          .bolded {
-            font-weight: bold;
-          }
-
-          .logo {
-            width: 100%;
-            max-width: 20rem;
-          }
-
-          .disclaimer {
-            width: 100%;
-            text-align: left;
-            margin-bottom: 0.2rem;
-          }
-
-          .disclaimerText {
-            font-size: 0.8rem;
-            color: #888;
-            font-style: italic;
           }
         `}</style>
       </>
