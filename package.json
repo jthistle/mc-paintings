@@ -11,6 +11,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-ga": "^2.6.0",
+    "react-ga4": "^2.1.0",
     "react-image-crop": "^8.5.0",
     "react-media": "^2.0.0-rc.1",
     "react-scripts": "3.0.1",
