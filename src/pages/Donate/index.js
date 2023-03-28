@@ -18,7 +18,6 @@
 
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
-import Button from '../../components/Button';
 import { PAYPAL } from '../../supportLinks.json';
 
 const Donate = ({ ...props }) => {
@@ -37,9 +36,13 @@ const Donate = ({ ...props }) => {
             To continue to PayPal, simply press the button below. Thanks again!
           </p>
           <div className="spacer"></div>
-          <Button external={PAYPAL} scheme="yellow">
-            Donate via PayPal
-          </Button>
+          <a href={PAYPAL}>
+            <img
+              src="/btn_donate_LG.png"
+              alt="Donate with PayPal button"
+              title="PayPal - The safer, easier way to pay online!"
+            />
+          </a>
         </div>
       </Column>
       <style jsx>{`
