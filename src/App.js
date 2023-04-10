@@ -19,27 +19,19 @@
 import React from 'react';
 import { Router } from '@reach/router';
 import Home from './pages/Home';
-import Backers from './pages/Backers';
-import DonationThank from './pages/DonationThank';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
-import Support from './pages/Support';
 import About from './pages/About';
 import Guide from './pages/Guide';
-import Donate from './pages/Donate';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Home path="/" />
-        <Backers path="/backers" />
-        <DonationThank path="/postdonation" />
         <Privacy path="/privacy" />
-        <Support path="/support" />
         <About path="/about" />
         <Guide path="/guide" />
-        <Donate path="/donate" />
         <NotFound default />
       </Router>
     </div>
