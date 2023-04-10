@@ -21,20 +21,22 @@ import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 
 import { TWITTER, GITHUB, FEEDBACK } from '../../supportLinks.json';
+import ReactGA from '../../analytics';
 
 export default ({ onClose }) => {
+  const kofiHandler = (e) => {
+    ReactGA.donateClick('finish', '');
+  };
+
   return (
     <InfoPopup onReject={onClose}>
-      <p>
-        <b>This website exists thanks to donations from people like you.</b>
-      </p>
-      <Button big internal="/donate" scheme="yellow">
-        Donate
-      </Button>
-      <div className="spacer"></div>
-      <p>
-        Thanks for using this website! Found a problem? Just want to say hi?
-      </p>
+      <p>Thanks for using MCPaintings.com! If you can spare it, please</p>
+      <div
+        className="kofi"
+        dangerouslySetInnerHTML={{ __html: window.kofiwidget2.getHTML() }}
+        onClick={kofiHandler}
+      />
+      <p>Found a problem? Just want to say hi?</p>
       <Button external={FEEDBACK}>Give some feedback</Button>
       <p>Other ways to support:</p>
       <Button external={TWITTER} scheme="tblue">
@@ -60,6 +62,10 @@ export default ({ onClose }) => {
 
         a {
           text-decoration: none;
+        }
+
+        .kofi {
+          margin: 2rem 0;
         }
       `}</style>
     </InfoPopup>

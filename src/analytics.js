@@ -54,11 +54,20 @@ function Analytics() {
     ReactGA.event(opts);
   };
 
+  const donateClick = (page, message) => {
+    ReactGA.event({
+      category: 'Donate',
+      action: page,
+      label: message,
+    });
+  };
+
   return {
     pageview: curry(pageview),
     event: curry(event),
     isInit: () => init,
     tryInit,
+    donateClick,
   };
 }
 

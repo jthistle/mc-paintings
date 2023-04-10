@@ -20,28 +20,26 @@ import React, { useState } from 'react';
 import { Link } from '@reach/router';
 import CapturedLink from '../CapturedLink';
 
-import Button from '../../components/Button';
 import { c_DARKEST, c_HEADER, c_PRIMARY } from '../../theme';
 
 import mediaQuery from '../../components/media';
 import { useMedia } from 'react-media';
+import ReactGA from '../../analytics';
 
 import MenuIcon from './menu.svg';
 
 const Links = ({ capture, mobile }) => {
+  const kofiHandler = (e) => {
+    ReactGA.donateClick('header', '');
+  };
+
   return (
     <div className="links">
-      <Button internal="/backers" capture={capture}>
-        Backers
-      </Button>
-      <Button
-        internal="/support"
-        scheme="yellow"
-        className="linkBtn"
-        capture={capture}
-      >
-        Support
-      </Button>
+      <div
+        className="kofi"
+        dangerouslySetInnerHTML={{ __html: window.kofiwidget2.getHTML() }}
+        onClick={kofiHandler}
+      />
       <CapturedLink to="/guide" capture={capture}>
         <span className="textLink">Guide</span>
       </CapturedLink>
@@ -65,6 +63,10 @@ const Links = ({ capture, mobile }) => {
         flex-wrap: wrap;
         justify-content: center;
         flex-direction: ${mobile ? 'column' : 'row'};
+      }
+
+      .kofi {
+        margin: ${mobile ? '1rem' : '0'} 2rem;
       }
     `}</style>
     </div>
