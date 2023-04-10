@@ -57,8 +57,8 @@ function Analytics() {
   const donateClick = (page, message) => {
     ReactGA.event({
       category: 'Donate',
-      action: page,
-      label: message,
+      action: 'Donate',
+      label: page,
     });
   };
 
