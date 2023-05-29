@@ -30,7 +30,9 @@ export default ({ onClose }) => {
 
   return (
     <InfoPopup onReject={onClose}>
-      <p>Thanks for using MCPaintings.com! If you can spare it, please</p>
+      <p className="larger">Thanks for using mcpaintings.com!</p>
+      <p>This website is free for you, but not for me.</p>
+      <p>If you can spare it, please</p>
       <div
         className="kofi"
         dangerouslySetInnerHTML={{ __html: window.kofiwidget2.getHTML() }}
@@ -66,6 +68,12 @@ export default ({ onClose }) => {
 
         .kofi {
           margin: 2rem 0;
+        }
+
+        .larger {
+          font-size: 1.2rem;
+          font-weight: bold;
+          margin-bottom: 3rem;
         }
       `}</style>
     </InfoPopup>
