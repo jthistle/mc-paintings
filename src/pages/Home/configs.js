@@ -16,6 +16,9 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * Number of paintings for each size.
+ */
 const SIZES = {
   '1x1': 7,
   '1x2': 2,
@@ -26,6 +29,9 @@ const SIZES = {
   '4x4': 3,
 };
 
+/**
+ * Names of the individual files from 1.14 onwards.
+ */
 const MC_1_14_NAMES = {
   '1x1': ['alban', 'aztec', 'aztec2', 'bomb', 'kebab', 'plant', 'wasteland'],
   '1x2': ['graham', 'wanderer'],
@@ -36,12 +42,22 @@ const MC_1_14_NAMES = {
   '4x4': ['burning_skull', 'pigscene', 'pointer'],
 };
 
+/**
+ * Helper function to construct version information object.
+ *
+ * packFormat is the raw value of the pack_format key in the mcmeta.
+ * class is:
+ *   - 1 for new Java format (separate file for each painting)
+ *   - 2 for current Bedrock format (single texture for all paintings)
+ *   - 3 for old Java format (single texture for all paintings)
+ */
 const _v = (f, c) => ({
   packFormat: f,
   class: c,
 });
 
 const VERSION_MAP = {
+  '1_20': _v(15, 1),
   '1_19_4': _v(13, 1),
   '1_19_3': _v(12, 1),
   '1_19': _v(9, 1),
