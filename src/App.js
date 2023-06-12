@@ -23,6 +23,7 @@ import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Guide from './pages/Guide';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Privacy path="/privacy" />
         <About path="/about" />
         <Guide path="/guide" />
+        <Contact path="/contact" />
         <NotFound default />
       </Router>
     </div>

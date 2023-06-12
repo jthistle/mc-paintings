@@ -20,7 +20,7 @@ import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 
-import { TWITTER, GITHUB, FEEDBACK } from '../../supportLinks.json';
+import { TWITTER, GITHUB, FEEDBACK, TWEET_AT } from '../../supportLinks.json';
 import ReactGA from '../../analytics';
 
 export default ({ onClose }) => {
@@ -40,6 +40,9 @@ export default ({ onClose }) => {
       />
       <p>Found a problem? Just want to say hi?</p>
       <Button external={FEEDBACK}>Give some feedback</Button>
+      <Button external={TWEET_AT} scheme="tblue">
+        Tweet at me
+      </Button>
       <p>Other ways to support:</p>
       <Button external={TWITTER} scheme="tblue">
         Tweet about it

@@ -49,6 +49,9 @@ const Links = ({ capture, mobile }) => {
       <CapturedLink to="/about" capture={capture}>
         <span className="textLink">About</span>
       </CapturedLink>
+      <CapturedLink to="/contact" capture={capture}>
+        <span className="textLink">Contact</span>
+      </CapturedLink>
       <style jsx>{`
       .textLink {
         display: inline-block;

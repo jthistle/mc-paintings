@@ -21,7 +21,7 @@
 
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
-import { GITHUB, FEEDBACK } from '../../supportLinks.json';
+import { GITHUB, GITHUB_ISSUE, FEEDBACK } from '../../supportLinks.json';
 
 function About(props) {
   return (
@@ -55,6 +55,10 @@ function About(props) {
             Use{' '}
             <a href={FEEDBACK} target="_blank">
               the feedback form
+            </a>{' '}
+            or
+            <a href={GITHUB_ISSUE} target="_blank">
+              open an issue on GitHub
             </a>{' '}
             to let me know. I'll try to get issues fixed as quickly as I can,
             but I can only do so if you provide clear instructions on how to
