@@ -35,15 +35,17 @@ function About(props) {
             suggestion? Do you just want to say hi? Please get in contact, using
             any of the three methods below:
           </p>
-          <Button external={TWEET_AT} scheme="tblue">
-            Talk to me on Twitter
-          </Button>
-          <br />
-          <Button external={FEEDBACK}>Leave feedback</Button>
-          <br />
-          <Button external={GITHUB_ISSUE} scheme="black">
-            Open an issue on GitHub
-          </Button>
+          <div className="buttons">
+            <Button external={TWEET_AT} scheme="tblue">
+              Talk to me on Twitter
+            </Button>
+            <br />
+            <Button external={FEEDBACK}>Leave feedback</Button>
+            <br />
+            <Button external={GITHUB_ISSUE} scheme="black">
+              Open an issue on GitHub
+            </Button>
+          </div>
           <br />
         </div>
       </Column>
@@ -71,6 +73,10 @@ function About(props) {
 
         a {
           color: white;
+        }
+
+        .buttons {
+          text-align: center;
         }
       `}</style>
     </Layout>

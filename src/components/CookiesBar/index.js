@@ -26,7 +26,7 @@ export default ({ onAccept }) => {
     <div className="bar">
       <div className="text">
         This website uses cookies.{' '}
-        <Link to="privacy/">
+        <Link to="/privacy/">
           <span className="more">More details</span>
         </Link>
         .
