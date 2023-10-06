@@ -1,4 +1,3 @@
-import ReactGALegacy from 'react-ga';
 import ReactGA from 'react-ga4';
 
 const debug = (...args) => false && console.log(...args);
@@ -15,10 +14,6 @@ function Analytics() {
       process.env.REACT_APP_GA_TRACKING_ID &&
       localStorage.getItem('canTrack') === 'yes'
     ) {
-      // legacy init
-      ReactGALegacy.initialize(process.env.REACT_APP_GA_TRACKING_ID);
-      ReactGALegacy.set({ anonymizeIp: true });
-
       // ga4 init
       ReactGA.initialize(process.env.REACT_APP_GA4_TRACKING_ID, {
         gaOptions: { anonymizeIp: true },
@@ -45,12 +40,10 @@ function Analytics() {
   };
 
   const pageview = (path) => {
-    ReactGALegacy.pageview(path);
     ReactGA.send({ hitType: 'pageview', page: path });
   };
 
   const event = (opts) => {
-    ReactGALegacy.event(opts);
     ReactGA.event(opts);
   };
 
