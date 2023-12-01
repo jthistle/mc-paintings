@@ -42,13 +42,10 @@ const Guide = () => {
             <li>Press 'Options'</li>
             <li>Press 'Resource Packs'</li>
             <li>Press 'Open resource pack folder'</li>
-            <li>
-              Now, you will have the folder open in which you need to place your
-              zip file. Copy or move the zip file to this folder.
-            </li>
-            <li>You now may need to restart Minecraft</li>
-            <li>Now, navigate to 'Options' &gt; 'Resource Packs'</li>
-            <li>You can now activate the resource pack</li>
+            <li>Copy or move the zip file to this folder</li>
+            <li>You may need to restart Minecraft at this point</li>
+            <li>Navigate to 'Options' &gt; 'Resource Packs'</li>
+            <li>Activate the resource pack</li>
           </ol>
           <h2 id="android">How to install a resource pack (Android)</h2>
           <ol>
@@ -74,7 +71,7 @@ const Guide = () => {
               Select the new resource pack
               <ul>
                 <li>
-                  If it doesn't show up, you might need to restart Minecraft
+                  If it doesn't show up, you might need to restart Minecraft.
                 </li>
               </ul>
             </li>
