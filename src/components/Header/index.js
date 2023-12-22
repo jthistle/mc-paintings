@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 James Thistlewood
+ *  Copyright (C) 2023 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 import React, { useState } from 'react';
 import { Link } from '@reach/router';
 import CapturedLink from '../CapturedLink';
+import SupportBtn from '../SupportBtn';
 
 import { c_DARKEST, c_HEADER, c_PRIMARY } from '../../theme';
 
@@ -35,11 +36,7 @@ const Links = ({ capture, mobile }) => {
 
   return (
     <div className="links">
-      <div
-        className="kofi"
-        dangerouslySetInnerHTML={{ __html: window.kofiwidget2.getHTML() }}
-        onClick={kofiHandler}
-      />
+      <SupportBtn kofiHandler={kofiHandler} />
       <CapturedLink to="/guide" capture={capture}>
         <span className="textLink">Guide</span>
       </CapturedLink>

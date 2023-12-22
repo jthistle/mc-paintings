@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 James Thistlewood
+ *  Copyright (C) 2023 James Thistlewood
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
+import SupportBtn from '../SupportBtn';
 
 import { TWITTER, GITHUB, FEEDBACK, TWEET_AT } from '../../supportLinks.json';
 import ReactGA from '../../analytics';
@@ -33,11 +34,7 @@ export default ({ onClose }) => {
       <p className="larger">Thanks for using mcpaintings.com!</p>
       <p>This website is free for you, but not for me.</p>
       <p>If you can spare it, please</p>
-      <div
-        className="kofi"
-        dangerouslySetInnerHTML={{ __html: window.kofiwidget2.getHTML() }}
-        onClick={kofiHandler}
-      />
+      <SupportBtn kofiHandler={kofiHandler} />
       <p>Found a problem? Just want to say hi?</p>
       <Button external={FEEDBACK}>Give some feedback</Button>
       <Button external={TWEET_AT} scheme="tblue">
