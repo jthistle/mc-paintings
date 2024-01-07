@@ -1,4 +1,26 @@
-import { MC_1_14_NAMES, SINGLE_TEX_POSITIONS } from './configs';
+/*
+ *  Copyright (C) 2024 James Thistlewood
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+import {
+  MC_1_14_NAMES,
+  SINGLE_TEX_POSITIONS,
+  MAX_PACK_FORMAT,
+} from './configs';
 import { v4 as uuid } from 'uuid';
 import defaultBedrockImage from './template_br.png';
 import defaultJavaImage from './template_java.png';
@@ -23,12 +45,30 @@ function createNewImage(imageString) {
  *    }
  */
 async function java(root, textureImages, meta) {
+  let min_format = meta.format;
+  let max_format = meta.format;
+
+  // Version 5 = 1.15, the first version to use multiple painting files.
+  // (Well, actually, this was 1.14, but versioning was fucked - see configs.js.)
+  // As of 1.20.4, there have been literally no changes to paintings since 1.15.
+  // So, we can safely use any version in the range 1.15 - 1.20.4.
+  if (meta.format >= 5) {
+    min_format = 5;
+    max_format = MAX_PACK_FORMAT;
+  }
+
   root.file(
     'pack.mcmeta',
     JSON.stringify({
       pack: {
         pack_format: meta.format,
         description: meta.desc,
+        // Since 1.20.2, this field is supported in the metadata. It should be
+        // ignored by older versions.
+        supported_formats: {
+          min_inclusive: min_format,
+          max_inclusive: max_format,
+        },
       },
     })
   );
@@ -39,7 +79,8 @@ async function java(root, textureImages, meta) {
     let thisSize = textureImages[size];
     for (let i = 0; i < thisSize.length; i++) {
       // At this point the image is in jpeg format so convert
-      // it to a png via a canvas
+      // it to a png via a canvas.
+      // SINCE 1.20.3, ONLY PNGs WORK!!!
       let jpegImage = thisSize[i];
       if (!jpegImage) continue;
 

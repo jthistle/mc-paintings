@@ -56,6 +56,17 @@ const _v = (f, c) => ({
   class: c,
 });
 
+/**
+ * Some information about minecraft pack_format values:
+ *   - pack_format is a resource pack version number first introduced in 1.6.
+ *   - It is incremented arbitrarily by Mojang.
+ *   - Since 1.20.2, the exact number is not needed and a range of values can be specified.
+ *     This means that adding a new version (if it does not touch paintings) is as simple as
+ *     updating the MAX_PACK_FORMAT variable to the latest number at https://minecraft.wiki/w/Pack_format.
+ *   - Are you actually adding a new version? Remember to update defaultMeta.js. (Also, fix whatever has
+ *     broken!) You'll also need to come up with a smarter solution than MAX_PACK_FORMAT.
+ */
+const MAX_PACK_FORMAT = 22;
 const VERSION_MAP = {
   '1_20_2': _v(18, 1),
   '1_20': _v(15, 1),
@@ -66,8 +77,8 @@ const VERSION_MAP = {
   '1_17': _v(7, 1),
   '1_16': _v(6, 1),
   '1_15': _v(5, 1),
-  '1_14': _v(4, 1),
-  '1_13': _v(4, 3),
+  '1_14': _v(4, 1), // Yes, 1.14 and 1.13 share a version number despite having completely
+  '1_13': _v(4, 3), // different painting formats. How crazy is that?
   '1_11': _v(3, 3),
   '1_9': _v(2, 3),
   '1_6': _v(1, 3),
@@ -110,4 +121,10 @@ const SINGLE_TEX_POSITIONS = {
   '4x4': { size: _s(4, 4), positions: [_p(0, 12), _p(4, 12), _p(8, 12)] },
 };
 
-export { SIZES, MC_1_14_NAMES, SINGLE_TEX_POSITIONS, VERSION_MAP };
+export {
+  SIZES,
+  MC_1_14_NAMES,
+  SINGLE_TEX_POSITIONS,
+  VERSION_MAP,
+  MAX_PACK_FORMAT,
+};
