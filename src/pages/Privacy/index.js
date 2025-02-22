@@ -52,21 +52,21 @@ const Privacy = () => {
             </li>
             <li>
               analytics cookies, which allow me to see how many people visit my
-              site. These analytics cookies collect your <b>anonymized</b> IP
-              address, what kind of device you're using, your general location
-              (i.e. which city), the date and time certain pages were accessed,
-              and how you use some functions of the website. This data is, as
-              described above, all anonymized through IP anonymization. I use
-              this information to improve the website.
+              site. These analytics cookies collect some limited information:
+              what kind of device you're using, your general location (i.e.
+              which city and country), the date and time certain pages were
+              accessed, and how you use some functions of the website. These
+              data are not associated with your real IP, which is obscured by IP
+              anonymization. I use this information to improve the website.
             </li>
           </ul>
           <p>Please also note:</p>
           <ul>
             <li>
               Your uploaded images and the texture pack are all managed and
-              created client-side, which means none of your images are ever sent
-              off to a server - only you, and people you share your texture pack
-              with, can see the images that you use.
+              created in your browser. Images you upload <b>never</b> leave your
+              local device. Only you, and people you share your finished texture
+              pack with, can see the images that you use.
             </li>
           </ul>
           <p>If you really want, you can:</p>
