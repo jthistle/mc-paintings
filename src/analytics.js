@@ -11,7 +11,7 @@ function Analytics() {
     if (init) return;
 
     if (
-      process.env.REACT_APP_GA_TRACKING_ID &&
+      process.env.REACT_APP_GA4_TRACKING_ID &&
       localStorage.getItem('canTrack') === 'yes'
     ) {
       // ga4 init
