@@ -49,7 +49,7 @@ import AddImage from './icons/add_image.svg';
 import ChangeImage from './icons/change_image.svg';
 import CropIcon from './icons/crop.svg';
 import DownloadIcon from './icons/download.svg';
-import CapturedLink from '../../components/CapturedLink';
+import BinIcon from './icons/bin.svg';
 import { FEEDBACK } from '../../supportLinks.json';
 
 const ImagePlaceHolder = ({ needsImage }) => (
@@ -248,6 +248,20 @@ const Home = () => {
     };
 
     reader.readAsDataURL(file);
+  };
+
+  const clearCurrentImage = () => {
+    // Clear uploaded image
+    let newUploadedImages = { ...uploadedImages };
+    newUploadedImages[selectedSize.size][selectedSize.index] = null;
+    setUploadedImages(newUploadedImages);
+
+    // Ignore resetting crop config, this will be reset if a new image is uploaded
+
+    // Reset any saved texures
+    let newTextureImages = { ...textureImages };
+    newTextureImages[selectedSize.size][selectedSize.index] = null;
+    setTextureImages(newTextureImages);
   };
 
   const isCropping = () =>
@@ -550,6 +564,17 @@ const Home = () => {
           </div>
         ))}
         <div className="buttons">
+          {!disableCrop && (
+            <Button onClick={clearCurrentImage} scheme="red">
+              <div className="iconContainer">
+                <img
+                  className="buttonIcon"
+                  src={BinIcon}
+                  alt="Clear image"
+                ></img>
+              </div>
+            </Button>
+          )}
           <UploadInput width={5} onUpload={onImageUpload}>
             <div className="iconContainer">
               <img
@@ -662,15 +687,24 @@ const Home = () => {
   // Render for desktop users
   const renderNormal = () => {
     const renderSizeSelect = () => {
+      const imageExists =
+        selectedSize && uploadedImages[selectedSize.size][selectedSize.index];
       return (
         <>
           <div className="buttonsContainer">
             <UploadInput onUpload={onImageUpload} disabled={!selectedSize}>
-              {selectedSize &&
-              uploadedImages[selectedSize.size][selectedSize.index]
-                ? 'Change image'
-                : 'Add an image'}
+              {imageExists ? 'Change image' : 'Add an image'}
             </UploadInput>
+            {imageExists && (
+              <Button scheme="red" onClick={clearCurrentImage}>
+                <img
+                  className="buttonIcon"
+                  src={BinIcon}
+                  alt="Clear image"
+                ></img>
+              </Button>
+            )}
+            <div className="hspace"></div>
             <Button onClick={onDownloadPressed}>Download pack</Button>
           </div>
           {!selectedSize && window.innerWidth < 600 && (
@@ -693,6 +727,36 @@ const Home = () => {
               />
             ))}
           </div>
+          <style jsx>{`
+            .imageSizeContainer {
+              margin-top: 2rem;
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-evenly;
+            }
+
+            .buttonsContainer {
+              display: flex;
+              justify-content: space-evenly;
+              flex-wrap: wrap;
+            }
+
+            .buttonIcon {
+              margin: 0.75rem 0;
+              max-height: 1.5rem;
+              display: inline-block;
+            }
+
+            .chooseSize {
+              text-align: center;
+              width: 100%;
+              margin: 1rem 0;
+            }
+
+            .hspace {
+              width: 2rem;
+            }
+          `}</style>
         </>
       );
     };
@@ -735,25 +799,6 @@ const Home = () => {
           </div>
         </Column>
         <style jsx>{`
-          .imageSizeContainer {
-            margin-top: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-          }
-
-          .buttonsContainer {
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-          }
-
-          .chooseSize {
-            text-align: center;
-            width: 100%;
-            margin: 1rem 0;
-          }
-
           .message {
             width: 100%;
             text-align: center;

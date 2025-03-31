@@ -26,7 +26,7 @@ import {
 } from '../../theme';
 
 const INPUT_HEIGHT = 3; // rem
-const INPUT_WIDTH = 15; // rem
+const INPUT_WIDTH = 12; // rem
 
 export default ({ onUpload, children, disabled, width }) => {
   width = width || INPUT_WIDTH;
