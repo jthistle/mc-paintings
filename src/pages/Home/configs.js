@@ -139,7 +139,7 @@ const _v = (f, c) => ({
  *     broken!) You'll also need to come up with a smarter solution than MAX_PACK_FORMAT.
  *     - note to self: the 'smarter solution' is apparently having two MAX_PACK_FORMATs.
  */
-const MAX_PACK_FORMAT = 53;
+const MAX_PACK_FORMAT = 63;
 const MAX_PACK_FORMAT_PRE_1_21 = 32;
 const VERSION_MAP = {
   '1_21': _v(34, 4),
