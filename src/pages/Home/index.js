@@ -381,6 +381,18 @@ const Home = () => {
     }
   };
 
+  const unloadEventListener = (e) => {
+    if (hasImage()) {
+      e.preventDefault();
+      return 'aaa'; // legacy
+    }
+  };
+
+  // warning for closing tab with unsaved work
+  useEffect(() => {
+    window.onbeforeunload = unloadEventListener;
+  }, [textureImages]);
+
   const onDownloadPressed = () => {
     setPackMeta({});
 
